@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rinnai.fireplacewifimodulenz.Rinnai11iRegistration">
+
+    <include
+        android:id="@+id/include_content_registrationi"
+        layout="@layout/content_rinnai11i_registration" />
+
+    <include
+        android:id="@+id/include_releaseappliance_lockout_registrationi"
+        layout="@layout/releaseappliance_lockout_rinnai11i_registration"
+        layout_height="wrap_content"
+        layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_releaseappliance_registrationi"
+        layout="@layout/releaseappliance_rinnai11i_registration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+</android.support.design.widget.CoordinatorLayout>

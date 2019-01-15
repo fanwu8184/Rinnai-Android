@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rinnai.fireplacewifimodulenz.Rinnai11cRegistration">
+
+    <include
+        android:id="@+id/include_content_registrationc"
+        layout="@layout/content_rinnai11c_registration" />
+
+    <include
+        android:id="@+id/include_scrollview_lockout_registrationc"
+        layout="@layout/scrollview_lockout_rinnai11c_registration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_selectfire_registrationc"
+        layout="@layout/selectfire_rinnai11c_registration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_showhints_lockout_registrationc"
+        layout="@layout/showhints_lockout_rinnai11c_registration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_showhints_serialnumber"
+        layout="@layout/showhints_serialnumber_rinnai11c_registration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+</android.support.design.widget.CoordinatorLayout>

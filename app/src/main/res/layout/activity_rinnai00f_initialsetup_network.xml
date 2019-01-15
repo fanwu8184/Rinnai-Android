@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rinnai.fireplacewifimodulenz.Rinnai00fInitialSetupNetwork">
+
+    <include
+        android:id="@+id/include_content_initialsetupnetwork"
+        layout="@layout/content_rinnai00f_initialsetup_network" />
+
+    <include
+        android:id="@+id/include_scanning_initialsetupnetwork"
+        layout="@layout/scanning_rinnai00f_initialsetup_network"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/include_scrollview_lockout_initialsetupnetwork"
+        layout="@layout/scrollview_lockout_rinnai00f_initialsetup_network"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/include_detailsaccepted_initialsetupnetwork"
+        layout="@layout/detailsaccepted_rinnai00f_initialsetup_network"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+
+</android.support.design.widget.CoordinatorLayout>

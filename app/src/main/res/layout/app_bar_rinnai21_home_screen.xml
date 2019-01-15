@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rinnai.fireplacewifimodulenz.Rinnai21HomeScreen">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include
+        android:id="@+id/include_content_home_screen"
+        layout="@layout/content_rinnai21_home_screen" />
+
+    <include
+        android:id="@+id/include_seekbar_shadow_flame_settemp"
+        layout="@layout/seekbar_shadow_flame_settemp_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
+    <include
+        android:id="@+id/include_button_flame_settemp"
+        layout="@layout/button_flame_settemp_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/include_button_multiunit"
+        layout="@layout/button_multiunit_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/include_showhints_flame"
+        layout="@layout/showhints_flame_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_showhints_settemp"
+        layout="@layout/showhints_settemp_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_showhints_economy"
+        layout="@layout/showhints_economy_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_standby"
+        layout="@layout/standby_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_button_multiunit_standby"
+        layout="@layout/button_multiunit_rinnai21_home_screen_standby"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_multiunit_lockout"
+        layout="@layout/multiunit_lockout_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_multiunit"
+        layout="@layout/multiunit_rinnai21_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_devicenameedit_lockout"
+        layout="@layout/devicenameedit_multiunit_lockout_rinnai21_home_screen"
+        layout_height="wrap_content"
+        layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/include_devicenameedit"
+        layout="@layout/devicenameedit_multiunit_rinnai21_home_screen"
+        layout_height="wrap_content"
+        layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+</android.support.design.widget.CoordinatorLayout>

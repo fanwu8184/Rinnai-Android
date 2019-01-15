@@ -1,0 +1,1000 @@
+package com.rinnai.fireplacewifimodulenz;
+
+import android.app.ActivityManager;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+/**
+ * Created by jconci on 14/09/2017.
+ */
+
+public class Rinnai17Login extends MillecActivityBase
+        implements ActivityClientInterfaceTCP, ActivityServerInterfaceUDP, ActivityTimerInterface {
+
+    ImageView ViewId_imageview18;
+
+    Timer startupCheckTimer;
+    int startupCheckTimerCount;
+
+    Timer fireanimationCheckTimer;
+    int fireanimationCheckTimerCount;
+
+    Intent intent;
+
+    boolean isClosing = false;
+
+    boolean isDeviceGetVersion = false;
+    boolean isDeviceSetTime = false;
+
+    boolean isAccessPoint = false;
+
+    String secondsSinceMondayHexLittleEndian = "";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_rinnai17_login);
+
+        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onCreate.");
+
+        Runtime rt = Runtime.getRuntime();
+        long maxMemory = rt.maxMemory();
+        Log.d("myApp_Memory", "maxMemory:" + Long.toString(maxMemory));
+
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        int memoryClass = am.getMemoryClass();
+        Log.d("myApp_Memory", "memoryClass:" + Integer.toString(memoryClass));
+
+        startFireAnimation();
+
+        this.startCommunicationErrorFault();
+
+        this.appStart();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onStart.");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onRestart.");
+
+        isClosing = false;
+        isDeviceGetVersion = false;
+        isDeviceSetTime = false;
+
+        try {
+            AppGlobals.UDPSrv.stopServer();
+            AppGlobals.UDPSrv.setCurrentActivity(this);
+            AppGlobals.UDPSrv.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiUDP", "Rinnai17Login: onRestart(Exception - " + e + ")");
+        }
+
+        startFireAnimation();
+
+        startCommunicationErrorFault();
+
+        startTxRN171DeviceGetStatus();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onResume.");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onPause.");
+
+        AppGlobals.CommErrorFault.stopTimer();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onStop.");
+
+        if (AppGlobals.rfwmInitialSetupFlag == true) {
+            AppGlobals.UDPSrv.stopServer();
+        }
+
+        startupCheckTimer.cancel();
+        fireanimationCheckTimer.cancel();
+        isClosing = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onDestroy.");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("myApp", "Rinnai17Login_onBackPressed.");
+
+        //super.onBackPressed();
+        moveTaskToBack(true);
+    }
+
+    //********************//
+    //***** appStart *****//
+    //********************//
+
+    void appStart() {
+
+        try {
+            AppGlobals.UDPSrv.stopServer();
+            AppGlobals.UDPSrv.setCurrentActivity(this);
+            AppGlobals.UDPSrv.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiUDP", "Rinnai17Login: appStart(Exception - " + e + ")");
+        }
+
+        AppGlobals.loadPersistentStorage(Rinnai17Login.this);
+
+        AppGlobals.userregInfo.userregistrationEmail = AppGlobals.rfwmEmail;
+        AppGlobals.userregInfo.userregistrationPassword = AppGlobals.rfwmPassword;
+
+        String compareAP = "RinnaiWiFi_";
+        String currentAP = NetworkFunctions.getCurrentAccessPointName(this);
+
+        Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: AP FOUND (" + currentAP + ")");
+        Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: AP FOUND Length (" + currentAP.length() + ")");
+
+        if (currentAP.contains(compareAP) && currentAP.length() == 17) {
+            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CORRECT AP FOUND.");
+
+            isAccessPoint = true;
+        } else {
+            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CORRECT RINNAI FOUND ON NETWORK.");
+
+            isAccessPoint = false;
+        }
+
+        startTxRN171DeviceGetStatus();
+
+    }
+
+    //******************************//
+    //***** startFireAnimation *****//
+    //******************************//
+
+    public void startFireAnimation() {
+
+        this.fireanimationCheckTimerCount = 0;
+
+        this.fireanimationCheckTimer = new Timer();
+
+        this.fireanimationCheckTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                Log.d("myApp", "startFireAnimation: Tick.. " + fireanimationCheckTimerCount);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Load the ImageView that will host the animation and
+                        // set its background to our AnimationDrawable XML resource.
+                        ViewId_imageview18 = (ImageView) findViewById(R.id.imageView18);
+
+                        switch(fireanimationCheckTimerCount){
+                            case 1:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_1);
+                                break;
+                            case 2:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_5);
+                                break;
+                            case 3:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_10);
+                                break;
+                            case 4:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_15);
+                                break;
+                            case 5:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_20);
+                                break;
+                            case 6:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_25);
+                                break;
+                            case 7:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_30);
+                                break;
+                            case 8:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_35);
+                                break;
+                            case 9:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_40);
+                                break;
+                            case 10:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_45);
+                                break;
+                            case 11:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_50);
+                                break;
+                            case 12:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_55);
+                                break;
+                            case 13:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_55);
+                                break;
+                            case 14:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_50);
+                                break;
+                            case 15:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_45);
+                                break;
+                            case 16:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_40);
+                                break;
+                            case 17:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_35);
+                                break;
+                            case 18:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_30);
+                                break;
+                            case 19:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_25);
+                                break;
+                            case 20:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_20);
+                                break;
+                            case 21:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_15);
+                                break;
+                            case 22:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_10);
+                                break;
+                            case 23:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_5);
+                                break;
+                            case 24:
+                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_1);
+                                fireanimationCheckTimerCount = 0;
+                                break;
+                        }
+
+                        fireanimationCheckTimerCount++;
+                    }
+                });
+            }
+
+        }, 0, 100);
+
+    }
+
+    //*********************************//
+    //***** getSecondsSinceMonday *****//
+    //*********************************//
+
+    public void getSecondsSinceMonday() {
+
+        int dayofweek_sincemonday = 0;
+        int seconds_sincemonday = 0;
+
+        secondsSinceMondayHexLittleEndian = "";
+
+        //**********************************************************************************//
+        //***** Get Current Time: DAY, MONTH, DATE, TIME, TIME ZONE ABBREVIATION, YEAR *****//
+        //**********************************************************************************//
+        //eg. Wed Nov 29 16:23:18 AEDT 2017
+
+        Date currentTime = Calendar.getInstance().getTime();
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: currentTime (" + currentTime + ")");
+
+        //Convert DAY OF WEEK to Day of week since Monday.
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: dayofWeek (" + day + ")");
+
+        switch (day) {
+            case Calendar.SUNDAY:
+                // Current day is Sunday
+                dayofweek_sincemonday = 6;
+                break;
+
+            case Calendar.MONDAY:
+                // Current day is Monday
+                dayofweek_sincemonday = 0;
+                break;
+
+            case Calendar.TUESDAY:
+                // Current day is TUESDAY
+                dayofweek_sincemonday = 1;
+                break;
+
+            case Calendar.WEDNESDAY:
+                // Current day is WEDNESDAY
+                dayofweek_sincemonday = 2;
+                break;
+
+            case Calendar.THURSDAY:
+                // Current day is THURSDAY
+                dayofweek_sincemonday = 3;
+                break;
+
+            case Calendar.FRIDAY:
+                // Current day is FRIDAY
+                dayofweek_sincemonday = 4;
+                break;
+
+            case Calendar.SATURDAY:
+                // Current day is SATURDAY
+                dayofweek_sincemonday = 5;
+                break;
+            default:
+                break;
+        }
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: dayofweek_sincemonday (" + dayofweek_sincemonday + ")");
+
+        //Convert Day of week since Monday to Seconds since Monday.
+        //Add to seconds_sincemonday running total.
+        seconds_sincemonday += dayofweek_sincemonday * 60 * 60 * 24;
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: seconds_sincemonday (" + seconds_sincemonday + ")");
+
+        //************************************//
+        //***** Get Current Hour of day. *****//
+        //************************************//
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: hourofday (" + hour + ")");
+
+        //Convert Current Hour of day to Seconds since Monday.
+        //Add to seconds_sincemonday running total.
+        seconds_sincemonday += hour * 60 * 60;
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: seconds_sincemonday (" + seconds_sincemonday + ")");
+
+        //**************************************//
+        //***** Get Current Minute of day. *****//
+        //**************************************//
+
+        int minute = calendar.get(Calendar.MINUTE);
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: minuteofday (" + minute + ")");
+
+        //Convert Current Minute of day to Seconds since Monday.
+        //Add to seconds_sincemonday running total.
+        seconds_sincemonday += minute * 60;
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: seconds_sincemonday (" + seconds_sincemonday + ")");
+
+        //**************************************//
+        //***** Get Current Second of day. *****//
+        //**************************************//
+
+        int second = calendar.get(Calendar.SECOND);
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: secondofday (" + second + ")");
+
+        //Add Current Second of day to seconds_sincemonday running total (FINAL).
+        seconds_sincemonday += second;
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: seconds_sincemonday-FINAL (" + seconds_sincemonday + ")");
+
+        //***************************************************************//
+        //***** Get Seconds Since Monday - HexLittleEndian (FINAL). *****//
+        //***************************************************************//
+
+        //Convert seconds_sincemonday running total to seconds_sincemonday-Hex String (This is Big Endian)
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: seconds_sincemonday-Hex_FINAL (" + String.format("%08X", seconds_sincemonday) + ")");
+
+        //Convert seconds_sincemonday-Hex String (Big Endian) to secondsSinceMondayHexLittleEndian (Final).
+        for (int i = String.format("%08X", seconds_sincemonday).length() - 2; i >= 0; i -= 2) {
+            secondsSinceMondayHexLittleEndian += String.format("%08X", seconds_sincemonday).substring(i, i + 2);
+        }
+        Log.d("myApp", "Rinnai17Login_getSecondsSinceMonday: seconds_sincemonday-HexLittleEndian_FINAL (" + secondsSinceMondayHexLittleEndian + ")");
+
+    }
+
+    //***************************************//
+    //***** startTxRN171DeviceGetStatus *****//
+    //***************************************//
+
+    public void startTxRN171DeviceGetStatus() {
+
+        this.startupCheckTimerCount = 0;
+
+        this.startupCheckTimer = new Timer();
+
+        getSecondsSinceMonday();
+
+        this.startupCheckTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                Log.d("myApp", "Rinnai17Login: Tick.. " + startupCheckTimerCount);
+
+                if (startupCheckTimerCount >= 10) {
+
+                    if (AppGlobals.fireplaceWifi.size() >= 1) {
+
+                        if (isAccessPoint == true) {
+
+                            if (isDeviceSetTime == false) {
+
+                                if (startupCheckTimerCount % 2 == 0) {
+                                    Tx_RN171DeviceSetTime();
+                                    Log.d("myApp", "Rinnai17Login_startTxRN171DeviceGetStatus - Tx_RN171DeviceSetTime");
+                                }
+                            } else {
+                                if (startupCheckTimerCount % 2 == 0) {
+
+                                    startupCheckTimer.cancel();
+                                    fireanimationCheckTimer.cancel();
+                                    isClosing = true;
+                                    isAccessPoint = false;
+                                    intent = new Intent(Rinnai17Login.this, Rinnai00fInitialSetupNetwork.class);
+                                    startActivity(intent);
+
+                                    finish();
+                                    Log.d("myApp_WiFiTCP", "Rinnai17Login_startTxRN171DeviceGetStatus: startActivity(Rinnai00fInitialSetupNetwork).");
+                                }
+                            }
+                        } else {
+
+                            if (AppGlobals.userregInfo.userregistrationEmail == null && AppGlobals.userregInfo.userregistrationPassword == null) {
+                                AppGlobals.rfwmUserFlag = 0;
+                            } else {
+                                AppGlobals.rfwmUserFlag = 1;
+                            }
+
+                            if (AppGlobals.rfwmUserFlag == 1) {
+
+                                if (isDeviceGetVersion == false) {
+                                    Tx_RN171DeviceGetVersion();
+                                    Log.d("myApp", "Rinnai17Login_startTxRN171DeviceGetStatus - Tx_RN171DeviceGetVersion");
+                                } else {
+                                    if (isDeviceSetTime == false) {
+
+                                        if (startupCheckTimerCount % 2 == 0) {
+                                            Tx_RN171DeviceSetTime();
+                                            Log.d("myApp", "Rinnai17Login_startTxRN171DeviceGetStatus - Tx_RN171DeviceSetTime");
+                                        }
+                                    } else {
+                                        if (startupCheckTimerCount % 2 == 0) {
+                                            Tx_RN171DeviceGetStatus();
+                                            Log.d("myApp", "Rinnai17Login_startTxRN171DeviceGetStatus - Tx_RN171GetStatus");
+                                        }
+                                    }
+                                }
+                            } else {
+                                AppGlobals.UDPSrv.stopServer();
+
+                                startupCheckTimer.cancel();
+                                fireanimationCheckTimer.cancel();
+                                isClosing = true;
+                                intent = new Intent(Rinnai17Login.this, Rinnai11aRegistration.class);
+                                startActivity(intent);
+
+                                finish();
+                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai11aRegistration).");
+                            }
+                        }
+                    } else {
+                        //show box
+                    }
+                }
+
+                startupCheckTimerCount++;
+
+            }
+
+        }, 0, 1000);
+
+    }
+
+    //************************//
+    //***** UDP - Server *****//
+    //************************//
+
+    @Override
+    public void serverCallBackUDP(String text) {
+        Log.d("myApp_WiFiUDP", "Rinnai17Login_serverCallBackUDP: " + text);
+    }
+
+    //************************//
+    //***** TCP - Client *****//
+    //************************//
+
+    @Override
+    public void clientCallBackTCP(String commandID, String text) {
+        final String pType = commandID;
+        final String pText = text;
+
+        if (isClosing == true) {
+            return;
+        }
+
+        if (commandID != null) {
+
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+                        if (pType.contains("10")) {
+                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Device Version (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion + ")");
+
+                            if ((2.07f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                                    (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                                    (2.02f != AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion)) {
+
+                                AppGlobals.UDPSrv.stopServer();
+
+                                startupCheckTimer.cancel();
+                                fireanimationCheckTimer.cancel();
+                                isClosing = true;
+                                intent = new Intent(Rinnai17Login.this, Rinnai12OTA.class);
+                                startActivity(intent);
+
+                                finish();
+                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai12OTA).");
+                            } else {
+                                isDeviceGetVersion = true;
+                            }
+                        }
+
+                        if (pType.contains("12")) {
+                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Set Time Result (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).settimeResult + ")");
+
+                            if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).settimeResult.equals("OK")) {
+                                isDeviceSetTime = true;
+                            }
+                        }
+
+                        if (pType.contains("22")) {
+
+                            //*****************************//
+                            //***** Main Power Switch *****//
+                            //*****************************//
+
+                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Main Power Switch (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmMainPowerSwitch + ")");
+
+                            //Main power switch = ON:[0x00]
+                            if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmMainPowerSwitch == 0) {
+
+                                //***************************//
+                                //***** Error Code HIGH *****//
+                                //***************************//
+
+                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Error Code HIGH (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeHI + ")");
+
+                                //***************************//
+                                //***** Error Code LOW *****//
+                                //***************************//
+
+                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Error Code LOW (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeLO + ")");
+
+                                //Error code HIGH = no error code:[Hx(0x20), Dec(32)]
+                                //Error code LOW = no error code:[Hx(0x20), Dec(32)]
+                                if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeHI == 32 && AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeLO == 32) {
+
+                                    //***************************//
+                                    //***** Operation State *****//
+                                    //***************************//
+
+                                    Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Operation State (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState + ")");
+
+                                    //Operation state = Stop:[0x00]
+                                    if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 0) {
+                                        AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = false;
+                                    }
+
+                                    //Operation state = Operate:[0x01]
+                                    else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 1) {
+                                        AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = true;
+                                    }
+
+                                    //Operation state = Error stop:[0x02]
+                                    else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 2) {
+                                        AppGlobals.UDPSrv.stopServer();
+
+                                        startupCheckTimer.cancel();
+                                        fireanimationCheckTimer.cancel();
+                                        isClosing = true;
+                                        intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+                                        startActivity(intent);
+
+                                        finish();
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
+                                    } else {
+                                        AppGlobals.UDPSrv.stopServer();
+
+                                        startupCheckTimer.cancel();
+                                        fireanimationCheckTimer.cancel();
+                                        isClosing = true;
+                                        intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+                                        startActivity(intent);
+
+                                        finish();
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
+                                    }
+
+                                    //*************************//
+                                    //***** Burning State *****//
+                                    //*************************//
+
+                                    Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Burning State (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState + ")");
+
+                                    //Burning state = Extinguish:[0x00]
+                                    if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 0) {
+                                        AppGlobals.UDPSrv.stopServer();
+
+                                        startupCheckTimer.cancel();
+                                        fireanimationCheckTimer.cancel();
+                                        isClosing = true;
+                                        intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+                                        startActivity(intent);
+
+                                        finish();
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
+                                    }
+
+                                    //Burning state = Ignite:[0x01]
+                                    else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 1) {
+                                        AppGlobals.UDPSrv.stopServer();
+
+                                        startupCheckTimer.cancel();
+                                        fireanimationCheckTimer.cancel();
+                                        isClosing = true;
+                                        intent = new Intent(Rinnai17Login.this, Rinnai22IgnitionSequence.class);
+                                        startActivity(intent);
+
+                                        finish();
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai22IgnitionSequence).");
+                                    }
+
+                                    //Burning state = Thermostat:[0x02]
+                                    else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 2) {
+                                        AppGlobals.UDPSrv.stopServer();
+
+                                        startupCheckTimer.cancel();
+                                        fireanimationCheckTimer.cancel();
+                                        isClosing = true;
+                                        intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+                                        startActivity(intent);
+
+                                        finish();
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
+                                    }
+
+                                    //Burning state = Thermostat OFF:[0x03]
+                                    else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 3) {
+                                        AppGlobals.UDPSrv.stopServer();
+
+                                        startupCheckTimer.cancel();
+                                        fireanimationCheckTimer.cancel();
+                                        isClosing = true;
+                                        intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+                                        startActivity(intent);
+
+                                        finish();
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
+                                    } else {
+                                        AppGlobals.UDPSrv.stopServer();
+
+                                        startupCheckTimer.cancel();
+                                        fireanimationCheckTimer.cancel();
+                                        isClosing = true;
+                                        intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+                                        startActivity(intent);
+
+                                        finish();
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
+                                    }
+
+                                } else {
+                                    AppGlobals.UDPSrv.stopServer();
+
+                                    startupCheckTimer.cancel();
+                                    fireanimationCheckTimer.cancel();
+                                    isClosing = true;
+                                    intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+                                    startActivity(intent);
+
+                                    finish();
+                                    Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
+                                }
+                            }
+                            //Main power switch = OFF:[0x01]
+                            else {
+                                AppGlobals.UDPSrv.stopServer();
+
+                                startupCheckTimer.cancel();
+                                fireanimationCheckTimer.cancel();
+                                isClosing = true;
+                                intent = new Intent(Rinnai17Login.this, Rinnai26PowerOff.class);
+                                startActivity(intent);
+
+                                finish();
+                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26PowerOff).");
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.d("myApp_WiFiTCP", "Rinnai17Login: clientCallBackTCP(Exception - " + e + ")");
+                        Log.d("myApp_WiFiTCP", "Rinnai17Login: clientCallBackTCP(RX - " + pText + ")");
+                    }
+                }
+            });
+        }
+
+        Log.d("myApp_WiFiTCP", "Rinnai17Login: clientCallBackTCP");
+    }
+
+    //***** RN171_DEVICE_GET_VERSION *****//
+    public void Tx_RN171DeviceGetVersion() {
+
+        try {
+            TCPClient tcpClient = new TCPClient(
+                    3000,
+                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                    this,
+                    "RINNAI_10,E\n", true);
+            tcpClient.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiTCP", "Rinnai17Login: Tx_RN171DeviceGetVersion(Exception - " + e + ")");
+        }
+    }
+
+    //***** RN171_DEVICE_SET_TIME *****//
+    public void Tx_RN171DeviceSetTime() {
+
+        try {
+            TCPClient tcpClient = new TCPClient(
+                    3000,
+                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                    this,
+                    "RINNAI_12," + secondsSinceMondayHexLittleEndian + ",E\n", true);
+            tcpClient.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiTCP", "Rinnai17Login: Tx_RN171DeviceSetTime(Exception - " + e + ")");
+        }
+    }
+
+    //***** RN171_DEVICE_GET_STATUS *****//
+    public void Tx_RN171DeviceGetStatus() {
+
+        try {
+            TCPClient tcpClient = new TCPClient(
+                    3000,
+                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                    this,
+                    "RINNAI_22,E\n", true);
+            tcpClient.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiTCP", "Rinnai17Login: Tx_RN171DeviceGetStatus(Exception - " + e + ")");
+        }
+    }
+
+    //****************************************//
+    //***** startCommunicationErrorFault *****//
+    //****************************************//
+
+    public void startCommunicationErrorFault() {
+        AppGlobals.CommErrorFault.setCurrentActivity(this);
+
+        AppGlobals.CommErrorFault.checkRN171DeviceCommunication();
+    }
+
+    //***********************************//
+    //***** timereventCallBackTimer *****//
+    //***********************************//
+
+    @Override
+    public void timereventCallBackTimer(int timerID) {
+        startupCheckTimer.cancel();
+        fireanimationCheckTimer.cancel();
+        isClosing = true;
+        isAccessPoint = false;
+        intent = new Intent(Rinnai17Login.this, Rinnai00aInitialSetupThanks.class);
+        startActivity(intent);
+
+        finish();
+        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai00aInitialSetupThanks).");
+    }
+
+    //************************//
+    //***** goToActivity *****//
+    //************************//
+
+    //Login
+    //public void goToActivity_Rinnai17_Login(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai17Login.class);
+    //    startActivity(intent);
+    //}
+
+    //Home Screen (Finish)
+    //public void goToActivity_Rinnai21_Home_Screen_Finish(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai21HomeScreen.class);
+    //    startActivity(intent);
+    //    finish();
+    //}
+
+    //Home Screen
+    //public void goToActivity_Rinnai21_Home_Screen(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai21HomeScreen.class);
+    //    startActivity(intent);
+    //}
+
+    //Timers a - Scheduled Timers
+    //public void goToActivity_Rinnai33a_Timers(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai33aTimers.class);
+    //    startActivity(intent);
+    //}
+
+    //Timers b - Scheduled Timer
+    //public void goToActivity_Rinnai33b_Timers(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai33bTimers.class);
+    //    startActivity(intent);
+    //}
+
+    //Visit Rinnai
+    //public void goToActivity_Rinnai35_Visit_Rinnai (View view){
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent (this, Rinnai35VisitRinnai.class);
+    //    startActivity(intent);
+    //}
+
+    //Visit Rinnai - Website
+    //public void goToActivity_Rinnai35_Visit_Rinnai_Website (View view){
+    //    String locale = this.getResources().getConfiguration().locale.getCountry();
+    //    Log.d("myApp", "Locale: " + locale);
+    //
+    //    String url;
+    //    if(locale.equals("AU")){
+    //        url = "http://rinnai.com.au/";
+    //
+    //        try {
+    //            Intent i = new Intent("android.intent.action.MAIN");
+    //            i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+    //            i.addCategory("android.intent.category.LAUNCHER");
+    //            i.setData(Uri.parse(url));
+    //            startActivity(i);
+    //        }
+    //        catch(ActivityNotFoundException e) {
+    //            // Chrome is not installed
+    //            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+    //            startActivity(i);
+    //        }
+    //    }
+    //    else if(locale.equals("NZ")){
+    //        url = "https://rinnai.co.nz/";
+    //
+    //        try {
+    //            Intent i = new Intent("android.intent.action.MAIN");
+    //            i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+    //            i.addCategory("android.intent.category.LAUNCHER");
+    //            i.setData(Uri.parse(url));
+    //            startActivity(i);
+    //        }
+    //        catch(ActivityNotFoundException e) {
+    //            // Chrome is not installed
+    //            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+    //            startActivity(i);
+    //        }
+    //    }
+    //    else{
+    //        Toast.makeText(this, "Rinnai Website not supported in your region.",
+    //                Toast.LENGTH_LONG).show();
+    //    }
+    //}
+
+    //Visit Rinnai - Facebook
+    //public void goToActivity_Rinnai35_Visit_Rinnai_Facebook (View view){
+    //    String url = "https://www.facebook.com/";
+    //    try {
+    //        Intent i = new Intent("android.intent.action.MAIN");
+    //        i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+    //        i.addCategory("android.intent.category.LAUNCHER");
+    //        i.setData(Uri.parse(url));
+    //        startActivity(i);
+    //    }
+    //    catch(ActivityNotFoundException e) {
+    //        // Chrome is not installed
+    //        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+    //        startActivity(i);
+    //    }
+    //}
+
+    //Visit Rinnai - Youtube
+    //public void goToActivity_Rinnai35_Visit_Rinnai_Youtube (View view){
+    //    String url = "https://www.youtube.com/";
+    //    try {
+    //        Intent i = new Intent("android.intent.action.MAIN");
+    //        i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+    //        i.addCategory("android.intent.category.LAUNCHER");
+    //        i.setData(Uri.parse(url));
+    //        startActivity(i);
+    //    }
+    //    catch(ActivityNotFoundException e) {
+    //        // Chrome is not installed
+    //        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+    //        startActivity(i);
+    //    }
+    //}
+
+    //Visit Rinnai - Phone
+    //public void goToActivity_Rinnai35_Visit_Rinnai_Phone (View view){
+    //    String locale = this.getResources().getConfiguration().locale.getCountry();
+    //    Log.d("myApp", "Locale: " + locale);
+    //
+    //    if(locale.equals("AU")){
+    //        Intent intent = new Intent(Intent.ACTION_DIAL);
+    //        intent.setData(Uri.parse("tel:1300555545"));
+    //        startActivity(intent);
+    //    }
+    //    else if(locale.equals("NZ")){
+    //        Intent intent = new Intent(Intent.ACTION_DIAL);
+    //        intent.setData(Uri.parse("tel:0800746624"));
+    //        startActivity(intent);
+    //    }
+    //    else{
+    //        Toast.makeText(this, "Rinnai Phone not supported in your region.",
+    //                Toast.LENGTH_LONG).show();
+    //    }
+    //}
+
+    //Lighting
+    //public void goToActivity_Rinnai34_Lighting (View view){
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent (this, Rinnai34Lighting.class);
+    //    startActivity(intent);
+    //}
+
+    //Network
+    //public void goToActivity_Rinnai37_Network (View view){
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent (this, Rinnai37Network.class);
+    //    startActivity(intent);
+    //}
+
+    //Fault
+    //public void goToActivity_Rinnai26_Fault(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai26Fault.class);
+    //    startActivity(intent);
+    //}
+
+    //Fault - Service Fault Codes
+    //public void goToActivity_Rinnai33_Service_Fault_Codes(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai33ServiceFaultCodes.class);
+    //    startActivity(intent);
+    //}
+
+    //Power Off
+    //public void goToActivity_Rinnai26_Power_Off(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai26PowerOff.class);
+    //    startActivity(intent);
+    //}
+
+    //Ignition Sequence
+    //public void goToActivity_Rinnai22_Ignition_Sequence(View view) {
+    //    startupCheckTimer.cancel();
+    //    Intent intent = new Intent(this, Rinnai22IgnitionSequence.class);
+    //    startActivity(intent);
+    //}
+
+}

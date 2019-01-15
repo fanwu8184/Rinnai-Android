@@ -1,0 +1,16 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <shape>
+            <size
+                android:height="@dimen/seekbar_flame_height"
+                android:width="@dimen/seekbar_flame_width" />
+
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ad_slider_tip_sml_c"
+
+        />
+
+</layer-list>

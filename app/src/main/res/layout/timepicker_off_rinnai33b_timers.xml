@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="950"
+        android:orientation="horizontal"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="550"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="95"
+            android:orientation="vertical"></LinearLayout>
+
+        <NumberPicker
+            android:id="@+id/numberPicker5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="125"
+            android:scaleX="@dimen/timepicker_off_scalex"
+            android:scaleY="@dimen/timepicker_off_scaley" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="55"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="233"
+                android:orientation="horizontal"></LinearLayout>
+
+            <com.lb.auto_fit_textview.AutoResizeTextView
+                android:id="@+id/textView41"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="84"
+                android:gravity="center"
+                android:text=":"
+                android:textColor="#FFFFFF"
+                android:textSize="1000sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="233"
+                android:orientation="horizontal"></LinearLayout>
+        </LinearLayout>
+
+        <NumberPicker
+            android:id="@+id/numberPicker6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="125"
+            android:scaleX="@dimen/timepicker_off_scalex"
+            android:scaleY="@dimen/timepicker_off_scaley" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="55"
+            android:orientation="vertical"></LinearLayout>
+
+        <NumberPicker
+            android:id="@+id/numberPicker7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="125"
+            android:scaleX="@dimen/timepicker_off_scalex"
+            android:scaleY="@dimen/timepicker_off_scaley" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="500"
+            android:orientation="vertical"></LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="420"
+        android:orientation="horizontal"></LinearLayout>
+</LinearLayout>

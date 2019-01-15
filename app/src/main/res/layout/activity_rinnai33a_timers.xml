@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rinnai.fireplacewifimodulenz.Rinnai33aTimers">
+
+    <include
+        android:id="@+id/include_content_timersa"
+        layout="@layout/content_rinnai33a_timers" />
+
+    <include
+        android:id="@+id/include_waiting_timersa"
+        layout="@layout/waiting_rinnai33a_timers"
+        layout_height="wrap_content"
+        layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/include_scrollview_lockout_timersa"
+        layout="@layout/scrollview_lockout_rinnai33a_timers"
+        layout_height="wrap_content"
+        layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</android.support.design.widget.CoordinatorLayout>

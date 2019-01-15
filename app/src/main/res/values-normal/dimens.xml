@@ -1,0 +1,48 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="seekbar_flame_height">40dp</dimen>
+    <dimen name="seekbar_flame_width">40dp</dimen>
+    <dimen name="seekbar_settemp_height">40dp</dimen>
+    <dimen name="seekbar_settemp_width">40dp</dimen>
+    <dimen name="seekbar_flame_paddingend">17dp</dimen>
+    <dimen name="seekbar_flame_paddingstart">17dp</dimen>
+    <dimen name="seekbar_settemp_paddingend">17dp</dimen>
+    <dimen name="seekbar_settemp_paddingstart">17dp</dimen>
+    <dimen name="framelayout_timersa_tlrowheight">75dp</dimen>
+    <dimen name="framelayout_timersa_dlrowheight">67dp</dimen>
+    <dimen name="framelayout_multiunit_tlrowheight">40dp</dimen>
+    <dimen name="framelayout_firemodel_tlrowheight">32dp</dimen>
+    <dimen name="framelayout_appliance_tlrowheight">115dp</dimen>
+    <dimen name="textview_timersa_dlrowwidth">67dp</dimen>
+    <dimen name="textview_timersa_delete_textsize">13sp</dimen>
+    <dimen name="textview_timersa_on_textsize">13sp</dimen>
+    <dimen name="textview_timersa_off_textsize">13sp</dimen>
+    <dimen name="textview_timersa_days_textsize">13sp</dimen>
+    <dimen name="textview_timersa_temp_textsize">13sp</dimen>
+    <dimen name="textview_faultcode_number_textsize">20sp</dimen>
+    <dimen name="textview_faultcode_cause_textsize">15sp</dimen>
+    <dimen name="textview_faultcode_description_textsize">15sp</dimen>
+    <dimen name="textview_faultcode_action_textsize">15sp</dimen>
+    <dimen name="textview_network_name_textsize">15sp</dimen>
+    <dimen name="textview_network_signalstrength_textsize">15sp</dimen>
+    <dimen name="textview_network_securitytype_textsize">15sp</dimen>
+    <dimen name="edittext_network_password_textsize">15sp</dimen>
+    <dimen name="textview_multiunit_devicename_textsize">13sp</dimen>
+    <dimen name="textview_multiunit_ipaddress_textsize">13sp</dimen>
+    <dimen name="textview_registration_firemodel_textsize">14sp</dimen>
+    <dimen name="textview_registration_tac_textsize">13sp</dimen>
+    <item name="textview_roomtemp_scalex" format="float" type="dimen">1.4</item>
+    <item name="textview_roomtemp_scaley" format="float" type="dimen">1.4</item>
+    <item name="switch1_lighting_scalex" format="float" type="dimen">1.5</item>
+    <item name="switch1_lighting_scaley" format="float" type="dimen">1.5</item>
+    <item name="switch2_lighting_scalex" format="float" type="dimen">1.5</item>
+    <item name="switch2_lighting_scaley" format="float" type="dimen">1.5</item>
+    <item name="switch3_timers_scalex" format="float" type="dimen">1.5</item>
+    <item name="switch3_timers_scaley" format="float" type="dimen">1.5</item>
+    <item name="timepicker_on_scalex" format="float" type="dimen">0.7</item>
+    <item name="timepicker_on_scaley" format="float" type="dimen">0.7</item>
+    <item name="numberpicker_settemp_scalex" format="float" type="dimen">0.7</item>
+    <item name="numberpicker_settemp_scaley" format="float" type="dimen">0.7</item>
+    <item name="timepicker_off_scalex" format="float" type="dimen">0.7</item>
+    <item name="timepicker_off_scaley" format="float" type="dimen">0.7</item>
+</resources>
