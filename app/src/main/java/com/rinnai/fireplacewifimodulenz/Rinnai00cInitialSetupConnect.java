@@ -86,7 +86,7 @@ public class Rinnai00cInitialSetupConnect extends MillecActivityBase {
         Log.d("myApp_WiFiSystem", "Rinnai00cInitialSetupConnect: AP FOUND (" + currentAP + ")");
         Log.d("myApp_WiFiSystem", "Rinnai00cInitialSetupConnect: AP FOUND Length (" + currentAP.length() + ")");
 
-        if (currentAP.contains(compareAP) && currentAP.length() == 17) {
+//        if (currentAP.contains(compareAP) && currentAP.length() == 17) {
             Log.d("myApp_WiFiSystem", "Rinnai00cInitialSetupConnect: CORRECT AP FOUND.");
 
             //startupCheckTimer.cancel();
@@ -97,7 +97,7 @@ public class Rinnai00cInitialSetupConnect extends MillecActivityBase {
             finish();
             Log.d("myApp", "Rinnai00cInitialSetupConnect_onClick: startActivity(Rinnai00fInitialSetupNetwork).");
 
-        }
+//        }
     }
 
     @Override

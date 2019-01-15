@@ -3,27 +3,20 @@ package com.rinnai.fireplacewifimodulenz;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.internal.NavigationMenuView;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -2221,8 +2214,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_include_button_multiunit_standby.setAlpha(0.10f);
 
             //***** Set Text - Multi-unit (button/text) *****//
-            ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
-
+//            ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
+            ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(0).DeviceName + "");
             //***** Set Text - Multi-unit (button/text) *****//
             ViewId_textview71Standby.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
 

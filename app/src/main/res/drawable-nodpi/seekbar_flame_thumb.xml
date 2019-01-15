@@ -9,7 +9,7 @@
             <solid android:color="@android:color/transparent" />
         </shape>
     </item>
-    <item android:drawable="@drawable/ad_slider_tip_sml_c"
+    <item android:drawable="@drawable/slider_thumb_3"
 
         />
 
