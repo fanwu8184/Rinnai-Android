@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="125"
+            android:theme="@style/NumberPickerText"
             android:scaleX="@dimen/timepicker_on_scalex"
             android:scaleY="@dimen/timepicker_on_scaley" />
 
@@ -62,6 +63,7 @@
         <NumberPicker
             android:id="@+id/numberPicker3"
             android:layout_width="0dp"
+            android:theme="@style/NumberPickerText"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="125"
@@ -77,6 +79,7 @@
         <NumberPicker
             android:id="@+id/numberPicker4"
             android:layout_width="0dp"
+            android:theme="@style/NumberPickerText"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="125"
