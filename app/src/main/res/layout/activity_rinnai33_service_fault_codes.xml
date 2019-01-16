@@ -117,11 +117,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1100"
+
         android:orientation="horizontal">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <TableLayout
                 android:id="@+id/faultcodeandfix_tableLayout"
