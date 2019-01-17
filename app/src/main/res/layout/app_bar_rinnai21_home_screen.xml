@@ -90,7 +90,7 @@
         layout="@layout/multiunit_rinnai21_home_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
     <include
         android:id="@+id/include_devicenameedit_lockout"

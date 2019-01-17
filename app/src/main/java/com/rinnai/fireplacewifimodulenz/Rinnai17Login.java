@@ -2,14 +2,16 @@ package com.rinnai.fireplacewifimodulenz;
 
 import android.app.ActivityManager;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +26,8 @@ public class Rinnai17Login extends MillecActivityBase
         implements ActivityClientInterfaceTCP, ActivityServerInterfaceUDP, ActivityTimerInterface {
 
     ImageView ViewId_imageview18;
+
+
 
     Timer startupCheckTimer;
     int startupCheckTimerCount;
@@ -40,12 +44,18 @@ public class Rinnai17Login extends MillecActivityBase
 
     boolean isAccessPoint = false;
 
+    int scrollviewrowmultiunitrinnai21homescreen_id = 0;
+
     String secondsSinceMondayHexLittleEndian = "";
+
+    LinearLayout ViewId_linearlayout_multiunit_row;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai17_login);
+
+
 
         Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onCreate.");
 
@@ -59,6 +69,8 @@ public class Rinnai17Login extends MillecActivityBase
 
         startFireAnimation();
 
+//        showWifiList();
+
         this.startCommunicationErrorFault();
 
         this.appStart();
@@ -68,6 +80,8 @@ public class Rinnai17Login extends MillecActivityBase
     protected void onStart() {
         super.onStart();
         Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onStart.");
+
+//        showWifiList();
     }
 
     @Override
@@ -92,6 +106,9 @@ public class Rinnai17Login extends MillecActivityBase
         startCommunicationErrorFault();
 
         startTxRN171DeviceGetStatus();
+
+        showWifiList();
+
     }
 
     @Override
@@ -135,6 +152,83 @@ public class Rinnai17Login extends MillecActivityBase
         //super.onBackPressed();
         moveTaskToBack(true);
     }
+
+    private void showWifiList(){
+
+        ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
+
+        ViewId_include_multiunit.setVisibility(View.VISIBLE);
+
+        TableLayout ViewId_multiunit_tableLayout;
+
+        ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
+        //tl.setOnTouchListener(new AutoTimerTableTouchListener());
+
+        //clear the table, start with blank table
+        ViewId_multiunit_tableLayout.removeAllViews();
+
+        int id = 0;
+
+        for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
+
+            View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
+
+            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
+
+            //add listener
+            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(wifiListOnclickListener);//add OnClickListener Here
+
+            //add listener
+//            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
+//
+            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
+
+            //Add the Row to the table
+            ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
+
+            //Next
+            id++;
+
+        }
+
+        Button ViewId_button14 = (Button) findViewById(R.id.button14);
+        ViewId_button14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+
+                intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }
+
+    private View.OnClickListener wifiListOnclickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+
+//            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+//            startActivity(intent);
+//
+//            finish();
+
+            //if(scrollview_listener_lockout == true){
+            //    return;
+            //}
+            //scrollviewrow_pressed = true;
+
+            //Get Selected Text (timersdaysofweek)
+            TextView ViewId_textview80 = ((TextView) v.findViewById(R.id.textView80));
+            scrollviewrowmultiunitrinnai21homescreen_id = Integer.parseInt(ViewId_textview80.getText().toString(), 10);
+
+            //Highlight Selection
+            ViewId_linearlayout_multiunit_row = ((LinearLayout) v.findViewById(R.id.linearlayout_multiunit_row));
+
+            ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#32FFFFFF"));
+        }
+    };
 
     //********************//
     //***** appStart *****//
@@ -639,10 +733,14 @@ public class Rinnai17Login extends MillecActivityBase
                                         startupCheckTimer.cancel();
                                         fireanimationCheckTimer.cancel();
                                         isClosing = true;
-                                        intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-                                        startActivity(intent);
+//                                        intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+//                                        startActivity(intent);
+//
+//                                        finish();
 
-                                        finish();
+                                        showWifiList();
+
+
                                         Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
                                     }
 

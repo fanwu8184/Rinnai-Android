@@ -16,5 +16,12 @@
             android:layout_height="match_parent"
             android:background="@drawable/fireanimation_1" />
 
+        <include
+            android:id="@+id/include_multiunit"
+            layout="@layout/multiunit_rinnai21_home_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
     </FrameLayout>
 </LinearLayout>
