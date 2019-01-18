@@ -153,11 +153,11 @@ public class Rinnai17Login extends MillecActivityBase
 
     private void showWifiList(){
 
-
-
+//      check fireplace wifi if only one
         if(AppGlobals.fireplaceWifi.size() == 1){
             AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
 
+//          auto select only one fireplace and proceed to home screen
             intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
             startActivity(intent);
             finish();
@@ -190,9 +190,6 @@ public class Rinnai17Login extends MillecActivityBase
                 //add listener
                 ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(wifiListOnclickListener);//add OnClickListener Here
 
-                //add listener
-//              ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
-//
                 ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
 
                 //Add the Row to the table
