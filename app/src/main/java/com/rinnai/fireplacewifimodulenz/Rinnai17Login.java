@@ -50,12 +50,12 @@ public class Rinnai17Login extends MillecActivityBase
 
     LinearLayout ViewId_linearlayout_multiunit_row;
 
+    private boolean isShowList = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai17_login);
-
-
 
         Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onCreate.");
 
@@ -68,8 +68,6 @@ public class Rinnai17Login extends MillecActivityBase
         Log.d("myApp_Memory", "memoryClass:" + Integer.toString(memoryClass));
 
         startFireAnimation();
-
-//        showWifiList();
 
         this.startCommunicationErrorFault();
 
@@ -155,40 +153,54 @@ public class Rinnai17Login extends MillecActivityBase
 
     private void showWifiList(){
 
-        ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
 
-        ViewId_include_multiunit.setVisibility(View.VISIBLE);
 
-        TableLayout ViewId_multiunit_tableLayout;
+        if(AppGlobals.fireplaceWifi.size() == 1){
+            AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
 
-        ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
-        //tl.setOnTouchListener(new AutoTimerTableTouchListener());
+            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+            startActivity(intent);
+            finish();
+        }else{
 
-        //clear the table, start with blank table
-        ViewId_multiunit_tableLayout.removeAllViews();
+            isShowList = true;
 
-        int id = 0;
+            ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
 
-        for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
+            ViewId_include_multiunit.setVisibility(View.VISIBLE);
 
-            View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
+            TableLayout ViewId_multiunit_tableLayout;
 
-            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
+            ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
 
-            //add listener
-            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(wifiListOnclickListener);//add OnClickListener Here
+            TextView tvHoldPress = (TextView) findViewById(R.id.textView74);
+            tvHoldPress.setVisibility(View.GONE);
 
-            //add listener
-//            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
+            //clear the table, start with blank table
+            ViewId_multiunit_tableLayout.removeAllViews();
+
+            int id = 0;
+
+            for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
+
+                View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
+
+                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
+
+                //add listener
+                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(wifiListOnclickListener);//add OnClickListener Here
+
+                //add listener
+//              ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
 //
-            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
+                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
 
-            //Add the Row to the table
-            ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
+                //Add the Row to the table
+                ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
 
-            //Next
-            id++;
-
+                //Next
+                id++;
+            }
         }
 
         Button ViewId_button14 = (Button) findViewById(R.id.button14);
@@ -204,6 +216,21 @@ public class Rinnai17Login extends MillecActivityBase
             }
         });
 
+    }
+
+    public void removeHighlight() {
+
+        TableLayout ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
+
+        for (int a = 0; a <= AppGlobals.fireplaceWifi.size() - 1; a++) {
+
+            View ViewId_scrollview_row_multiunit_rinnai21_home_screen = ViewId_multiunit_tableLayout.getChildAt(a);
+
+            //Highlight Selection
+            ViewId_linearlayout_multiunit_row = ((LinearLayout) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.linearlayout_multiunit_row));
+
+            ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#00000000"));
+        }
     }
 
     private View.OnClickListener wifiListOnclickListener = new View.OnClickListener() {
@@ -222,6 +249,8 @@ public class Rinnai17Login extends MillecActivityBase
             //Get Selected Text (timersdaysofweek)
             TextView ViewId_textview80 = ((TextView) v.findViewById(R.id.textView80));
             scrollviewrowmultiunitrinnai21homescreen_id = Integer.parseInt(ViewId_textview80.getText().toString(), 10);
+
+            removeHighlight();
 
             //Highlight Selection
             ViewId_linearlayout_multiunit_row = ((LinearLayout) v.findViewById(R.id.linearlayout_multiunit_row));
@@ -896,15 +925,19 @@ public class Rinnai17Login extends MillecActivityBase
 
     @Override
     public void timereventCallBackTimer(int timerID) {
-        startupCheckTimer.cancel();
-        fireanimationCheckTimer.cancel();
-        isClosing = true;
-        isAccessPoint = false;
-        intent = new Intent(Rinnai17Login.this, Rinnai00aInitialSetupThanks.class);
-        startActivity(intent);
 
-        finish();
-        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai00aInitialSetupThanks).");
+        if(!isShowList){
+            startupCheckTimer.cancel();
+            fireanimationCheckTimer.cancel();
+
+            isClosing = true;
+            isAccessPoint = false;
+            intent = new Intent(Rinnai17Login.this, Rinnai00aInitialSetupThanks.class);
+            startActivity(intent);
+
+            finish();
+            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai00aInitialSetupThanks).");
+        }
     }
 
     //************************//
