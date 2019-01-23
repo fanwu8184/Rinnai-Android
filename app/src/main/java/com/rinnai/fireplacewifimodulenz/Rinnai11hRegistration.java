@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -15,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +33,7 @@ public class Rinnai11hRegistration extends MillecActivityBase {
     Button ViewId_button35;
 
     ImageButton ViewId_imagebutton28;
+    ImageView ivLogout;
 
     TextView ViewId_textview118;
     TextView ViewId_textview119;
@@ -80,6 +81,23 @@ public class Rinnai11hRegistration extends MillecActivityBase {
 
         //***** OnTouchListener - imageButton28 (Cross) *****//
         ViewId_imagebutton28 = (ImageButton) findViewById(R.id.imageButton28);
+        ViewId_imagebutton28 = (ImageButton) findViewById(R.id.imageButton28);
+        ivLogout = (ImageView) findViewById(R.id.iv_logout);
+
+        ivLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AppGlobals.userregInfo.userregistrationEmail = "NA";
+                AppGlobals.userregInfo.userregistrationPassword = "NA";
+
+                AppGlobals.saveRinnaiFireplaceWiFiModuleCredentials(Rinnai11hRegistration.this, AppGlobals.userregInfo.userregistrationEmail, AppGlobals.userregInfo.userregistrationPassword);
+
+                Intent intent = new Intent(Rinnai11hRegistration.this, Rinnai11bRegistration.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         ViewId_imagebutton28.setOnTouchListener(new View.OnTouchListener() {
             @Override

@@ -205,11 +205,18 @@ public class Rinnai17Login extends MillecActivityBase
             @Override
             public void onClick(View v) {
 
-                AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+                if(AppGlobals.userregInfo.userregistrationEmail.equals("NA")){
+                    AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+                    intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+                    intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+                    startActivity(intent);
+                    finish();
+                }
 
-                intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-                startActivity(intent);
-                finish();
             }
         });
 
