@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -100,6 +99,8 @@ public class Rinnai11eRegistration extends MillecActivityBase
                         ViewId_textview109.setTextColor(Color.parseColor("#FFFFFFFF"));
 
                         setAWSUserRegistration_Agree();
+
+                        AppGlobals.saveRinnaiFireplaceWiFiModuleCredentials(Rinnai11eRegistration.this, AppGlobals.userregInfo.userregistrationEmail, AppGlobals.userregInfo.userregistrationPassword);
 
                         AppGlobals.rfwmInitialSetupFlag = true;
                         AppGlobals.rfwmUserFlag = 1;
@@ -215,7 +216,7 @@ public class Rinnai11eRegistration extends MillecActivityBase
                 AppGlobals.userregInfo.userregistrationCityRegion,
                 AppGlobals.userregInfo.userregistrationFirstName,
                 AppGlobals.userregInfo.userregistrationLastName,
-                Integer.parseInt(AppGlobals.userregInfo.userregistrationPostcode),
+                AppGlobals.userregInfo.userregistrationPostcode,
                 AppGlobals.userregInfo.userregistrationCountry,
 
                 //Call interface to retrieve Async results
@@ -238,6 +239,7 @@ public class Rinnai11eRegistration extends MillecActivityBase
                                 }
                             });
                         } else {
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -273,6 +275,7 @@ public class Rinnai11eRegistration extends MillecActivityBase
                         Log.d("myApp_AWS", "Registration:" + result);
 
                         if (!result.equals("\"Appliance Registration Successful\"")) {
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

@@ -965,12 +965,22 @@ public class Rinnai11hRegistration extends MillecActivityBase {
                                 String[] ui_streetaddresssplitb = ui_streetaddresssplita[1].split("\"");
                                 Log.d("myApp_AWS", "Street Address(split): " + ui_streetaddresssplitb[0]);
 
-                                //Split "postcode"
-                                String[] ui_postcodesplita = ui_resultList.get(0).split("postcode");
-                                String[] ui_postcodesplitb = ui_postcodesplita[1].split("\"");
-                                String[] ui_postcodesplitc = ui_postcodesplitb[1].split(":");
-                                String[] ui_postcodesplitd = ui_postcodesplitc[1].split(",");
-                                Log.d("myApp_AWS", "Postcode(split): " + ui_postcodesplitd[0]);
+                                //Split "street_address"
+                                String[] ui_streetaddresssplit2 = ui_resultList.get(0).split("postcode\":\"");
+                                String[] ui_streetaddresssplit2b = ui_streetaddresssplit2[1].split("\"");
+                                Log.d("myApp_AWS", "Street Address(split): " + ui_streetaddresssplit2b[0]);
+
+                                //Split "postcode 2"
+                                String[] ui_postcodesplitc = ui_resultList.get(0).split("postcode\":\"");
+                                String[] ui_postcodesplitd = ui_postcodesplitc[1].split("\"");
+                                Log.d("myApp_AWS", "postcode 2(split): " + ui_postcodesplitd[0]);
+
+//                                //Split "postcode"
+//                                String[] ui_postcodesplita = ui_resultList.get(0).split("postcode");
+//                                String[] ui_postcodesplitb = ui_postcodesplita[1].split("\"");
+//                                String[] ui_postcodesplitc = ui_postcodesplitb[1].split(":");
+//                                String[] ui_postcodesplitd = ui_postcodesplitc[1].split(",");
+//                                Log.d("myApp_AWS", "Postcode(split): " + ui_postcodesplitd[0]);
 
                                 //Split "password"
                                 String[] ui_passwordsplita = ui_resultList.get(0).split("password\":\"");

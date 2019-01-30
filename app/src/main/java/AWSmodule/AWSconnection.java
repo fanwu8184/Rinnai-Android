@@ -170,7 +170,7 @@ public class AWSconnection {
     //Register Customers
     /////////////////////////////////////////
     public static void insertCustomerURL(String email, String password, String street_address,
-                                         String suburb, String city, String first_name, String last_name, int postcode, String country,
+                                         String suburb, String city, String first_name, String last_name, String postcode, String country,
                                          final textResult result) {
 
 
