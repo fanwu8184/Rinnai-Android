@@ -1,12 +1,20 @@
 package com.rinnai.fireplacewifimodulenz;
 
+import android.Manifest;
 import android.app.ActivityManager;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,27 +59,61 @@ public class Rinnai17Login extends MillecActivityBase
     LinearLayout ViewId_linearlayout_multiunit_row;
 
     private boolean isShowList = false;
+    private boolean isTimer = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai17_login);
 
-        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onCreate.");
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
 
-        Runtime rt = Runtime.getRuntime();
-        long maxMemory = rt.maxMemory();
-        Log.d("myApp_Memory", "maxMemory:" + Long.toString(maxMemory));
 
-        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        int memoryClass = am.getMemoryClass();
-        Log.d("myApp_Memory", "memoryClass:" + Integer.toString(memoryClass));
+            // Permission is not granted
 
-        startFireAnimation();
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        0);
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        0);
 
-        this.startCommunicationErrorFault();
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
 
-        this.appStart();
+
+
+        }else {
+            isTimer = true;
+            Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onCreate.");
+
+            Runtime rt = Runtime.getRuntime();
+            long maxMemory = rt.maxMemory();
+            Log.d("myApp_Memory", "maxMemory:" + Long.toString(maxMemory));
+
+            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            int memoryClass = am.getMemoryClass();
+            Log.d("myApp_Memory", "memoryClass:" + Integer.toString(memoryClass));
+
+            startFireAnimation();
+
+            this.startCommunicationErrorFault();
+
+            this.appStart();
+
+        }
     }
 
     @Override
@@ -119,8 +161,9 @@ public class Rinnai17Login extends MillecActivityBase
     protected void onPause() {
         super.onPause();
         Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onPause.");
-
-        AppGlobals.CommErrorFault.stopTimer();
+        if(isTimer){
+            AppGlobals.CommErrorFault.stopTimer();
+        }
     }
 
     @Override
@@ -131,10 +174,13 @@ public class Rinnai17Login extends MillecActivityBase
         if (AppGlobals.rfwmInitialSetupFlag == true) {
             AppGlobals.UDPSrv.stopServer();
         }
+        if(isTimer){
+            startupCheckTimer.cancel();
+            fireanimationCheckTimer.cancel();
+            isClosing = true;
 
-        startupCheckTimer.cancel();
-        fireanimationCheckTimer.cancel();
-        isClosing = true;
+        }
+
     }
 
     @Override
@@ -149,6 +195,70 @@ public class Rinnai17Login extends MillecActivityBase
 
         //super.onBackPressed();
         moveTaskToBack(true);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 0: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    Intent myIntent = new Intent(getBaseContext(), Rinnai17Login.class);
+                    //myIntent.putExtra("key", value); //Optional parameters
+                    this.startActivity(myIntent);
+
+                    finish();//we are done with this activity
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    showPopup();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+    private void showPopup(){
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+
+        builder.setTitle("Location is required.")
+                .setMessage("Can't use Wi-Fi when location is off since Android 6.0")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent myIntent = new Intent(getBaseContext(), Rinnai17Login.class);
+                        startActivity(myIntent);
+
+                        //we are done with this activity
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // close the app
+                        finish();
+                        System.exit(0);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog al = builder.create();
+        al.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        al.show();
     }
 
     private void showWifiList(){
