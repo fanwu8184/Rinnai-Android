@@ -79,11 +79,8 @@ public class Rinnai11hRegistration extends MillecActivityBase {
         //***** OnTouchListener *****//
         //***************************//
 
-        //***** OnTouchListener - imageButton28 (Cross) *****//
-        ViewId_imagebutton28 = (ImageButton) findViewById(R.id.imageButton28);
-        ViewId_imagebutton28 = (ImageButton) findViewById(R.id.imageButton28);
+        //***** OnClickListener - Logout imageview *****//
         ivLogout = (ImageView) findViewById(R.id.iv_logout);
-
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +96,8 @@ public class Rinnai11hRegistration extends MillecActivityBase {
             }
         });
 
+        //***** OnTouchListener - imageButton28 (Cross) *****//
+        ViewId_imagebutton28 = (ImageButton) findViewById(R.id.imageButton28);
         ViewId_imagebutton28.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
