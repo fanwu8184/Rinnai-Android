@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,6 +31,29 @@ public class Rinnai26Fault extends MillecActivityBase
         setContentView(R.layout.activity_rinnai26_fault);
 
         Log.d("myApp_ActivityLifecycle", "Rinnai26Fault_onCreate.");
+
+        TextView tvPressServiceInfo = (TextView) findViewById(R.id.textView44);
+        tvPressServiceInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startupCheckTimer.cancel();
+                isClosing = true;
+                Intent intent = new Intent(Rinnai26Fault.this, Rinnai33ServiceFaultCodes.class);
+                startActivity(intent);
+
+                finish();
+                Log.d("myApp", "Rinnai26Fault_onClick: startActivity(Rinnai33ServiceFaultCodes).");
+            }
+        });
+
+        ImageButton ibFire = (ImageButton) findViewById(R.id.ib_fire);
+        ibFire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         startTxRN171DeviceGetStatus();
     }
