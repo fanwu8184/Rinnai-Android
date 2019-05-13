@@ -36,6 +36,7 @@ public class Rinnai11bRegistration extends MillecActivityBase {
     TextView ViewId_textview86;
     TextView ViewId_textview87;
     TextView ViewId_textview88;
+    TextView ViewId_textview89;
     TextView ViewId_textview90;
     TextView ViewId_textview91;
 
@@ -69,8 +70,16 @@ public class Rinnai11bRegistration extends MillecActivityBase {
         //***** OnTouchListener - button18 (Login) *****//
         ViewId_button18 = (Button) findViewById(R.id.button18);
         ViewId_textview86 = (TextView) findViewById(R.id.textView86);
+        ViewId_textview89 = (TextView) findViewById(R.id.textView89);
         ViewId_edittext3 = (EditText) findViewById(R.id.editText3);
         ViewId_edittext4 = (EditText) findViewById(R.id.editText4);
+
+        String locale = this.getResources().getConfiguration().locale.getCountry();
+        if (locale.equals("AU")) {
+            ViewId_textview89.setText("HELP: 1300555545");
+        } else if (locale.equals("NZ")) {
+            ViewId_textview89.setText("HELP: 0800 RINNAI");
+        }
 
         ViewId_button18.setOnTouchListener(new View.OnTouchListener() {
             @Override

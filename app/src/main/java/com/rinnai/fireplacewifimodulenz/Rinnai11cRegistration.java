@@ -44,6 +44,7 @@ public class Rinnai11cRegistration extends MillecActivityBase
 
     ImageButton ViewId_imagebutton24;
 
+    TextView ViewId_textview92;
     TextView ViewId_textview93;
     TextView ViewId_textview95;
     TextView ViewId_textview96;
@@ -178,10 +179,20 @@ public class Rinnai11cRegistration extends MillecActivityBase
 
         //***** OnTouchListener - button24 (Select Fire - Scrollview) *****//
         ViewId_button24 = (Button) findViewById(R.id.button24);
+        ViewId_textview92 = (TextView) findViewById(R.id.textView92);
         ViewId_textview95 = (TextView) findViewById(R.id.textView95);
         ViewId_include_selectfire_registrationc = (ViewGroup) findViewById(R.id.include_selectfire_registrationc);
         ViewId_linearlayout_registration_selectfire = (LinearLayout) findViewById(R.id.linearlayout_registration_selectfire);
         ViewId_include_scrollview_lockout_registrationc = (ViewGroup) findViewById(R.id.include_scrollview_lockout_registrationc);
+
+
+        String locale = this.getResources().getConfiguration().locale.getCountry();
+        if (locale.equals("AU")) {
+            ViewId_textview92.setText("HELP: 1300555545");
+        } else if (locale.equals("NZ")) {
+            ViewId_textview92.setText("HELP: 0800 RINNAI");
+        }
+
 
         ViewId_button24.setOnTouchListener(new View.OnTouchListener() {
             @Override

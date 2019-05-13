@@ -32,6 +32,7 @@ public class Rinnai11fRegistration extends MillecActivityBase {
 
     TextView ViewId_textview110;
     TextView ViewId_textview111;
+    TextView ViewId_textview112;
 
     EditText ViewId_edittext22;
 
@@ -57,6 +58,14 @@ public class Rinnai11fRegistration extends MillecActivityBase {
 
         //***** OnTouchListener - imageButton26 (Cross) *****//
         ViewId_imagebutton26 = (ImageButton) findViewById(R.id.imageButton26);
+        ViewId_textview112 = (TextView) findViewById(R.id.textView112);
+
+        String locale = this.getResources().getConfiguration().locale.getCountry();
+        if (locale.equals("AU")) {
+            ViewId_textview112.setText("HELP: 1300555545");
+        } else if (locale.equals("NZ")) {
+            ViewId_textview112.setText("HELP: 0800 RINNAI");
+        }
 
         ViewId_imagebutton26.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -102,6 +111,11 @@ public class Rinnai11fRegistration extends MillecActivityBase {
                         // RELEASED
                         ViewId_button30.setBackgroundResource(R.drawable.registration_button_red_background);
                         ViewId_textview111.setTextColor(Color.parseColor("#FFFFFFFF"));
+
+                        intent = new Intent(Rinnai11fRegistration.this, Rinnai11gRegistration.class);
+                        startActivity(intent);
+                        finish();
+
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:
                         // ABORTED
