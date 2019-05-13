@@ -1,11 +1,13 @@
 package com.rinnai.fireplacewifimodulenz;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
@@ -21,7 +23,10 @@ import android.widget.Toast;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -464,7 +469,6 @@ public class Rinnai33aTimers extends MillecActivityBase
     //****************************************//
     //***** viewidswitch3OnTouchListener *****//
     //****************************************//
-
     private View.OnTouchListener viewidswitch3OnTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -503,35 +507,116 @@ public class Rinnai33aTimers extends MillecActivityBase
     //*************************************************************//
     //***** deletescrollviewrowrinnai33atimersOnClickListener *****//
     //*************************************************************//
+    private String generateDaysOfWeekString(int daysOfWeek) {
+        String daysOfWeekString = "";
+
+        if ((daysOfWeek & 1) == 1) {
+            daysOfWeekString = "Mon ";
+        }
+        if ((daysOfWeek & 2) == 2) {
+            daysOfWeekString += "Tue ";
+        }
+        if ((daysOfWeek & 4) == 4) {
+            daysOfWeekString += "Wed ";
+        }
+        if ((daysOfWeek & 8) == 8) {
+            daysOfWeekString += "Thu ";
+        }
+        if ((daysOfWeek & 16) == 16) {
+            daysOfWeekString += "Fri ";
+        }
+        if ((daysOfWeek & 32) == 32) {
+            daysOfWeekString += "Sat ";
+        }
+        if ((daysOfWeek & 64) == 64) {
+            daysOfWeekString += "Sun ";
+        }
+        return daysOfWeekString;
+    }
+
+    private Boolean isCurrentRunning(Timers_Info timerInfo) {
+        DateFormat df = new SimpleDateFormat("EEE,HH,mm");
+        String currentTime = df.format(Calendar.getInstance().getTime());
+        String[] currentTimeArray = currentTime.split(",");
+        String currentDayOfWeek = currentTimeArray[0];
+        int currentHour = Integer.valueOf(currentTimeArray[1]);
+        int currentMinute = Integer.valueOf(currentTimeArray[2]);
+
+        //timersHoursOn and timersHoursOff bug
+        int timersHoursOn = timerInfo.timersHoursOn;
+        int timersHoursOff = timerInfo.timersHoursOff;
+        if (timersHoursOn == 24) {
+            timersHoursOn = 12;
+        }
+        if (timersHoursOff == 24) {
+            timersHoursOff = 12;
+        }
+
+        if (timerInfo.timersOnOff == 1) {
+            String daysOfWeekString = generateDaysOfWeekString(timerInfo.timersDaysOfWeek);
+            if (daysOfWeekString.contains(currentDayOfWeek)) {
+                if (currentHour > timersHoursOn || (currentHour == timersHoursOn && currentMinute >= timerInfo.timersMinutesOn)) {
+                    if (currentHour < timersHoursOff || (currentHour == timersHoursOff && currentMinute <= timerInfo.timersMinutesOff)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void deleteTimerAt(int index) {
+        scrollviewrowrinnai33atimers_id = index;
+
+        Tx_RN171DeviceDeleteTimers();
+
+        //***** include - ViewId_include_waiting_timersa *****//
+        ViewId_include_waiting_timersa = (ViewGroup) findViewById(R.id.include_waiting_timersa);
+
+        ViewId_include_waiting_timersa.setVisibility(View.VISIBLE);
+
+        //***** include - ViewId_include_scrollview_lockout_timersa *****//
+        ViewId_include_scrollview_lockout_timersa = (ViewGroup) findViewById(R.id.include_scrollview_lockout_timersa);
+
+        ViewId_include_scrollview_lockout_timersa.setVisibility(View.VISIBLE);
+
+        //***** Add New Button - ViewId_imagebutton12 *****//
+        ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
+
+        ViewId_imagebutton12.setEnabled(false);
+
+        //***** TX WiFi - TCP *****//
+        isDeviceGetTimers = false;
+        startTxRN171DeviceGetTimers();
+        Log.d("myApp", "Rinnai33aTimers_delete - Tx_RN171DeviceGetTimers");
+    }
 
     private View.OnClickListener deletescrollviewrowrinnai33atimersOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
 
-            ViewId_textview67 = ((TextView) v.findViewById(R.id.textView67));
-            scrollviewrowrinnai33atimers_id = Integer.parseInt(ViewId_textview67.getText().toString(), 10);
+            final int index = Integer.valueOf(((TextView) v.findViewById(R.id.textView67)).getText().toString());
 
-            Tx_RN171DeviceDeleteTimers();
+            if (isCurrentRunning(AppGlobals.TimersInfo_List.get(index)) == false) {
+                deleteTimerAt(index);
+            } else {
+                AlertDialog alertDialog = new AlertDialog.Builder(Rinnai33aTimers.this).create();
+                alertDialog.setTitle("Warning Automatic OFF Function Disabled");
+                alertDialog.setMessage("Please note that the unit is running on this time. If you delete timers you will have to operate the appliance manually.");
 
-            //***** include - ViewId_include_waiting_timersa *****//
-            ViewId_include_waiting_timersa = (ViewGroup) findViewById(R.id.include_waiting_timersa);
-
-            ViewId_include_waiting_timersa.setVisibility(View.VISIBLE);
-
-            //***** include - ViewId_include_scrollview_lockout_timersa *****//
-            ViewId_include_scrollview_lockout_timersa = (ViewGroup) findViewById(R.id.include_scrollview_lockout_timersa);
-
-            ViewId_include_scrollview_lockout_timersa.setVisibility(View.VISIBLE);
-
-            //***** Add New Button - ViewId_imagebutton12 *****//
-            ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
-
-            ViewId_imagebutton12.setEnabled(false);
-
-            //***** TX WiFi - TCP *****//
-            isDeviceGetTimers = false;
-            startTxRN171DeviceGetTimers();
-            Log.d("myApp", "Rinnai33aTimers_delete - Tx_RN171DeviceGetTimers");
-
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteTimerAt(index);
+                            }
+                        });
+                alertDialog.show();
+            }
         }
     };
 
