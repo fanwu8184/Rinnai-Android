@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import AWSmodule.AWSconnection;
+
 /**
  * Created by JConci on 6/02/2018.
  */
@@ -112,9 +114,48 @@ public class Rinnai11fRegistration extends MillecActivityBase {
                         ViewId_button30.setBackgroundResource(R.drawable.registration_button_red_background);
                         ViewId_textview111.setTextColor(Color.parseColor("#FFFFFFFF"));
 
-                        intent = new Intent(Rinnai11fRegistration.this, Rinnai11gRegistration.class);
-                        startActivity(intent);
-                        finish();
+                        ViewId_edittext22.getText().toString();
+                        AWSconnection.resetPasswordGenerateTokenURL(ViewId_edittext22.getText().toString(), new AWSconnection.textResult() {
+                            @Override
+                            public void getResult(final String textResult) {
+                                Log.d("myApp_AWS", "Reset password:" + textResult);
+
+                                if (textResult.equals("\"code has been emailed\"")) {
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            Toast.makeText(Rinnai11fRegistration.this, textResult,
+                                                    Toast.LENGTH_LONG).show();
+
+                                        }
+                                    });
+
+                                    intent = new Intent(Rinnai11fRegistration.this, VerificationCodeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }else{
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(Rinnai11fRegistration.this, textResult,
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
+                                }
+
+
+//                                intent = new Intent(Rinnai11fRegistration.this, Rinnai11gRegistration.class);
+//                                startActivity(intent);
+//                                finish();
+                            }
+                        });
+
+
 
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:

@@ -2161,7 +2161,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
             //***** Set Text - Multi-unit (button/text) *****//
 //            ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
-            ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(0).DeviceName + "");
+            ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
             //***** Set Text - Multi-unit (button/text) *****//
             ViewId_textview71Standby.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
 
