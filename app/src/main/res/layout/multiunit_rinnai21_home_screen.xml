@@ -164,61 +164,6 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="150"
-                            android:background="@drawable/multiunit_button_background"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="100">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <Button
-                                        android:id="@+id/button14"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="1"
-                                        android:background="@null" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="10"
-                                        android:orientation="horizontal"></LinearLayout>
-
-                                    <com.lb.auto_fit_textview.AutoResizeTextView
-                                        android:id="@+id/textView75"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="80"
-                                        android:gravity="center"
-                                        android:text="OK"
-                                        android:textColor="#ffffff"
-                                        android:textSize="1000sp" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="10"
-                                        android:orientation="horizontal"></LinearLayout>
-                                </LinearLayout>
-                            </FrameLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
                             android:layout_weight="75"
                             android:orientation="vertical"></LinearLayout>
                     </LinearLayout>

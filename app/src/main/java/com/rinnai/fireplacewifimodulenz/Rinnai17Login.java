@@ -310,25 +310,25 @@ public class Rinnai17Login extends MillecActivityBase
             }
         }
 
-        Button ViewId_button14 = (Button) findViewById(R.id.button14);
-        ViewId_button14.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(AppGlobals.userregInfo.userregistrationEmail.equals("NA")){
-                    AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
-                    intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
-                    intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-                    startActivity(intent);
-                    finish();
-                }
-
-            }
-        });
+//        Button ViewId_button14 = (Button) findViewById(R.id.button14);
+//        ViewId_button14.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if(AppGlobals.userregInfo.userregistrationEmail.equals("NA")){
+//                    AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+//                    intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+//                    startActivity(intent);
+//                    finish();
+//                }else{
+//                    AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+//                    intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//
+//            }
+//        });
 
     }
 
@@ -370,6 +370,11 @@ public class Rinnai17Login extends MillecActivityBase
             ViewId_linearlayout_multiunit_row = ((LinearLayout) v.findViewById(R.id.linearlayout_multiunit_row));
 
             ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#32FFFFFF"));
+
+            AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+            startActivity(intent);
+            finish();
         }
     };
 

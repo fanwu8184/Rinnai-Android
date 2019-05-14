@@ -1830,64 +1830,10 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         });
 
         //***** OnTouchListener - button14 (OK) *****//
-        ViewId_button14 = (Button) findViewById(R.id.button14);
-        ViewId_textview75 = (TextView) findViewById(R.id.textView75);
+//        ViewId_button14 = (Button) findViewById(R.id.button14);
+//        ViewId_textview75 = (TextView) findViewById(R.id.textView75);
         ViewId_include_multiunit_lockout = (ViewGroup) findViewById(R.id.include_multiunit_lockout);
         ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
-
-        ViewId_button14.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // PRESSED
-
-                        ViewId_button14.setPressed(true);
-
-                        ViewId_textview75.setTextColor(Color.parseColor("#FF808080"));
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_UP:
-                        // RELEASED
-
-                        ViewId_button14.setPressed(false);
-
-                        enableguardtimeRinnai21HomeScreen();
-
-                        ViewId_textview75.setTextColor(Color.parseColor("#FFFFFFFF"));
-
-                        AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
-                        Log.d("myApp", "Rinnai21HomeScreen_selected_fireplaceWifi:" + AppGlobals.selected_fireplaceWifi);
-
-                        //***** Alpha - Multi-unit (button/text) *****//
-                        ViewId_include_button_multiunit.setAlpha(1.0f);
-
-                        //***** Alpha - Multi-unit (button/text) *****//
-                        ViewId_include_button_multiunit_standby.setAlpha(1.0f);
-
-                        //***** Set Text - Multi-unit (button/text) *****//
-                        ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
-
-                        //***** Set Text - Multi-unit (button/text) *****//
-                        ViewId_textview71Standby.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
-
-                        //***** Visibility - Multi-unit Lockout *****//
-                        ViewId_include_multiunit_lockout.setVisibility(View.INVISIBLE);
-
-                        //***** Visibility - Multi-unit *****//
-                        ViewId_include_multiunit.setVisibility(View.INVISIBLE);
-
-                        AppGlobals.ViewId_imagebutton23_actionup = true;
-
-                        AppGlobals.ViewId_imagebutton23standby_actionup = true;
-
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_CANCEL:
-                        // ABORTED
-                        ViewId_textview75.setTextColor(Color.parseColor("#FFFFFFFF"));
-                }
-                return false;
-            }
-        });
 
         //***************************//
         //***** OnClickListener *****//
@@ -2464,6 +2410,11 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_linearlayout_multiunit_row = ((LinearLayout) v.findViewById(R.id.linearlayout_multiunit_row));
 
             ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#32FFFFFF"));
+
+            AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+            intent = new Intent(Rinnai21HomeScreen.this, Rinnai21HomeScreen.class);
+            startActivity(intent);
+            finish();
         }
     };
 

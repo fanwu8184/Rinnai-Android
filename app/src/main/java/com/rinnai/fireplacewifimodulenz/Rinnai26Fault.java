@@ -1,11 +1,15 @@
 package com.rinnai.fireplacewifimodulenz;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -24,6 +28,12 @@ public class Rinnai26Fault extends MillecActivityBase
     Intent intent;
 
     boolean isClosing = false;
+
+    int scrollviewrowmultiunitrinnai21homescreen_id = 0;
+
+    private boolean isShowList = false;
+
+    LinearLayout ViewId_linearlayout_multiunit_row;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +61,120 @@ public class Rinnai26Fault extends MillecActivityBase
         ibFire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showWifiList();
             }
         });
 
         startTxRN171DeviceGetStatus();
+    }
+
+    private void showWifiList(){
+
+//      check fireplace wifi if only one
+//        if(AppGlobals.fireplaceWifi.size() == 1){
+//            AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+//
+////          auto select only one fireplace and proceed to home screen
+//            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+//            startActivity(intent);
+//            finish();
+//        }else{
+
+        isShowList = true;
+
+        ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
+
+        ViewId_include_multiunit.setVisibility(View.VISIBLE);
+
+        TableLayout ViewId_multiunit_tableLayout;
+
+        ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
+
+        TextView tvHoldPress = (TextView) findViewById(R.id.textView74);
+        tvHoldPress.setVisibility(View.GONE);
+
+        //clear the table, start with blank table
+        ViewId_multiunit_tableLayout.removeAllViews();
+
+        int id = 0;
+
+        for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
+
+            View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
+
+            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
+
+            //add listener
+            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(wifiListOnclickListener);//add OnClickListener Here
+
+            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
+
+            //Add the Row to the table
+            ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
+
+            //Next
+            id++;
+        }
+//        }
+
+//        Button ViewId_button14 = (Button) findViewById(R.id.button14);
+//        ViewId_button14.setVisibility(View.GONE);
+//        ViewId_button14.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+
+//                if(AppGlobals.userregInfo.userregistrationEmail.equals("NA")){
+//                    AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+//                    intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+//                    startActivity(intent);
+//                    finish();
+//                }else{
+//                    AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+//                    intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+
+//            }
+//        });
+//
+    }
+
+    private View.OnClickListener wifiListOnclickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+
+            //Get Selected Text (timersdaysofweek)
+            TextView ViewId_textview80 = ((TextView) v.findViewById(R.id.textView80));
+            scrollviewrowmultiunitrinnai21homescreen_id = Integer.parseInt(ViewId_textview80.getText().toString(), 10);
+
+            removeHighlight();
+
+            //Highlight Selection
+            ViewId_linearlayout_multiunit_row = ((LinearLayout) v.findViewById(R.id.linearlayout_multiunit_row));
+
+            ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#32FFFFFF"));
+
+            AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+            intent = new Intent(Rinnai26Fault.this, Rinnai21HomeScreen.class);
+            startActivity(intent);
+            finish();
+
+        }
+    };
+
+    public void removeHighlight() {
+
+        TableLayout ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
+
+        for (int a = 0; a <= AppGlobals.fireplaceWifi.size() - 1; a++) {
+
+            View ViewId_scrollview_row_multiunit_rinnai21_home_screen = ViewId_multiunit_tableLayout.getChildAt(a);
+
+            //Highlight Selection
+            ViewId_linearlayout_multiunit_row = ((LinearLayout) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.linearlayout_multiunit_row));
+
+            ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#00000000"));
+        }
     }
 
     @Override
