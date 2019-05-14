@@ -57,8 +57,10 @@ public class Rinnai33aTimers extends MillecActivityBase
     TextView ViewId_textview34c;
     TextView ViewId_textview66;
     TextView ViewId_textview67;
+    TextView ViewId_clearTimerstextView;
 
     ImageButton ViewId_imagebutton12;
+    ImageButton ViewId_clearTimersImageButton;
 
     View ViewId_scrollview_row_rinnai33a_timers;
     View ViewId_scrollview_row_switch_rinnai33a_timers;
@@ -136,6 +138,52 @@ public class Rinnai33aTimers extends MillecActivityBase
                     case MotionEvent.ACTION_CANCEL:
                         // ABORTED
                         ViewId_textview30.setTextColor(Color.parseColor("#FFFFFFFF"));
+                }
+                return false;
+            }
+        });
+
+        ViewId_clearTimersImageButton = (ImageButton) findViewById(R.id.clearTimersImageButton);
+        ViewId_clearTimerstextView = (TextView) findViewById(R.id.clearTimerstextView);
+
+        ViewId_clearTimersImageButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // PRESSED
+                        ViewId_clearTimerstextView.setTextColor(Color.parseColor("#FF808080"));
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_UP:
+                        // RELEASED
+                        ViewId_clearTimerstextView.setTextColor(Color.parseColor("#FFFFFFFF"));
+
+                        if(isThereATimerRunning()) {
+                            AlertDialog alertDialog = new AlertDialog.Builder(Rinnai33aTimers.this).create();
+                            alertDialog.setTitle("Warning Automatic OFF Function Disabled");
+                            alertDialog.setMessage("Please note that there is a unit is running on this time. If you delete timers you will have to operate the appliance manually.");
+
+                            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            clearTimers();
+                                        }
+                                    });
+                            alertDialog.show();
+                        } else {
+                            clearTimers();
+                        }
+
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_CANCEL:
+                        // ABORTED
+                        ViewId_clearTimerstextView.setTextColor(Color.parseColor("#FFFFFFFF"));
                 }
                 return false;
             }
@@ -565,6 +613,16 @@ public class Rinnai33aTimers extends MillecActivityBase
         return false;
     }
 
+    private Boolean isThereATimerRunning() {
+        int numberOfTimers = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).tmrstotal;
+        for(int i=0; i<numberOfTimers; i++) {
+            if (isCurrentRunning(AppGlobals.TimersInfo_List.get(i)) == true) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void deleteTimerAt(int index) {
         scrollviewrowrinnai33atimers_id = index;
 
@@ -584,11 +642,37 @@ public class Rinnai33aTimers extends MillecActivityBase
         ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
 
         ViewId_imagebutton12.setEnabled(false);
+        ViewId_clearTimersImageButton.setEnabled(false);
 
         //***** TX WiFi - TCP *****//
         isDeviceGetTimers = false;
         startTxRN171DeviceGetTimers();
         Log.d("myApp", "Rinnai33aTimers_delete - Tx_RN171DeviceGetTimers");
+    }
+
+    private void clearTimers() {
+        Tx_RN171DeviceClearTimers();
+
+        //***** include - ViewId_include_waiting_timersa *****//
+        ViewId_include_waiting_timersa = (ViewGroup) findViewById(R.id.include_waiting_timersa);
+
+        ViewId_include_waiting_timersa.setVisibility(View.VISIBLE);
+
+        //***** include - ViewId_include_scrollview_lockout_timersa *****//
+        ViewId_include_scrollview_lockout_timersa = (ViewGroup) findViewById(R.id.include_scrollview_lockout_timersa);
+
+        ViewId_include_scrollview_lockout_timersa.setVisibility(View.VISIBLE);
+
+        //***** Add New Button - ViewId_imagebutton12 *****//
+        ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
+
+        ViewId_imagebutton12.setEnabled(false);
+        ViewId_clearTimersImageButton.setEnabled(false);
+
+        //***** TX WiFi - TCP *****//
+        isDeviceGetTimers = false;
+        startTxRN171DeviceGetTimers();
+        Log.d("myApp", "Rinnai33aTimers_clear timers");
     }
 
     private View.OnClickListener deletescrollviewrowrinnai33atimersOnClickListener = new View.OnClickListener() {
@@ -900,6 +984,7 @@ public class Rinnai33aTimers extends MillecActivityBase
                             ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
 
                             ViewId_imagebutton12.setEnabled(true);
+                            ViewId_clearTimersImageButton.setEnabled(true);
 
                             isDeviceGetTimers = true;
 
@@ -1023,6 +1108,19 @@ public class Rinnai33aTimers extends MillecActivityBase
             tcpClient.start();
         } catch (Exception e) {
             Log.d("myApp_WiFiTCP", "Rinnai33aTimers: Tx_RN171DeviceDeleteTimers(Exception - " + e + ")");
+        }
+    }
+
+    private void Tx_RN171DeviceClearTimers() {
+        try {
+            TCPClient tcpClient = new TCPClient(
+                    3000,
+                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                    this,
+                    "RINNAI_51," + "E\n", false);
+            tcpClient.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiTCP", "Rinnai33aTimers: Tx_RN171DeviceClearTimers(Exception - " + e + ")");
         }
     }
 

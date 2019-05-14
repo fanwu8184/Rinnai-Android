@@ -14,6 +14,7 @@
     <list default="true" id="3855dc2b-2b82-4b27-b4c7-da550191a6c0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai33aTimers.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai33aTimers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai33a_timers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai33a_timers.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,32 +33,19 @@
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_rinnai33a_timers.xml">
-          <provider editor-type-id="text-editor" />
-          <provider selected="true" editor-type-id="android-designer2" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scrollview_row_rinnai33a_timers.xml">
+          <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+            <state relative-caret-position="356">
+              <caret line="265" column="60" selection-start-line="265" selection-start-column="41" selection-end-line="265" selection-end-column="60" />
             </state>
           </provider>
-          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai33aTimers.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="606" column="63" lean-forward="true" selection-start-line="606" selection-start-column="63" selection-end-line="606" selection-end-column="63" />
-              <folding>
-                <element signature="e#25528#26785#0" expanded="true" />
-                <element signature="e#26387#26388#0" expanded="true" />
-                <element signature="e#26494#26728#0" expanded="true" />
-                <element signature="e#26727#26728#0" expanded="true" />
-                <element signature="e#26784#26785#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="367">
+              <caret line="652" column="17" selection-start-line="652" selection-start-column="17" selection-end-line="652" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -82,15 +70,19 @@
       <find>ViewId_scrollview_row_rinnai33a_timers</find>
       <find>v</find>
       <find>textView33</find>
-      <find>textView67</find>
       <find>ViewId_textview33a</find>
-      <find>goToActivity_Rinnai33b_Timers</find>
       <find>timersHoursOn</find>
       <find>timersDaysOfWeek</find>
       <find>1111</find>
       <find>timersOperationMode</find>
       <find>111</find>
       <find>scrollviewrowrinnai33atimers_id</find>
+      <find>textView67</find>
+      <find>startActivity</find>
+      <find>goToActivity_Rinnai33b_Timers</find>
+      <find>ViewId_textview30</find>
+      <find>ViewId_imagebutton12.setEnabled</find>
+      <find>ViewId_imagebutton12.setEnabled(true)</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -103,11 +95,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11cRegistration.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11gRegistration.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11fRegistration.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai33a_timers.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai33aTimers.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="726" />
@@ -117,6 +110,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Rinnai-Android" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -128,41 +132,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Rinnai-Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="Rinnai-Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="Rinnai-Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="fireplacewifimodulenz" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Rinnai-Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="Rinnai-Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -259,7 +230,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="726" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="726" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.24474959" />
@@ -270,7 +242,6 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info id="Resources Explorer" order="8" />
-      <window_info anchor="bottom" id="Find" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" weight="0.2917981" />
@@ -280,12 +251,13 @@
       <window_info anchor="bottom" id="Logcat" order="6" weight="0.4652997" />
       <window_info anchor="bottom" id="Android Profiler" order="7" />
       <window_info anchor="bottom" id="Debug" order="8" />
-      <window_info anchor="right" id="Preview" weight="0.32956383" />
+      <window_info anchor="bottom" id="Find" order="9" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Gradle" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="right" id="Device File Explorer" order="4" side_tool="true" />
+      <window_info anchor="right" id="Preview" order="5" weight="0.32956383" />
     </layout>
   </component>
   <component name="editorHistoryManager">
@@ -465,28 +437,12 @@
       <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_rinnai33a_timers.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/AppGlobals.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="59" column="44" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="44" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scrollview_row_rinnai33a_timers.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai33b_timers.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-26/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -502,17 +458,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scrollview_row_rinnai33a_timers.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai33b_timers.xml">
+      <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_rinnai33a_timers.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="265" column="60" selection-start-line="265" selection-start-column="41" selection-end-line="265" selection-end-column="60" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai33aTimers.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="606" column="63" lean-forward="true" selection-start-line="606" selection-start-column="63" selection-end-line="606" selection-end-column="63" />
-          <folding>
-            <element signature="e#25528#26785#0" expanded="true" />
-            <element signature="e#26387#26388#0" expanded="true" />
-            <element signature="e#26494#26728#0" expanded="true" />
-            <element signature="e#26727#26728#0" expanded="true" />
-            <element signature="e#26784#26785#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="367">
+          <caret line="652" column="17" selection-start-line="652" selection-start-column="17" selection-end-line="652" selection-end-column="17" />
         </state>
       </provider>
     </entry>
