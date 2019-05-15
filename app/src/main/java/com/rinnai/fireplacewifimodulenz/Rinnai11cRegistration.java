@@ -1,11 +1,13 @@
 package com.rinnai.fireplacewifimodulenz;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
@@ -24,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import AWSmodule.AWSconnection;
 
@@ -84,6 +89,8 @@ public class Rinnai11cRegistration extends MillecActivityBase
     Intent intent;
 
     boolean isClosing = false;
+
+    String locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +193,7 @@ public class Rinnai11cRegistration extends MillecActivityBase
         ViewId_include_scrollview_lockout_registrationc = (ViewGroup) findViewById(R.id.include_scrollview_lockout_registrationc);
 
 
-        String locale = this.getResources().getConfiguration().locale.getCountry();
+        locale = this.getResources().getConfiguration().locale.getCountry();
         if (locale.equals("AU")) {
             ViewId_textview92.setText("HELP: 1300555545");
         } else if (locale.equals("NZ")) {
@@ -551,10 +558,28 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText6.");
 
-                if (ViewId_edittext6.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext7.requestFocus();
+                if (!ViewId_edittext6.getText().toString().equals("")) {
+                    String[] years = { "J", "K", "L", "M", "N", "P", "R", "S", "T", "W", "X", "Y", "Z" };
+                    if (Arrays.asList(years).contains(ViewId_edittext6.getText().toString().toUpperCase())) {
+                        ViewId_edittext7.requestFocus();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("First Letter Is Invalid.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext6.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext6.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext7.requestFocus();
+//                }
             }
         });
 
@@ -577,10 +602,28 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText7.");
 
-                if (ViewId_edittext7.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext8.requestFocus();
+                if (!ViewId_edittext7.getText().toString().equals("")) {
+                    String[] months = { "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M" };
+                    if (Arrays.asList(months).contains(ViewId_edittext7.getText().toString().toUpperCase())) {
+                        ViewId_edittext8.requestFocus();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("Second Letter Is Invalid.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext7.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext7.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext8.requestFocus();
+//                }
             }
         });
 
@@ -603,10 +646,28 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText8.");
 
-                if (ViewId_edittext8.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext9.requestFocus();
+                if (!ViewId_edittext8.getText().toString().equals("")) {
+                    String[] factory = { "Z" };
+                    if (Arrays.asList(factory).contains(ViewId_edittext8.getText().toString().toUpperCase())) {
+                        ViewId_edittext9.requestFocus();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("Third Letter Is Invalid.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext8.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext8.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext9.requestFocus();
+//                }
             }
         });
 
@@ -629,10 +690,28 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText9.");
 
-                if (ViewId_edittext9.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext10.requestFocus();
+                if (!ViewId_edittext9.getText().toString().equals("")) {
+                    String[] categoty = { "B" };
+                    if (Arrays.asList(categoty).contains(ViewId_edittext9.getText().toString().toUpperCase())) {
+                        ViewId_edittext10.requestFocus();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("Forth Letter Is Invalid.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext9.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext9.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext10.requestFocus();
+//                }
             }
         });
 
@@ -655,10 +734,28 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText10.");
 
-                if (ViewId_edittext10.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext11.requestFocus();
+                if (!ViewId_edittext10.getText().toString().equals("")) {
+                    String[] firstModel = { "A", "B" };
+                    if (Arrays.asList(firstModel).contains(ViewId_edittext10.getText().toString().toUpperCase())) {
+                        ViewId_edittext11.requestFocus();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("Fifth Letter Is Invalid.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext10.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext10.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext11.requestFocus();
+//                }
             }
         });
 
@@ -681,10 +778,88 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText11.");
 
-                if (ViewId_edittext11.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext12.requestFocus();
+                if (!ViewId_edittext11.getText().toString().equals("")) {
+                    Map<String,String> auMap =  new HashMap<String,String>();
+                    auMap.put("AB", "RIB2312");
+                    auMap.put("AD", "RHFE952");
+                    auMap.put("AF", "RHFE1252");
+                    auMap.put("AH", "RDV600");
+                    auMap.put("AK", "RDV700");
+                    auMap.put("AM", "RHFE800SF");
+                    auMap.put("AP", "RHFE800DF");
+                    auMap.put("AR", "RHFE800S");
+                    auMap.put("AT", "RHFE800D");
+                    auMap.put("AV", "RHFE1000S");
+                    auMap.put("AX", "RHFE1000D");
+                    auMap.put("BA", "RHFE1500S");
+                    auMap.put("BC", "RHFE1500D");
+                    Map<String,String> nzMap =  new HashMap<String,String>();
+                    nzMap.put("AA", "RIB2312");
+                    nzMap.put("AC", "RHFE952");
+                    nzMap.put("AE", "RHFE1252");
+                    nzMap.put("AG", "RDV600");
+                    nzMap.put("AJ", "RDV700");
+                    nzMap.put("AL", "RHFE800SF");
+                    nzMap.put("AN", "RHFE800DF");
+                    nzMap.put("AQ", "RHFE800S");
+                    nzMap.put("AS", "RHFE800D");
+                    nzMap.put("AU", "RHFE1000S");
+                    nzMap.put("AW", "RHFE1000D");
+                    nzMap.put("AZ", "RHFE1500S");
+                    nzMap.put("BB", "RHFE1500D");
+
+                    String inputString = ViewId_edittext10.getText().toString().toUpperCase() + ViewId_edittext11.getText().toString().toUpperCase();
+                    String modelString = "***";
+                    String type = ViewId_textview174.getText().toString();
+
+                    if (locale.equals("AU")) {
+                        String getString = (String) auMap.get(inputString);
+                        if (getString != null) {
+                            modelString = getString;
+                        }
+                    } else if (locale.equals("NZ")) {
+                        String getString = (String) nzMap.get(inputString);
+                        if (getString != null) {
+                            modelString = getString;
+                        }
+                    }
+
+
+                    if (type != "") {
+                        if (type.contains(modelString)) {
+                            ViewId_edittext12.requestFocus();
+                        } else {
+                            AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                            alertDialog.setTitle("The Code For Model Is Not Matched.");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ViewId_edittext10.setText("");
+                                            ViewId_edittext11.setText("");
+                                            ViewId_edittext10.requestFocus();
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
+                        }
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("Please Select Fire First.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext11.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext11.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext12.requestFocus();
+//                }
             }
         });
 
@@ -707,10 +882,29 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText12.");
 
-                if (ViewId_edittext12.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext13.requestFocus();
+                if (!ViewId_edittext12.getText().toString().equals("")) {
+                    //Integer aaa = Integer.parseInt(ViewId_edittext12.getText().toString());
+
+                    if (ViewId_edittext12.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                        ViewId_edittext13.requestFocus();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("It Is Not A Number.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext12.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext12.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext13.requestFocus();
+//                }
             }
         });
 
@@ -733,10 +927,29 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText13.");
 
-                if (ViewId_edittext13.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext14.requestFocus();
+                if (!ViewId_edittext13.getText().toString().equals("")) {
+                    //Integer aaa = Integer.parseInt(ViewId_edittext12.getText().toString());
+
+                    if (ViewId_edittext13.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                        ViewId_edittext14.requestFocus();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("It Is Not A Number.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext13.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext13.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext14.requestFocus();
+//                }
             }
         });
 
@@ -759,10 +972,29 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText14.");
 
-                if (ViewId_edittext14.getText().toString().length() == 1)     //size as per your requirement
-                {
-                    ViewId_edittext15.requestFocus();
+                if (!ViewId_edittext14.getText().toString().equals("")) {
+                    //Integer aaa = Integer.parseInt(ViewId_edittext12.getText().toString());
+
+                    if (ViewId_edittext14.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                        ViewId_edittext15.requestFocus();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("It Is Not A Number.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext14.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 }
+
+//                if (ViewId_edittext14.getText().toString().length() == 1)     //size as per your requirement
+//                {
+//                    ViewId_edittext15.requestFocus();
+//                }
             }
         });
 
@@ -784,6 +1016,21 @@ public class Rinnai11cRegistration extends MillecActivityBase
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText15.");
+
+                if (!ViewId_edittext15.getText().toString().equals("")) {
+                    if (!ViewId_edittext15.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                        alertDialog.setTitle("It Is Not A Number.");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ViewId_edittext15.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
+                }
 
                 //if(ViewId_edittext15.getText().toString().length()==1)     //size as per your requirement
                 //{
