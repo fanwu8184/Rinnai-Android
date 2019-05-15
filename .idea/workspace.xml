@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Appliance Serial" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="myApp_AWS" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
@@ -34,7 +34,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_rinnai11c_registration.xml">
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
+            <state relative-caret-position="1008">
               <caret line="217" column="32" selection-start-line="217" selection-start-column="32" selection-end-line="217" selection-end-column="32" />
             </state>
           </provider>
@@ -43,9 +43,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11cRegistration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="1032" column="43" lean-forward="true" selection-start-line="1032" selection-start-column="43" selection-end-line="1032" selection-end-column="43" />
+            <state relative-caret-position="-167">
+              <caret line="142" column="21" lean-forward="true" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="21" />
               <folding>
+                <element signature="e#4087#4095#0" expanded="true" />
                 <element signature="e#39445#39460#0" expanded="true" />
                 <element signature="e#40104#40119#0" expanded="true" />
               </folding>
@@ -57,8 +58,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>goToActivity_Rinnai35_Visit_Rinnai_Website</find>
-      <find>textView89</find>
       <find>ViewId_textview86</find>
       <find>ViewId_textview97</find>
       <find>content_rinnai</find>
@@ -87,6 +86,8 @@
       <find>ViewId_imagebutton12.setEnabled(true)</find>
       <find>editText6</find>
       <find>userregistrationApplianceType</find>
+      <find>myApp_AWS</find>
+      <find>ui_resultList</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -225,6 +226,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="726" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.24474959" />
@@ -242,7 +244,7 @@
       <window_info anchor="bottom" id="Build" order="4" weight="0.32334384" />
       <window_info anchor="bottom" id="Run" order="5" />
       <window_info anchor="bottom" id="Logcat" order="6" weight="0.4652997" />
-      <window_info anchor="bottom" id="Android Profiler" order="7" />
+      <window_info anchor="bottom" id="Android Profiler" order="7" weight="0.329653" />
       <window_info anchor="bottom" id="Debug" order="8" />
       <window_info anchor="bottom" id="Find" order="9" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
@@ -473,16 +475,17 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_rinnai11c_registration.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
+        <state relative-caret-position="1008">
           <caret line="217" column="32" selection-start-line="217" selection-start-column="32" selection-end-line="217" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11cRegistration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="1032" column="43" lean-forward="true" selection-start-line="1032" selection-start-column="43" selection-end-line="1032" selection-end-column="43" />
+        <state relative-caret-position="-167">
+          <caret line="142" column="21" lean-forward="true" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="21" />
           <folding>
+            <element signature="e#4087#4095#0" expanded="true" />
             <element signature="e#39445#39460#0" expanded="true" />
             <element signature="e#40104#40119#0" expanded="true" />
           </folding>

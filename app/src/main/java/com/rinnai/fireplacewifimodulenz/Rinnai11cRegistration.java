@@ -25,6 +25,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -105,6 +107,15 @@ public class Rinnai11cRegistration extends MillecActivityBase
 
         setRinnai11cRegistration();
 
+
+        locale = this.getResources().getConfiguration().locale.getCountry();
+        ViewId_textview92 = (TextView) findViewById(R.id.textView92);
+        if (locale.equals("AU")) {
+            ViewId_textview92.setText("HELP: 1300555545");
+        } else if (locale.equals("NZ")) {
+            ViewId_textview92.setText("HELP: 0800 RINNAI");
+        }
+
         /////////////////////////////////////////////////
         //Select Appliance List from AWS as an ArrayList
         /////////////////////////////////////////////////
@@ -114,14 +125,25 @@ public class Rinnai11cRegistration extends MillecActivityBase
             //Get Async callback results
             public void getResult(ArrayList<String> resultList) {
 
+                ArrayList<String> filteredResult = new ArrayList<String>();
                 //Do stuff with results here
                 int listSize = resultList.size();
                 for (int i = 0; i < listSize; i++) {
                     //Log.i("Appliance: ", resultList.get(i));
                     Log.d("myApp_AWS", "Appliance: " + resultList.get(i));
+
+                    try {
+                        JSONObject json = new JSONObject(resultList.get(i));
+                        String countryCode = json.getString("fire_country");
+                        if (locale.equals(countryCode)) {
+                            filteredResult.add(resultList.get(i));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
-                final ArrayList<String> ui_resultList = resultList;
+                final ArrayList<String> ui_resultList = filteredResult;
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -186,20 +208,10 @@ public class Rinnai11cRegistration extends MillecActivityBase
 
         //***** OnTouchListener - button24 (Select Fire - Scrollview) *****//
         ViewId_button24 = (Button) findViewById(R.id.button24);
-        ViewId_textview92 = (TextView) findViewById(R.id.textView92);
         ViewId_textview95 = (TextView) findViewById(R.id.textView95);
         ViewId_include_selectfire_registrationc = (ViewGroup) findViewById(R.id.include_selectfire_registrationc);
         ViewId_linearlayout_registration_selectfire = (LinearLayout) findViewById(R.id.linearlayout_registration_selectfire);
         ViewId_include_scrollview_lockout_registrationc = (ViewGroup) findViewById(R.id.include_scrollview_lockout_registrationc);
-
-
-        locale = this.getResources().getConfiguration().locale.getCountry();
-        if (locale.equals("AU")) {
-            ViewId_textview92.setText("HELP: 1300555545");
-        } else if (locale.equals("NZ")) {
-            ViewId_textview92.setText("HELP: 0800 RINNAI");
-        }
-
 
         ViewId_button24.setOnTouchListener(new View.OnTouchListener() {
             @Override
