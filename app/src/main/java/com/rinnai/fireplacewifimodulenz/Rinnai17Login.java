@@ -384,6 +384,12 @@ public class Rinnai17Login extends MillecActivityBase
 
     void appStart() {
 
+//        if(AppGlobals.rfwmEmail.equals("NA")){
+//            AppGlobals.CommErrorFault.stopTimer();
+//            intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+//            startActivity(intent);
+//            finish();
+//        }
         try {
             AppGlobals.UDPSrv.stopServer();
             AppGlobals.UDPSrv.setCurrentActivity(this);
@@ -407,10 +413,20 @@ public class Rinnai17Login extends MillecActivityBase
             Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CORRECT AP FOUND.");
 
             isAccessPoint = true;
+
+            if(AppGlobals.rfwmEmail.equals("NA")){
+                AppGlobals.CommErrorFault.stopTimer();
+                intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+                startActivity(intent);
+                finish();
+            }
+
         } else {
             Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CORRECT RINNAI FOUND ON NETWORK.");
 
             isAccessPoint = false;
+
+
         }
 
         startTxRN171DeviceGetStatus();
