@@ -126,7 +126,7 @@ public class Rinnai11fRegistration extends MillecActivityBase {
                                         @Override
                                         public void run() {
 
-                                            Toast.makeText(Rinnai11fRegistration.this, textResult,
+                                            Toast.makeText(Rinnai11fRegistration.this, "Code has been emailed!",
                                                     Toast.LENGTH_LONG).show();
 
                                         }
@@ -149,9 +149,7 @@ public class Rinnai11fRegistration extends MillecActivityBase {
                                 }
 
 
-//                                intent = new Intent(Rinnai11fRegistration.this, Rinnai11gRegistration.class);
-//                                startActivity(intent);
-//                                finish();
+
                             }
                         });
 

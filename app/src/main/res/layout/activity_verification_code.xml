@@ -237,17 +237,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/textView165"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="left|center|start"
-                            android:text="Type your password"
-                            android:textColor="#FFC0C0C0"
-                            android:textSize="@dimen/edittext_network_password_textsize" />
-
                         <EditText
-                            android:id="@+id/editText30"
+                            android:id="@+id/et_code"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
@@ -311,7 +302,7 @@
                         android:orientation="horizontal"></LinearLayout>
 
                     <com.lb.auto_fit_textview.AutoResizeTextView
-                        android:id="@+id/textView166"
+                        android:id="@+id/artv_ok"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="105"

@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import AWSmodule.AWSconnection;
+
 /**
  * Created by JConci on 6/02/2018.
  */
@@ -41,11 +43,13 @@ public class Rinnai11gRegistration extends MillecActivityBase {
     LinearLayout ViewId_linearlayout_registration_reset_newpassword;
     LinearLayout ViewId_linearlayout_hidesoftkeyboardg;
 
+    String codeStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai11g_registration);
-
+        codeStr = getIntent().getExtras().getString("code");
         Log.d("myApp_ActivityLifecycle", "Rinnai11gRegistration_onCreate.");
 
         setRinnai11gRegistration();
@@ -102,6 +106,33 @@ public class Rinnai11gRegistration extends MillecActivityBase {
                         // RELEASED
                         ViewId_button32.setBackgroundResource(R.drawable.registration_button_red_background);
                         ViewId_textview115.setTextColor(Color.parseColor("#FFFFFFFF"));
+
+//                        validate and send
+
+
+                        AWSconnection.resetPasswordVerifyTokenURL("glenaries03@gmail.com", codeStr, "qwerty", new AWSconnection.textResult() {
+                            @Override
+                            public void getResult(final String textResult) {
+
+                                if (textResult.equals("\"Password Successfully Changed\"")) {
+
+                                    Intent intent = new Intent(Rinnai11gRegistration.this, ResetPasswordCompleteActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }else{
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(Rinnai11gRegistration.this, textResult,
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:
                         // ABORTED
