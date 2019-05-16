@@ -93,11 +93,12 @@ public class UDPServer extends Thread {
                     InetAddress address = packet.getAddress();
                     int port = packet.getPort();
 
-                    this.serverCallBackUDP_Safe("Request from: " + address + ":" + port + "\n");
+                    //this.serverCallBackUDP_Safe("Request from: " + address + ":" + port + "\n");
                     Log.d("myApp_WiFiUDP", "UDPServer_run: Recived Request:" + address + ":" + port + "\n");
 
                     String packetData = (new String(packet.getData(), Charset.forName("UTF-8")));
 
+                    this.serverCallBackUDP_Safe(packetData);
                     Log.d("myApp_WiFiUDP", "UDPServer_run: RX Data(String) :" + packetData + "\n");
                     //Log.d("myApp_WiFiUDP","UDPServer:RX Data(bytes)  :"+FormattingFunctions.GetByteArrayAsHexString(packet.getData(),packet.getLength())+"\n");
 

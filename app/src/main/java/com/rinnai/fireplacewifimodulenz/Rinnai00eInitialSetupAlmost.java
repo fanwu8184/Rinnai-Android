@@ -1,20 +1,29 @@
 package com.rinnai.fireplacewifimodulenz;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by JConci on 16/02/2018.
  */
 
-public class Rinnai00eInitialSetupAlmost extends MillecActivityBase {
+public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
+        implements ActivityServerInterfaceUDP {
 
     Button ViewId_button44;
 
@@ -24,12 +33,19 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase {
 
     boolean isClosing = false;
 
+    ViewGroup ViewId_include_detailsaccepted_initialsetupnetwork;
+
+    Timer waitingUDPTimer;
+    String wifiModuleNetWorkName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai00e_initialsetup_almost);
 
         Log.d("myApp_ActivityLifecycle", "Rinnai00eInitialSetupAlmost_onCreate.");
+
+        wifiModuleNetWorkName = getIntent().getStringExtra("WIFIMODULE");
 
         TextView ssid = (TextView) findViewById(R.id.textView154);
 
@@ -97,12 +113,21 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase {
             if (currentAP.equals(compareAP))
             {
                 System.out.println("CORRECT AP FOUND");
-                isClosing = true;
-                intent = new Intent(Rinnai00eInitialSetupAlmost.this, Rinnai00dInitialSetupComplete.class);
-                startActivity(intent);
-
-                finish();
-                Log.d("myApp_WiFiTCP", "Rinnai00fInitialSetupNetwork_clientCallBackTCP: startActivity(Rinnai00dInitialSetupComplete).");
+                setupUDP();
+                //showprogress
+                waitingUDPTimer = new Timer();
+                waitingUDPTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        stopUDP();
+                        showAlert();
+                    }
+                }, 5000);
+//                isClosing = true;
+//                intent = new Intent(Rinnai00eInitialSetupAlmost.this, Rinnai00dInitialSetupComplete.class);
+//                startActivity(intent);
+//                finish();
+//                Log.d("myApp_WiFiTCP", "Rinnai00fInitialSetupNetwork_clientCallBackTCP: startActivity(Rinnai00dInitialSetupComplete).");
             }
         }
         catch(Exception e){
@@ -143,5 +168,56 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase {
 
         //super.onBackPressed();
         moveTaskToBack(true);
+    }
+
+    private void showProgress() {
+    }
+
+    private void showAlert() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                AlertDialog alertDialog = new AlertDialog.Builder(Rinnai00eInitialSetupAlmost.this).create();
+                alertDialog.setTitle("Setup Failed");
+                alertDialog.setMessage("Please make sure the password you entered for the home network is correct. This App will be off for you to restart the setup again.");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                moveTaskToBack(true);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(1);
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
+    }
+
+    private void setupUDP() {
+        try {
+            //AppGlobals.UDPSrv.stopServer();
+            AppGlobals.UDPSrv.setCurrentActivity(this);
+            AppGlobals.UDPSrv.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiUDP", "Rinnai17Login: appStart(Exception - " + e + ")");
+        }
+    }
+
+    private void stopUDP(){
+        AppGlobals.UDPSrv.stopServer();
+    }
+
+    @Override
+    public void serverCallBackUDP(String text) {
+        if (wifiModuleNetWorkName != null) {
+            if (text.contains(wifiModuleNetWorkName)) {
+                stopUDP();
+                waitingUDPTimer.cancel();
+                isClosing = true;
+                intent = new Intent(Rinnai00eInitialSetupAlmost.this, Rinnai00dInitialSetupComplete.class);
+                startActivity(intent);
+                finish();
+                Log.d("myApp_WiFiTCP", "Rinnai00fInitialSetupNetwork_clientCallBackTCP: startActivity(Rinnai00dInitialSetupComplete).");
+            }
+        }
     }
 }
