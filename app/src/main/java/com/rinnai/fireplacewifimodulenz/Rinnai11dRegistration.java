@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.regex.Pattern;
 
 import static com.rinnai.fireplacewifimodulenz.AppGlobals.userregInfo;
 
@@ -106,42 +109,46 @@ public class Rinnai11dRegistration extends MillecActivityBase {
                                 !ViewId_edittext32.getText().toString().equals("") &&
                                 !ViewId_edittext33.getText().toString().equals("")) {
 
-                            if(ViewId_edittext20.getText().toString().equals(ViewId_edittext21.getText().toString())){
+                            if (isValidEmail(ViewId_edittext31.getText().toString())) {
+                                if(ViewId_edittext20.getText().toString().equals(ViewId_edittext21.getText().toString())){
 
-                                AppGlobals.userregInfo.userregistrationStreetAddress = ViewId_edittext16.getText().toString();
-                                AppGlobals.userregInfo.userregistrationSuburb = ViewId_edittext17.getText().toString();
-                                AppGlobals.userregInfo.userregistrationCityRegion = ViewId_edittext18.getText().toString();
-                                AppGlobals.userregInfo.userregistrationPostcode = ViewId_edittext19.getText().toString();
-                                AppGlobals.userregInfo.userregistrationPassword = ViewId_edittext20.getText().toString();
-                                AppGlobals.userregInfo.userregistrationConfirmPassword = ViewId_edittext21.getText().toString();
-                                AppGlobals.userregInfo.userregistrationEmail = ViewId_edittext31.getText().toString();
-                                AppGlobals.userregInfo.userregistrationFirstName = ViewId_edittext32.getText().toString();
-                                AppGlobals.userregInfo.userregistrationLastName = ViewId_edittext33.getText().toString();
-                                AppGlobals.userregInfo.userregistrationCountry = getResources().getConfiguration().locale.getCountry();
+                                    AppGlobals.userregInfo.userregistrationStreetAddress = ViewId_edittext16.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationSuburb = ViewId_edittext17.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationCityRegion = ViewId_edittext18.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationPostcode = ViewId_edittext19.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationPassword = ViewId_edittext20.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationConfirmPassword = ViewId_edittext21.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationEmail = ViewId_edittext31.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationFirstName = ViewId_edittext32.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationLastName = ViewId_edittext33.getText().toString();
+                                    AppGlobals.userregInfo.userregistrationCountry = getResources().getConfiguration().locale.getCountry();
 
-                                Log.d("myApp", "Rinnai11dRegistration: (Street Address: " + AppGlobals.userregInfo.userregistrationStreetAddress + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (Suburb: " + AppGlobals.userregInfo.userregistrationSuburb + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (City / Region: " + AppGlobals.userregInfo.userregistrationCityRegion + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (Postcode: " + AppGlobals.userregInfo.userregistrationPostcode + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (Password: " + AppGlobals.userregInfo.userregistrationPassword + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (Confirm Password: " + AppGlobals.userregInfo.userregistrationConfirmPassword + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (Email: " + AppGlobals.userregInfo.userregistrationEmail + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (First Name: " + AppGlobals.userregInfo.userregistrationFirstName + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (Last Name: " + AppGlobals.userregInfo.userregistrationLastName + ")");
-                                Log.d("myApp", "Rinnai11dRegistration: (Country: " + AppGlobals.userregInfo.userregistrationCountry + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (Street Address: " + AppGlobals.userregInfo.userregistrationStreetAddress + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (Suburb: " + AppGlobals.userregInfo.userregistrationSuburb + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (City / Region: " + AppGlobals.userregInfo.userregistrationCityRegion + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (Postcode: " + AppGlobals.userregInfo.userregistrationPostcode + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (Password: " + AppGlobals.userregInfo.userregistrationPassword + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (Confirm Password: " + AppGlobals.userregInfo.userregistrationConfirmPassword + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (Email: " + AppGlobals.userregInfo.userregistrationEmail + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (First Name: " + AppGlobals.userregInfo.userregistrationFirstName + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (Last Name: " + AppGlobals.userregInfo.userregistrationLastName + ")");
+                                    Log.d("myApp", "Rinnai11dRegistration: (Country: " + AppGlobals.userregInfo.userregistrationCountry + ")");
 
-                                isClosing = true;
-                                intent = new Intent(Rinnai11dRegistration.this, Rinnai11eRegistration.class);
-                                startActivity(intent);
+                                    isClosing = true;
+                                    intent = new Intent(Rinnai11dRegistration.this, Rinnai11eRegistration.class);
+                                    startActivity(intent);
 
-                                finish();
-                                Log.d("myApp", "Rinnai11dRegistration: startActivity(Rinnai11eRegistration).");
+                                    finish();
+                                    Log.d("myApp", "Rinnai11dRegistration: startActivity(Rinnai11eRegistration).");
 
+                                } else {
+                                    Toast.makeText(Rinnai11dRegistration.this, "Password and Confirm Password Error. \nTry entering details again.",
+                                            Toast.LENGTH_LONG).show();
+                                }
                             } else {
-                                Toast.makeText(Rinnai11dRegistration.this, "Password and Confirm Password Error. \nTry entering details again.",
+                                Toast.makeText(Rinnai11dRegistration.this, "Email Format is NOT correct.",
                                         Toast.LENGTH_LONG).show();
                             }
-
                         } else {
                             Toast.makeText(Rinnai11dRegistration.this, "Enter Your Details.",
                                     Toast.LENGTH_LONG).show();
@@ -887,4 +894,8 @@ public class Rinnai11dRegistration extends MillecActivityBase {
         inputMethodManager.showSoftInput(view, 0);
     }
 
+    private boolean isValidEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
+    }
 }
