@@ -121,7 +121,6 @@ public class Rinnai17Login extends MillecActivityBase
         super.onStart();
         Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onStart.");
 
-//        showWifiList();
     }
 
     @Override
@@ -147,8 +146,7 @@ public class Rinnai17Login extends MillecActivityBase
 
         startTxRN171DeviceGetStatus();
 
-        showWifiList();
-
+            showWifiList();
     }
 
     @Override
@@ -384,12 +382,6 @@ public class Rinnai17Login extends MillecActivityBase
 
     void appStart() {
 
-//        if(AppGlobals.rfwmEmail.equals("NA")){
-//            AppGlobals.CommErrorFault.stopTimer();
-//            intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
-//            startActivity(intent);
-//            finish();
-//        }
         try {
             AppGlobals.UDPSrv.stopServer();
             AppGlobals.UDPSrv.setCurrentActivity(this);
@@ -410,24 +402,16 @@ public class Rinnai17Login extends MillecActivityBase
         Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: AP FOUND Length (" + currentAP.length() + ")");
 
         if (currentAP.contains(compareAP) && currentAP.length() == 17) {
-            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CORRECT AP FOUND.");
+            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CONNECTED TO AP.");
 
             isAccessPoint = true;
 
-            if(AppGlobals.rfwmEmail.equals("NA")){
-                AppGlobals.CommErrorFault.stopTimer();
-                intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
-                startActivity(intent);
-                finish();
-            }
-
         } else {
-            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CORRECT RINNAI FOUND ON NETWORK.");
+            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart:NOT CONNECTED IN AP.");
 
             isAccessPoint = false;
 
-
-        }
+            }
 
         startTxRN171DeviceGetStatus();
 
@@ -897,13 +881,15 @@ public class Rinnai17Login extends MillecActivityBase
                                         startupCheckTimer.cancel();
                                         fireanimationCheckTimer.cancel();
                                         isClosing = true;
-//                                        intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-//                                        startActivity(intent);
-//
-//                                        finish();
 
-                                        showWifiList();
-
+                                        if(AppGlobals.rfwmEmail.equals("NA")){
+                                            AppGlobals.CommErrorFault.stopTimer();
+                                            intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+                                            startActivity(intent);
+                                            finish();
+                                         }else{
+                                            showWifiList();
+                                        }
 
                                         Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
                                     }
