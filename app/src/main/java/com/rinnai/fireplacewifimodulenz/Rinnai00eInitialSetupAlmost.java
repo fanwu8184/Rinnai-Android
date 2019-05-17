@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -33,10 +34,9 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
 
     boolean isClosing = false;
 
-    ViewGroup ViewId_include_detailsaccepted_initialsetupnetwork;
-
     Timer waitingUDPTimer;
     String wifiModuleNetWorkName;
+    ProgressBar progressBarWaiting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
         Log.d("myApp_ActivityLifecycle", "Rinnai00eInitialSetupAlmost_onCreate.");
 
         wifiModuleNetWorkName = getIntent().getStringExtra("WIFIMODULE");
+        progressBarWaiting = (ProgressBar) findViewById(R.id.progressBarWaiting);
+        progressBarWaiting.setVisibility(View.INVISIBLE);
 
         TextView ssid = (TextView) findViewById(R.id.textView154);
 
@@ -114,7 +116,7 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
             {
                 System.out.println("CORRECT AP FOUND");
                 setupUDP();
-                //showprogress
+                progressBarWaiting.setVisibility(View.VISIBLE);
                 waitingUDPTimer = new Timer();
                 waitingUDPTimer.schedule(new TimerTask() {
                     @Override
@@ -122,7 +124,7 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
                         stopUDP();
                         showAlert();
                     }
-                }, 5000);
+                }, 40000);
 //                isClosing = true;
 //                intent = new Intent(Rinnai00eInitialSetupAlmost.this, Rinnai00dInitialSetupComplete.class);
 //                startActivity(intent);
@@ -176,6 +178,7 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
     private void showAlert() {
         runOnUiThread(new Runnable() {
             public void run() {
+                progressBarWaiting.setVisibility(View.INVISIBLE);
                 AlertDialog alertDialog = new AlertDialog.Builder(Rinnai00eInitialSetupAlmost.this).create();
                 alertDialog.setTitle("Setup Failed");
                 alertDialog.setMessage("Please make sure the password you entered for the home network is correct. This App will be off for you to restart the setup again.");
@@ -210,6 +213,7 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
     public void serverCallBackUDP(String text) {
         if (wifiModuleNetWorkName != null) {
             if (text.contains(wifiModuleNetWorkName)) {
+                progressBarWaiting.setVisibility(View.INVISIBLE);
                 stopUDP();
                 waitingUDPTimer.cancel();
                 isClosing = true;
