@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -114,44 +116,49 @@ public class Rinnai11fRegistration extends MillecActivityBase {
                         ViewId_button30.setBackgroundResource(R.drawable.registration_button_red_background);
                         ViewId_textview111.setTextColor(Color.parseColor("#FFFFFFFF"));
 
-                        ViewId_edittext22.getText().toString();
-                        AWSconnection.resetPasswordGenerateTokenURL(ViewId_edittext22.getText().toString(), new AWSconnection.textResult() {
-                            @Override
-                            public void getResult(final String textResult) {
-                                Log.d("myApp_AWS", "Reset password:" + textResult);
+                        if(!isValidEmail(ViewId_edittext22.getText().toString())){
+                            Toast.makeText(Rinnai11fRegistration.this, "Email is not registered or invalid !",
+                                    Toast.LENGTH_LONG).show();
+                        }else{
+                            AWSconnection.resetPasswordGenerateTokenURL(ViewId_edittext22.getText().toString(), new AWSconnection.textResult() {
+                                @Override
+                                public void getResult(final String textResult) {
 
-                                if (textResult.equals("\"code has been emailed\"")) {
+                                    Log.d("myApp_AWS", "Reset password:" + textResult);
 
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
+                                    if (textResult.equals("\"code has been emailed\"")) {
 
-                                            Toast.makeText(Rinnai11fRegistration.this, "Code has been emailed!",
-                                                    Toast.LENGTH_LONG).show();
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
 
-                                        }
-                                    });
+                                                Toast.makeText(Rinnai11fRegistration.this, "Code has been emailed!",
+                                                        Toast.LENGTH_LONG).show();
 
-                                    intent = new Intent(Rinnai11fRegistration.this, VerificationCodeActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                            }
+                                        });
 
-                                }else{
+                                        Intent intent = new Intent(Rinnai11fRegistration.this, VerificationCodeActivity.class);
+                                        intent.putExtra("email", (ViewId_edittext22.getText().toString()));
+                                        startActivity(intent);
+                                        finish();
 
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(Rinnai11fRegistration.this, textResult,
-                                                    Toast.LENGTH_LONG).show();
-                                        }
-                                    });
+                                    }else{
 
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(Rinnai11fRegistration.this, textResult,
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+
+                                    }
                                 }
+                            });
 
+                        }
 
-
-                            }
-                        });
 
 
 
@@ -254,6 +261,10 @@ public class Rinnai11fRegistration extends MillecActivityBase {
                 }
             }
         });
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
     @Override

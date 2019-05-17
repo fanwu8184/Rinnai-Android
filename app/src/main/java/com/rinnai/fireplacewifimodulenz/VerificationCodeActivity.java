@@ -9,12 +9,16 @@ import android.widget.TextView;
 
 public class VerificationCodeActivity extends MillecActivityBase {
 
+    String emailStr;
+    EditText etCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification_code);
 
-        final EditText etCode = (EditText) findViewById(R.id.et_code);
+         emailStr = getIntent().getExtras().getString("email");
+         etCode = (EditText) findViewById(R.id.et_code);
 
         TextView okBtn = (TextView) findViewById(R.id.artv_ok);
         okBtn.setOnClickListener(new View.OnClickListener() {
@@ -22,8 +26,8 @@ public class VerificationCodeActivity extends MillecActivityBase {
             public void onClick(View v) {
                 Intent intent = new Intent(VerificationCodeActivity.this, Rinnai11gRegistration.class);
                 intent.putExtra("code", etCode.getText().toString());
+                intent.putExtra("email", emailStr);
                 startActivity(intent);
-                finish();
             }
         });
     }

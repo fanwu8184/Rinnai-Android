@@ -44,12 +44,14 @@ public class Rinnai11gRegistration extends MillecActivityBase {
     LinearLayout ViewId_linearlayout_hidesoftkeyboardg;
 
     String codeStr;
+    String emailStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai11g_registration);
         codeStr = getIntent().getExtras().getString("code");
+        emailStr = getIntent().getExtras().getString("email");
         Log.d("myApp_ActivityLifecycle", "Rinnai11gRegistration_onCreate.");
 
         setRinnai11gRegistration();
@@ -80,6 +82,7 @@ public class Rinnai11gRegistration extends MillecActivityBase {
                     case MotionEvent.ACTION_UP:
                         // RELEASED
                         ViewId_imagebutton27.setImageResource(R.drawable.registration_button_cross);
+                        finish();
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:
                         // ABORTED
@@ -108,29 +111,48 @@ public class Rinnai11gRegistration extends MillecActivityBase {
                         ViewId_textview115.setTextColor(Color.parseColor("#FFFFFFFF"));
 
 //                        validate and send
+                        String newPasswordStr = ViewId_edittext23.getText().toString();
+                        String confirmPasswordStr = ViewId_edittext24.getText().toString();
 
+                        if(newPasswordStr.equals(confirmPasswordStr)){
+                            AWSconnection.resetPasswordVerifyTokenURL(emailStr, codeStr, newPasswordStr, new AWSconnection.textResult() {
+                                @Override
+                                public void getResult(final String textResult) {
 
-                        AWSconnection.resetPasswordVerifyTokenURL("glenaries03@gmail.com", codeStr, "qwerty", new AWSconnection.textResult() {
-                            @Override
-                            public void getResult(final String textResult) {
+                                    if (textResult.equals("\"Password Successfully Changed\"")) {
 
-                                if (textResult.equals("\"Password Successfully Changed\"")) {
+                                        Intent intent = new Intent(Rinnai11gRegistration.this, ResetPasswordCompleteActivity.class);
+                                        startActivity(intent);
+                                        finish();
 
-                                    Intent intent = new Intent(Rinnai11gRegistration.this, ResetPasswordCompleteActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    }else{
 
-                                }else{
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(Rinnai11gRegistration.this, textResult,
-                                                    Toast.LENGTH_LONG).show();
-                                        }
-                                    });
+                                       String resultStr = textResult.replaceAll("^\"|\"$", "");
+                                       resultStr = resultStr.substring(0,1).toUpperCase() + resultStr.substring(1);
+                                       final String RESULT_STR = resultStr;
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(Rinnai11gRegistration.this,RESULT_STR,
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    Toast.makeText(Rinnai11gRegistration.this, "Password mismatch or is invalid. Please try again.",
+                                            Toast.LENGTH_LONG).show();
+
+                                }
+                            });
+                        }
+
+
 
 
                         return true; // if you want to handle the touch event
