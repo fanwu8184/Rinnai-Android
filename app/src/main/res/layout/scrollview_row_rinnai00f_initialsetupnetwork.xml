@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/linearlayout_network_row"
@@ -20,16 +21,13 @@
             android:textColor="#FFC0C0C0"
             android:textSize="@dimen/textview_network_name_textsize" />
 
-        <TextView
-            android:id="@+id/textView168"
+        <ImageView
+            android:id="@+id/wifiStrength"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="SignalStrength"
-            android:textColor="#FFC0C0C0"
-            android:textSize="@dimen/textview_network_signalstrength_textsize"
-            android:visibility="invisible" />
+            android:scaleType="centerInside"
+            app:srcCompat="@mipmap/wifi_siginal_bars_1" />
 
         <TextView
             android:id="@+id/textView169"

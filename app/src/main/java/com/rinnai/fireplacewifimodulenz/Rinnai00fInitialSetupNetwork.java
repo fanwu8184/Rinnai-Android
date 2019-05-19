@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -710,7 +711,19 @@ public class Rinnai00fInitialSetupNetwork extends MillecActivityBase
                                 ((TextView) ViewId_scrollview_row_rinnai00f_initialsetupnetwork.findViewById(R.id.textView167)).setText(AppGlobals.WiFiAccessPointInfo_List.get(i).wifiaccesspointName);
 
                                 //set it on the row - textView168, wifiaccesspointSignalStrength
-                                ((TextView) ViewId_scrollview_row_rinnai00f_initialsetupnetwork.findViewById(R.id.textView168)).setText(AppGlobals.WiFiAccessPointInfo_List.get(i).wifiaccesspointSignalStrength);
+                                //((TextView) ViewId_scrollview_row_rinnai00f_initialsetupnetwork.findViewById(R.id.textView168)).setText(AppGlobals.WiFiAccessPointInfo_List.get(i).wifiaccesspointSignalStrength);
+                                int decimalStrenth = Integer.parseInt(AppGlobals.WiFiAccessPointInfo_List.get(i).wifiaccesspointSignalStrength, 16);
+                                if (decimalStrenth >= 225) {
+                                    ((ImageView) ViewId_scrollview_row_rinnai00f_initialsetupnetwork.findViewById(R.id.wifiStrength)).setImageResource(R.mipmap.wifi_siginal_bars_5);
+                                } else if (decimalStrenth >= 188) {
+                                    ((ImageView) ViewId_scrollview_row_rinnai00f_initialsetupnetwork.findViewById(R.id.wifiStrength)).setImageResource(R.mipmap.wifi_siginal_bars_4);
+                                } else if (decimalStrenth >= 185) {
+                                    ((ImageView) ViewId_scrollview_row_rinnai00f_initialsetupnetwork.findViewById(R.id.wifiStrength)).setImageResource(R.mipmap.wifi_siginal_bars_3);
+                                } else if (decimalStrenth >= 175) {
+                                    ((ImageView) ViewId_scrollview_row_rinnai00f_initialsetupnetwork.findViewById(R.id.wifiStrength)).setImageResource(R.mipmap.wifi_siginal_bars_2);
+                                } else {
+                                    ((ImageView) ViewId_scrollview_row_rinnai00f_initialsetupnetwork.findViewById(R.id.wifiStrength)).setImageResource(R.mipmap.wifi_siginal_bars_1);
+                                }
 
                                 //set it on the row - textView169, wifiaccesspointSecurityType
                                 int networksecuritytypeValue = Integer.parseInt(AppGlobals.WiFiAccessPointInfo_List.get(i).wifiaccesspointSecurityType.toString());
