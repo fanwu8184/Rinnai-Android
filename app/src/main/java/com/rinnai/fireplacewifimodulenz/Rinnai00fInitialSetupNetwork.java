@@ -115,7 +115,6 @@ public class Rinnai00fInitialSetupNetwork extends MillecActivityBase
                         if (scrollviewrow_pressed == true && !selected_scrollviewrowrinnai00finitialsetupnetworkpassword.getText().toString().equals("Type your password") && !selected_scrollviewrowrinnai00finitialsetupnetworkpassword.getText().toString().equals("")) {
                             Tx_RN171DeviceNetworkSetup();
 
-                            Log.d("ttt", "starting.........");
                             hideSoftKeyboard_initialsetupf();
 
                             //***** include - ViewId_include_scanning_initialsetupnetwork *****//

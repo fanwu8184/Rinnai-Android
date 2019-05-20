@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -49,6 +50,9 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     Button ViewId_button_navview4;
     Button ViewId_button_navview5;
     Button ViewId_button_navview7;
+    Button signalStrengthBut;
+    Button factoryResetBut;
+
     Button ViewId_button;
     Button ViewId_button2;
     Button ViewId_button3;
@@ -73,6 +77,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     ImageView ViewId_imageview3;
     ImageView ViewId_imageview4;
     ImageView ViewId_imageview5;
+    ImageView imageView53;
 
     TextView ViewId_textview3;
     TextView ViewId_textview4;
@@ -502,6 +507,87 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //int dpAsPixels = (int) (sizeInDp*scale + 0.5f);
         dpAsPixels = (int) (25 * scale + 0.5f);
         ViewId_button_navview5.setPadding(dpAsPixels, 0, 0, 0);
+
+        //*********************************//
+        //***** linearlayout_signalStrengthNav *****//
+        //*********************************//
+
+        //***** layout_height - signalStrengthNav *****//
+        ConstraintLayout signalStrengthNav = (ConstraintLayout) findViewById(R.id.signalStrengthNav);
+
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        width_screen = (int) ((double) (getResources().getDisplayMetrics().widthPixels) * 0.75);
+        LinearLayout.LayoutParams params_signalStrengthNav = (LinearLayout.LayoutParams) signalStrengthNav.getLayoutParams();
+        params_signalStrengthNav.height = height_screen;
+        params_signalStrengthNav.width = width_screen;
+        params_signalStrengthNav.gravity = Gravity.CENTER;
+        signalStrengthNav.setLayoutParams(params_signalStrengthNav);
+
+        signalStrengthBut = (Button) findViewById(R.id.signalStrengthBut);
+        signalStrengthBut.setTextColor(Color.parseColor("#FFa3a3a3"));
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.03);
+        signalStrengthBut.setTextSize(COMPLEX_UNIT_PX, height_screen);
+        signalStrengthBut.setGravity(Gravity.CENTER_VERTICAL);
+        signalStrengthBut.setPadding(0, 0, 0, 0);
+
+        imageView53 = (ImageView) findViewById(R.id.imageView53);
+        int decimalStrenth = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmWifiStrength;
+        if (decimalStrenth >= 225) {
+            imageView53.setImageResource(R.mipmap.wifi_siginal_bars_5);
+        } else if (decimalStrenth >= 188) {
+            imageView53.setImageResource(R.mipmap.wifi_siginal_bars_4);
+        } else if (decimalStrenth >= 185) {
+            imageView53.setImageResource(R.mipmap.wifi_siginal_bars_3);
+        } else if (decimalStrenth >= 175) {
+            imageView53.setImageResource(R.mipmap.wifi_siginal_bars_2);
+        } else {
+            imageView53.setImageResource(R.mipmap.wifi_siginal_bars_1);
+        }
+
+
+        //*********************************//
+        //***** linearlayout_factoryResetNav *****//
+        //*********************************//
+        LinearLayout factoryResetNav = (LinearLayout) findViewById(R.id.factoryResetNav);
+
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        LinearLayout.LayoutParams params_factoryResetNav= (LinearLayout.LayoutParams) factoryResetNav.getLayoutParams();
+        params_factoryResetNav.height = height_screen;
+        factoryResetNav.setLayoutParams(params_factoryResetNav);
+
+        //***** layout_height - factoryResetBut (Rinnai Account) *****//
+        factoryResetBut = (Button) findViewById(R.id.factoryResetBut);
+
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.095);
+        LinearLayout.LayoutParams params_factoryResetBut = (LinearLayout.LayoutParams) factoryResetBut.getLayoutParams();
+        params_factoryResetBut.height = height_screen;
+        factoryResetBut.setLayoutParams(params_factoryResetBut);
+
+        //***** layout_width - factoryResetBut (Rinnai Account) *****//
+        width_screen = (int) ((double) (getResources().getDisplayMetrics().widthPixels) * 0.75);
+        params_factoryResetBut = (LinearLayout.LayoutParams) factoryResetBut.getLayoutParams();
+        params_factoryResetBut.width = width_screen;
+        factoryResetBut.setLayoutParams(params_factoryResetBut);
+
+        //***** layout_gravity - factoryResetBut (Rinnai Account) *****//
+        params_factoryResetBut.gravity = Gravity.CENTER;
+        factoryResetBut.setLayoutParams(params_factoryResetBut);
+
+        //***** textColor - factoryResetBut (Rinnai Account) *****//
+        factoryResetBut.setTextColor(Color.parseColor("#FFa3a3a3"));
+
+        //***** textSize - factoryResetBut (Rinnai Account) *****//
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.03);
+        factoryResetBut.setTextSize(COMPLEX_UNIT_PX, height_screen);
+
+        //***** gravity - factoryResetBut (Rinnai Account) *****//
+        factoryResetBut.setGravity(Gravity.CENTER_VERTICAL);
+
+        //***** Padding - factoryResetBut (Rinnai Account) *****//
+        scale = getResources().getDisplayMetrics().density;
+        //int dpAsPixels = (int) (sizeInDp*scale + 0.5f);
+        dpAsPixels = (int) (25 * scale + 0.5f);
+        factoryResetBut.setPadding(dpAsPixels, 0, 0, 0);
 
         //*********************************//
         //***** linearlayout_navview6 *****//

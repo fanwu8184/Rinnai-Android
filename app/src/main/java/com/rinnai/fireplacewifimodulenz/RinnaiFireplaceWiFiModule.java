@@ -31,6 +31,7 @@ public class RinnaiFireplaceWiFiModule {
     int rfwmBurnSpeedInfo = 0;
     int rfwmLightingInfo = 0;
     int rfwmTimerActive = 0;
+    int rfwmWifiStrength = 0;
 
     int tmrstotal = 0;
 
@@ -306,6 +307,7 @@ public class RinnaiFireplaceWiFiModule {
                             this.rfwmBurnSpeedInfo = Integer.parseInt(dataSplit[12], 16);
                             this.rfwmLightingInfo = Integer.parseInt(dataSplit[13], 16);
                             this.rfwmTimerActive = Integer.parseInt(dataSplit[14], 16);
+                            this.rfwmWifiStrength = Integer.parseInt(dataSplit[15], 16);
 
                         } catch (Exception e) {
                             header = "";//Error with data
