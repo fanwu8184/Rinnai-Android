@@ -95,8 +95,6 @@
     <include
         android:id="@+id/include_devicenameedit_lockout"
         layout="@layout/devicenameedit_multiunit_lockout_rinnai21_home_screen"
-        layout_height="wrap_content"
-        layout_width="match_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible" />
@@ -104,8 +102,6 @@
     <include
         android:id="@+id/include_devicenameedit"
         layout="@layout/devicenameedit_multiunit_rinnai21_home_screen"
-        layout_height="wrap_content"
-        layout_width="match_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible" />
