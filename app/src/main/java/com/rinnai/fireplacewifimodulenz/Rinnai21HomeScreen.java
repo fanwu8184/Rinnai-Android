@@ -1,6 +1,7 @@
 package com.rinnai.fireplacewifimodulenz;
 
 import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -816,6 +818,28 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                     case MotionEvent.ACTION_CANCEL:
                         // ABORTED
                         ViewId_button_navview5.setTextColor(Color.parseColor("#FFFFFFFF"));
+                }
+                return false;
+            }
+        });
+
+        //***** OnTouchListener - factoryResetBut (Rinnai Account) *****//
+        factoryResetBut.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // PRESSED
+                        factoryResetBut.setTextColor(Color.parseColor("#FFFFFFFF"));
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_UP:
+                        // RELEASED
+                        factoryResetBut.setTextColor(Color.parseColor("#FFa3a3a3"));
+                        presentResetWarning();
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_CANCEL:
+                        // ABORTED
+                        factoryResetBut.setTextColor(Color.parseColor("#FFa3a3a3"));
                 }
                 return false;
             }
@@ -2990,6 +3014,14 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: clientCallBackTCP(Exception - " + e + ")");
                         Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: clientCallBackTCP(RX - " + pText + ")");
                     }
+
+                    if (pType.contains("19")) {
+                        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmResetResponse == 1) {
+                            presentSuccessfulAlert();
+                        } else {
+                            presentFailAlert();
+                        }
+                    }
                 }
             });
         }
@@ -3349,4 +3381,64 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     //    startActivity(intent);
     //}
 
+    private void presentResetWarning() {
+        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai21HomeScreen.this).create();
+        alertDialog.setTitle("Factory Reset");
+        alertDialog.setMessage("This will reset your fire device back to factory setting.");
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        resetToFactory();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    private void resetToFactory() {
+        try {
+            TCPClient tcpClient = new TCPClient(
+                    3000,
+                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                    this,
+                    "RINNAI_19," + "E\n", true);
+            tcpClient.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: resetToFactory(Exception - " + e + ")");
+        }
+    }
+
+    private void presentSuccessfulAlert() {
+        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai21HomeScreen.this).create();
+        alertDialog.setTitle("Reset Succeeded!");
+        alertDialog.setMessage("You have successfully reset your fire device back to factory setting. This App will be off.");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                    }
+                });
+        alertDialog.show();
+    }
+
+    private  void presentFailAlert() {
+        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai21HomeScreen.this).create();
+        alertDialog.setTitle("Reset Failed!");
+        alertDialog.setMessage("Something went wrong. Please try again.");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
 }

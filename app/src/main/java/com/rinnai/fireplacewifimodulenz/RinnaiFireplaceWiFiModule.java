@@ -32,6 +32,7 @@ public class RinnaiFireplaceWiFiModule {
     int rfwmLightingInfo = 0;
     int rfwmTimerActive = 0;
     int rfwmWifiStrength = 0;
+    int rfwmResetResponse = 0;
 
     int tmrstotal = 0;
 
@@ -348,6 +349,22 @@ public class RinnaiFireplaceWiFiModule {
 
                         try {
                             this.otafiletransferResult = dataSplit[1];
+                        } catch (Exception e) {
+                            header = "";//Error with data
+                        }
+                    }
+                } else if (header.compareTo("19") == 0) {
+                    //RINNAI_19,OK,E
+
+                    if (data.contains("OK")) {
+                        try {
+                            this.rfwmResetResponse = 1;
+                        } catch (Exception e) {
+                            header = "";//Error with data
+                        }
+                    } else {
+                        try {
+                            this.rfwmResetResponse = 0;
                         } catch (Exception e) {
                             header = "";//Error with data
                         }
