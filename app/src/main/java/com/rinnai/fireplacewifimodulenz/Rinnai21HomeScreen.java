@@ -1580,6 +1580,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
                         ViewId_imagebutton3.setPressed(false);
 
+                        setStandby();
+
                         Tx_RN171DeviceSetOpState();
 
                         return true; // if you want to handle the touch event
@@ -2452,17 +2454,17 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         //Check if Standby Screen is set.
         //Operation state = Stop:[0x00]
-        if (AppGlobals.ViewId_imagebutton3_imagebutton22_actionup == false) {
-            setStandby();
-        }
-        //Operation state = Operate:[0x01]
-        else {
-            setShowHints();
-
-            AppGlobals.Button_flame_settemp_actionvisible = false;
-
-            setFlameSettempVisibility();
-        }
+//        if (AppGlobals.ViewId_imagebutton3_imagebutton22_actionup == false) {
+//            setStandby();
+//        }
+//        //Operation state = Operate:[0x01]
+//        else {
+//            setShowHints();
+//
+//            AppGlobals.Button_flame_settemp_actionvisible = false;
+//
+//            setFlameSettempVisibility();
+//        }
 
         //***** myseekbar3 (Seekbar Shadow Flame - Seekbar) *****//
         ViewId_myseekbar3 = (VerticalSeekBar) findViewById(R.id.mySeekBar3);
@@ -2637,7 +2639,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                 ViewId_button5.isPressed() == false && ViewId_button6.isPressed() == false &&
                                 ViewId_imagebutton23.isPressed() == false &&
                                 ViewId_imagebutton23Standby.isPressed() == false &&
-                                ViewId_include_multiunit.getVisibility() == View.INVISIBLE && ViewId_button14.isPressed() == false &&
+                                ViewId_include_multiunit.getVisibility() == View.INVISIBLE &&
                                 ViewId_include_devicenameedit.getVisibility() == View.INVISIBLE && ViewId_button16.isPressed() == false &&
                                 !drawer.isDrawerOpen(GravityCompat.START)) {
 
@@ -2679,6 +2681,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                             //Operation state = Stop:[0x00]
                                             if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 0) {
                                                 AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = false;
+                                                setStandby();
                                             }
 
                                             //Operation state = Operate:[0x01]
@@ -3009,6 +3012,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                     }
                                 }
                             }
+                        }else{
+                                                   Log.d("myApp_WiFiTCP", "ELSE");
                         }
                     } catch (Exception e) {
                         Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: clientCallBackTCP(Exception - " + e + ")");
