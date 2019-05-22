@@ -18,6 +18,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,8 @@ public class Rinnai17Login extends MillecActivityBase
 
     private boolean isShowList = false;
     private boolean isTimer = false;
+
+    ProgressBar progressBarOnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +110,8 @@ public class Rinnai17Login extends MillecActivityBase
             int memoryClass = am.getMemoryClass();
             Log.d("myApp_Memory", "memoryClass:" + Integer.toString(memoryClass));
 
-            startFireAnimation();
+            //startFireAnimation();
+            progressBarOnStart = (ProgressBar) findViewById(R.id.progressBarOnStart);
 
             this.startCommunicationErrorFault();
 
@@ -174,7 +178,8 @@ public class Rinnai17Login extends MillecActivityBase
         }
         if(isTimer){
             startupCheckTimer.cancel();
-            fireanimationCheckTimer.cancel();
+            //fireanimationCheckTimer.cancel();
+            progressBarOnStart.setVisibility(View.INVISIBLE);
             isClosing = true;
 
         }
@@ -423,105 +428,105 @@ public class Rinnai17Login extends MillecActivityBase
 
     public void startFireAnimation() {
 
-        this.fireanimationCheckTimerCount = 0;
-
-        this.fireanimationCheckTimer = new Timer();
-
-        this.fireanimationCheckTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                Log.d("myApp", "startFireAnimation: Tick.. " + fireanimationCheckTimerCount);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Load the ImageView that will host the animation and
-                        // set its background to our AnimationDrawable XML resource.
-                        ViewId_imageview18 = (ImageView) findViewById(R.id.imageView18);
-
-                        switch(fireanimationCheckTimerCount){
-                            case 1:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_1);
-                                break;
-                            case 2:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_5);
-                                break;
-                            case 3:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_10);
-                                break;
-                            case 4:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_15);
-                                break;
-                            case 5:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_20);
-                                break;
-                            case 6:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_25);
-                                break;
-                            case 7:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_30);
-                                break;
-                            case 8:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_35);
-                                break;
-                            case 9:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_40);
-                                break;
-                            case 10:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_45);
-                                break;
-                            case 11:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_50);
-                                break;
-                            case 12:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_55);
-                                break;
-                            case 13:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_55);
-                                break;
-                            case 14:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_50);
-                                break;
-                            case 15:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_45);
-                                break;
-                            case 16:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_40);
-                                break;
-                            case 17:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_35);
-                                break;
-                            case 18:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_30);
-                                break;
-                            case 19:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_25);
-                                break;
-                            case 20:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_20);
-                                break;
-                            case 21:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_15);
-                                break;
-                            case 22:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_10);
-                                break;
-                            case 23:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_5);
-                                break;
-                            case 24:
-                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_1);
-                                fireanimationCheckTimerCount = 0;
-                                break;
-                        }
-
-                        fireanimationCheckTimerCount++;
-                    }
-                });
-            }
-
-        }, 0, 100);
+//        this.fireanimationCheckTimerCount = 0;
+//
+//        this.fireanimationCheckTimer = new Timer();
+//
+//        this.fireanimationCheckTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//                Log.d("myApp", "startFireAnimation: Tick.. " + fireanimationCheckTimerCount);
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // Load the ImageView that will host the animation and
+//                        // set its background to our AnimationDrawable XML resource.
+//                        ViewId_imageview18 = (ImageView) findViewById(R.id.imageView18);
+//
+//                        switch(fireanimationCheckTimerCount){
+//                            case 1:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_1);
+//                                break;
+//                            case 2:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_5);
+//                                break;
+//                            case 3:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_10);
+//                                break;
+//                            case 4:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_15);
+//                                break;
+//                            case 5:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_20);
+//                                break;
+//                            case 6:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_25);
+//                                break;
+//                            case 7:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_30);
+//                                break;
+//                            case 8:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_35);
+//                                break;
+//                            case 9:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_40);
+//                                break;
+//                            case 10:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_45);
+//                                break;
+//                            case 11:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_50);
+//                                break;
+//                            case 12:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_55);
+//                                break;
+//                            case 13:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_55);
+//                                break;
+//                            case 14:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_50);
+//                                break;
+//                            case 15:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_45);
+//                                break;
+//                            case 16:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_40);
+//                                break;
+//                            case 17:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_35);
+//                                break;
+//                            case 18:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_30);
+//                                break;
+//                            case 19:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_25);
+//                                break;
+//                            case 20:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_20);
+//                                break;
+//                            case 21:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_15);
+//                                break;
+//                            case 22:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_10);
+//                                break;
+//                            case 23:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_5);
+//                                break;
+//                            case 24:
+//                                ViewId_imageview18.setBackgroundResource(R.drawable.fireanimation_1);
+//                                fireanimationCheckTimerCount = 0;
+//                                break;
+//                        }
+//
+//                        fireanimationCheckTimerCount++;
+//                    }
+//                });
+//            }
+//
+//        }, 0, 100);
 
     }
 
@@ -678,7 +683,8 @@ public class Rinnai17Login extends MillecActivityBase
                                 if (startupCheckTimerCount % 2 == 0) {
 
                                     startupCheckTimer.cancel();
-                                    fireanimationCheckTimer.cancel();
+                                    //fireanimationCheckTimer.cancel();
+                                    progressBarOnStart.setVisibility(View.INVISIBLE);
                                     isClosing = true;
                                     isAccessPoint = false;
                                     intent = new Intent(Rinnai17Login.this, Rinnai00fInitialSetupNetwork.class);
@@ -719,7 +725,8 @@ public class Rinnai17Login extends MillecActivityBase
                                 AppGlobals.UDPSrv.stopServer();
 
                                 startupCheckTimer.cancel();
-                                fireanimationCheckTimer.cancel();
+                                //fireanimationCheckTimer.cancel();
+                                progressBarOnStart.setVisibility(View.INVISIBLE);
                                 isClosing = true;
                                 intent = new Intent(Rinnai17Login.this, Rinnai11aRegistration.class);
                                 startActivity(intent);
@@ -780,7 +787,8 @@ public class Rinnai17Login extends MillecActivityBase
                                 AppGlobals.UDPSrv.stopServer();
 
                                 startupCheckTimer.cancel();
-                                fireanimationCheckTimer.cancel();
+                                //fireanimationCheckTimer.cancel();
+                                progressBarOnStart.setVisibility(View.INVISIBLE);
                                 isClosing = true;
                                 intent = new Intent(Rinnai17Login.this, Rinnai12OTA.class);
                                 startActivity(intent);
@@ -848,7 +856,8 @@ public class Rinnai17Login extends MillecActivityBase
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
-                                        fireanimationCheckTimer.cancel();
+                                        //fireanimationCheckTimer.cancel();
+                                        progressBarOnStart.setVisibility(View.INVISIBLE);
                                         isClosing = true;
                                         intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
                                         startActivity(intent);
@@ -859,7 +868,8 @@ public class Rinnai17Login extends MillecActivityBase
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
-                                        fireanimationCheckTimer.cancel();
+                                        //fireanimationCheckTimer.cancel();
+                                        progressBarOnStart.setVisibility(View.INVISIBLE);
                                         isClosing = true;
                                         intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
                                         startActivity(intent);
@@ -879,7 +889,8 @@ public class Rinnai17Login extends MillecActivityBase
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
-                                        fireanimationCheckTimer.cancel();
+                                        //fireanimationCheckTimer.cancel();
+                                        progressBarOnStart.setVisibility(View.INVISIBLE);
                                         isClosing = true;
 
                                         if(AppGlobals.rfwmEmail.equals("NA")){
@@ -899,7 +910,8 @@ public class Rinnai17Login extends MillecActivityBase
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
-                                        fireanimationCheckTimer.cancel();
+                                        //fireanimationCheckTimer.cancel();
+                                        progressBarOnStart.setVisibility(View.INVISIBLE);
                                         isClosing = true;
                                         intent = new Intent(Rinnai17Login.this, Rinnai22IgnitionSequence.class);
                                         startActivity(intent);
@@ -913,7 +925,8 @@ public class Rinnai17Login extends MillecActivityBase
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
-                                        fireanimationCheckTimer.cancel();
+                                        //fireanimationCheckTimer.cancel();
+                                        progressBarOnStart.setVisibility(View.INVISIBLE);
                                         isClosing = true;
                                         intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
                                         startActivity(intent);
@@ -927,7 +940,8 @@ public class Rinnai17Login extends MillecActivityBase
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
-                                        fireanimationCheckTimer.cancel();
+                                        //fireanimationCheckTimer.cancel();
+                                        progressBarOnStart.setVisibility(View.INVISIBLE);
                                         isClosing = true;
                                         intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
                                         startActivity(intent);
@@ -938,7 +952,8 @@ public class Rinnai17Login extends MillecActivityBase
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
-                                        fireanimationCheckTimer.cancel();
+                                        //fireanimationCheckTimer.cancel();
+                                        progressBarOnStart.setVisibility(View.INVISIBLE);
                                         isClosing = true;
                                         intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
                                         startActivity(intent);
@@ -951,7 +966,8 @@ public class Rinnai17Login extends MillecActivityBase
                                     AppGlobals.UDPSrv.stopServer();
 
                                     startupCheckTimer.cancel();
-                                    fireanimationCheckTimer.cancel();
+                                    //fireanimationCheckTimer.cancel();
+                                    progressBarOnStart.setVisibility(View.INVISIBLE);
                                     isClosing = true;
                                     intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
                                     startActivity(intent);
@@ -965,7 +981,8 @@ public class Rinnai17Login extends MillecActivityBase
                                 AppGlobals.UDPSrv.stopServer();
 
                                 startupCheckTimer.cancel();
-                                fireanimationCheckTimer.cancel();
+                                //fireanimationCheckTimer.cancel();
+                                progressBarOnStart.setVisibility(View.INVISIBLE);
                                 isClosing = true;
                                 intent = new Intent(Rinnai17Login.this, Rinnai26PowerOff.class);
                                 startActivity(intent);
@@ -1049,7 +1066,8 @@ public class Rinnai17Login extends MillecActivityBase
 
         if(!isShowList){
             startupCheckTimer.cancel();
-            fireanimationCheckTimer.cancel();
+            //fireanimationCheckTimer.cancel();
+            progressBarOnStart.setVisibility(View.INVISIBLE);
 
             isClosing = true;
             isAccessPoint = false;
