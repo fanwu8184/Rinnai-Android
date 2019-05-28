@@ -251,7 +251,6 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         Log.d("myApp_ActivityLifecycle", "Rinnai21Homescreen_onStop.");
 
         if (startupCheckTimer != null) {
-            Log.d("ttt", "cancel....");
             startupCheckTimer.cancel();
         }
         isClosing = true;
@@ -593,6 +592,15 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //int dpAsPixels = (int) (sizeInDp*scale + 0.5f);
         dpAsPixels = (int) (25 * scale + 0.5f);
         factoryResetBut.setPadding(dpAsPixels, 0, 0, 0);
+
+
+        //*********************************//
+        //***** Hide Views when on Remote *****//
+        //*********************************//
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+            signalStrengthNav.setVisibility(View.INVISIBLE);
+            factoryResetNav.setVisibility(View.INVISIBLE);
+        }
 
         //*********************************//
         //***** linearlayout_navview6 *****//
