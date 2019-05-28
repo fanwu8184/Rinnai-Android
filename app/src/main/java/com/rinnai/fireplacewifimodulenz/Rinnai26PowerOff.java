@@ -73,7 +73,9 @@ public class Rinnai26PowerOff extends MillecActivityBase
         super.onStop();
         Log.d("myApp_ActivityLifecycle", "Rinnai26PowerOff_onStop.");
 
-        startupCheckTimer.cancel();
+        if (startupCheckTimer != null) {
+            startupCheckTimer.cancel();
+        }
         isClosing = true;
     }
 
@@ -97,22 +99,25 @@ public class Rinnai26PowerOff extends MillecActivityBase
 
     public void startTxRN171DeviceGetStatus() {
 
-        this.startupCheckTimerCount = 0;
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+            Log.d("ttt", "update remote...");
+        } else {
+            this.startupCheckTimerCount = 0;
 
-        this.startupCheckTimer = new Timer();
+            this.startupCheckTimer = new Timer();
 
-        this.startupCheckTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+            this.startupCheckTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
 
-                Log.d("myApp", "Rinnai26PowerOff: Tick.. " + startupCheckTimerCount);
+                    Log.d("myApp", "Rinnai26PowerOff: Tick.. " + startupCheckTimerCount);
 
-                Tx_RN171DeviceGetStatus();
+                    Tx_RN171DeviceGetStatus();
 
-            }
+                }
 
-        }, 0, 2000);
-
+            }, 0, 2000);
+        }
     }
 
 

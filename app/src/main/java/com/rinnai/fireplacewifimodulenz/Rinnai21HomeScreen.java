@@ -250,7 +250,10 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         super.onStop();
         Log.d("myApp_ActivityLifecycle", "Rinnai21Homescreen_onStop.");
 
-        startupCheckTimer.cancel();
+        if (startupCheckTimer != null) {
+            Log.d("ttt", "cancel....");
+            startupCheckTimer.cancel();
+        }
         isClosing = true;
     }
 
@@ -2351,91 +2354,94 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
     public void startTxRN171DeviceGetStatus() {
 
-        this.startupCheckTimerCount = 0;
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+            Log.d("ttt", "update remote...");
+        } else {
+            this.startupCheckTimerCount = 0;
 
-        this.startupCheckTimer = new Timer();
+            this.startupCheckTimer = new Timer();
 
-        this.startupCheckTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+            this.startupCheckTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
 
-                Log.d("myApp", "Rinnai21HomeScreen: Tick.. " + startupCheckTimerCount);
+                    Log.d("myApp", "Rinnai21HomeScreen: Tick.. " + startupCheckTimerCount);
 
-                //***** myseekbar3 (Seekbar Shadow Flame - Seekbar) *****//
-                ViewId_myseekbar = (VerticalSeekBar) findViewById(R.id.mySeekBar);
-                ViewId_myseekbar3 = (VerticalSeekBar) findViewById(R.id.mySeekBar3);
+                    //***** myseekbar3 (Seekbar Shadow Flame - Seekbar) *****//
+                    ViewId_myseekbar = (VerticalSeekBar) findViewById(R.id.mySeekBar);
+                    ViewId_myseekbar3 = (VerticalSeekBar) findViewById(R.id.mySeekBar3);
 
-                if (ViewId_myseekbar3.getProgress() < ViewId_myseekbar.getProgress()) {
-                    ViewId_myseekbar3.setProgress(seekbar_shadow_flamevalue++);
-                } else if (ViewId_myseekbar3.getProgress() > ViewId_myseekbar.getProgress()) {
-                    ViewId_myseekbar3.setProgress(seekbar_shadow_flamevalue--);
+                    if (ViewId_myseekbar3.getProgress() < ViewId_myseekbar.getProgress()) {
+                        ViewId_myseekbar3.setProgress(seekbar_shadow_flamevalue++);
+                    } else if (ViewId_myseekbar3.getProgress() > ViewId_myseekbar.getProgress()) {
+                        ViewId_myseekbar3.setProgress(seekbar_shadow_flamevalue--);
+                    }
+
+                    //***** myseekbar4 (Seekbar Shadow Set Temp - Seekbar) *****//
+                    ViewId_myseekbar4 = (VerticalSeekBar) findViewById(R.id.mySeekBar4);
+
+                    switch (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmRoomTemperature) {
+                        case 16:
+                            ViewId_myseekbar4.setProgress(0);
+                            break;
+                        case 17:
+                            ViewId_myseekbar4.setProgress(7);
+                            break;
+                        case 18:
+                            ViewId_myseekbar4.setProgress(14);
+                            break;
+                        case 19:
+                            ViewId_myseekbar4.setProgress(21);
+                            break;
+                        case 20:
+                            ViewId_myseekbar4.setProgress(29);
+                            break;
+                        case 21:
+                            ViewId_myseekbar4.setProgress(36);
+                            break;
+                        case 22:
+                            ViewId_myseekbar4.setProgress(43);
+                            break;
+                        case 23:
+                            ViewId_myseekbar4.setProgress(50);
+                            break;
+                        case 24:
+                            ViewId_myseekbar4.setProgress(57);
+                            break;
+                        case 25:
+                            ViewId_myseekbar4.setProgress(64);
+                            break;
+                        case 26:
+                            ViewId_myseekbar4.setProgress(71);
+                            break;
+                        case 27:
+                            ViewId_myseekbar4.setProgress(79);
+                            break;
+                        case 28:
+                            ViewId_myseekbar4.setProgress(86);
+                            break;
+                        case 29:
+                            ViewId_myseekbar4.setProgress(93);
+                            break;
+                        case 30:
+                            ViewId_myseekbar4.setProgress(100);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (startupCheckTimerCount % 20 == 0) {
+                        Tx_RN171DeviceGetStatus();
+
+                        AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmappSettingsChangeGuardTime--;
+                    }
+
+                    startupCheckTimerCount++;
+
                 }
 
-                //***** myseekbar4 (Seekbar Shadow Set Temp - Seekbar) *****//
-                ViewId_myseekbar4 = (VerticalSeekBar) findViewById(R.id.mySeekBar4);
-
-                switch (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmRoomTemperature) {
-                    case 16:
-                        ViewId_myseekbar4.setProgress(0);
-                        break;
-                    case 17:
-                        ViewId_myseekbar4.setProgress(7);
-                        break;
-                    case 18:
-                        ViewId_myseekbar4.setProgress(14);
-                        break;
-                    case 19:
-                        ViewId_myseekbar4.setProgress(21);
-                        break;
-                    case 20:
-                        ViewId_myseekbar4.setProgress(29);
-                        break;
-                    case 21:
-                        ViewId_myseekbar4.setProgress(36);
-                        break;
-                    case 22:
-                        ViewId_myseekbar4.setProgress(43);
-                        break;
-                    case 23:
-                        ViewId_myseekbar4.setProgress(50);
-                        break;
-                    case 24:
-                        ViewId_myseekbar4.setProgress(57);
-                        break;
-                    case 25:
-                        ViewId_myseekbar4.setProgress(64);
-                        break;
-                    case 26:
-                        ViewId_myseekbar4.setProgress(71);
-                        break;
-                    case 27:
-                        ViewId_myseekbar4.setProgress(79);
-                        break;
-                    case 28:
-                        ViewId_myseekbar4.setProgress(86);
-                        break;
-                    case 29:
-                        ViewId_myseekbar4.setProgress(93);
-                        break;
-                    case 30:
-                        ViewId_myseekbar4.setProgress(100);
-                        break;
-                    default:
-                        break;
-                }
-
-                if (startupCheckTimerCount % 20 == 0) {
-                    Tx_RN171DeviceGetStatus();
-
-                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmappSettingsChangeGuardTime--;
-                }
-
-                startupCheckTimerCount++;
-
-            }
-
-        }, 0, 100);
-
+            }, 0, 100);
+        }
     }
 
     //*********************************//
