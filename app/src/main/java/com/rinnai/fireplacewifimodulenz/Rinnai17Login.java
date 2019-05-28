@@ -21,11 +21,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import AWSmodule.AWSconnection;
 
 /**
  * Created by jconci on 14/09/2017.
@@ -63,6 +67,8 @@ public class Rinnai17Login extends MillecActivityBase
     private boolean isTimer = false;
 
     ProgressBar progressBarOnStart;
+
+    ArrayList<Appliance> appliances = new ArrayList<Appliance>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,6 +272,8 @@ public class Rinnai17Login extends MillecActivityBase
 
     private void showWifiList(){
 
+        addRemoteDevices();
+
 //      check fireplace wifi if only one
         if(AppGlobals.fireplaceWifi.size() == 1){
             AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
@@ -295,6 +303,7 @@ public class Rinnai17Login extends MillecActivityBase
             int id = 0;
 
             for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
+
 
                 View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
 
@@ -416,7 +425,10 @@ public class Rinnai17Login extends MillecActivityBase
 
             isAccessPoint = false;
 
+            if(!AppGlobals.rfwmEmail.equals("NA")) {
+                getAWSCustomerAppliance();
             }
+        }
 
         startTxRN171DeviceGetStatus();
 
@@ -1276,4 +1288,57 @@ public class Rinnai17Login extends MillecActivityBase
     //    startActivity(intent);
     //}
 
+    public void getAWSCustomerAppliance() {
+
+        /////////////////////////////////////////
+        //Select appliances owned by a customer
+        /////////////////////////////////////////
+        AWSconnection.selectCustomerApplianceURL(AppGlobals.userregInfo.userregistrationEmail, new AWSconnection.arrayResult() {
+            @Override
+
+            //Get Async callback results
+            public void getResult(ArrayList<String> resultList) {
+
+                //Do stuff with results here
+                int listSize = resultList.size();
+                for (int i = 0; i < listSize; i++) {
+                    String[] ui_resultListsplit = resultList.get(i).split("\"");
+                    Log.d("result", "WiFi Dongle UUID: " + ui_resultListsplit[3]);
+                    Log.d("result", "Nickname: " + ui_resultListsplit[19]);
+                    appliances.add(new Appliance(ui_resultListsplit[3], ui_resultListsplit[19]));
+                }
+            }
+        });
+    }
+
+    public boolean containsUUID(String uuid) {
+        for (int i = 0; i < AppGlobals.fireplaceWifi.size(); i++) {
+            if (AppGlobals.fireplaceWifi.get(i).UUID.equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addRemoteDevices() {
+        for (int i = 0; i < appliances.size(); i++) {
+            if (!containsUUID(appliances.get(i).uuid)) {
+                RinnaiFireplaceWiFiModule nFireplace = new RinnaiFireplaceWiFiModule();
+                nFireplace.UUID = appliances.get(i).uuid;
+                nFireplace.DeviceName = "(R) " + appliances.get(i).name;
+                AppGlobals.fireplaceWifi.add(nFireplace);
+            }
+        }
+    }
+}
+
+class Appliance {
+    public String uuid = "";
+    public String name = "";
+
+    public Appliance(String uuid, String name){
+
+        this.uuid = uuid;
+        this.name = name;
+    }
 }
