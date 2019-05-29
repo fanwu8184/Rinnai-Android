@@ -1331,14 +1331,3 @@ public class Rinnai17Login extends MillecActivityBase
         }
     }
 }
-
-class Appliance {
-    public String uuid = "";
-    public String name = "";
-
-    public Appliance(String uuid, String name){
-
-        this.uuid = uuid;
-        this.name = name;
-    }
-}

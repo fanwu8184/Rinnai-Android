@@ -35,6 +35,10 @@ import android.widget.Toast;
 
 import com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -139,6 +143,9 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
     boolean scrollviewrowmultiunit_pressed = false;
 
+    RemoteSetting remoteSetting;
+    Timer remoteTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,7 +208,9 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         disableNavigationViewScrollbars(ViewId_nav_view);
 
-        startCommunicationErrorFault();
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress != null) {
+            startCommunicationErrorFault();
+        }
 
         startTxRN171DeviceGetStatus();
     }
@@ -250,9 +259,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         super.onStop();
         Log.d("myApp_ActivityLifecycle", "Rinnai21Homescreen_onStop.");
 
-        if (startupCheckTimer != null) {
-            startupCheckTimer.cancel();
-        }
+        cancelTimers();
         isClosing = true;
     }
 
@@ -731,7 +738,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         // RELEASED
                         ViewId_button_navview2.setTextColor(Color.parseColor("#FFFFFFFF"));
                         resetguardtimeRinnai21HomeScreen();
-                        startupCheckTimer.cancel();
+                        cancelTimers();
                         isClosing = true;
                         Intent intent = new Intent(Rinnai21HomeScreen.this, Rinnai33aTimers.class);
                         startActivity(intent);
@@ -760,7 +767,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         // RELEASED
                         ViewId_button_navview3.setTextColor(Color.parseColor("#FFFFFFFF"));
                         resetguardtimeRinnai21HomeScreen();
-                        startupCheckTimer.cancel();
+                        cancelTimers();
                         isClosing = true;
                         Intent intent = new Intent(Rinnai21HomeScreen.this, Rinnai35VisitRinnai.class);
                         startActivity(intent);
@@ -789,7 +796,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         // RELEASED
                         ViewId_button_navview4.setTextColor(Color.parseColor("#FFFFFFFF"));
                         resetguardtimeRinnai21HomeScreen();
-                        startupCheckTimer.cancel();
+                        cancelTimers();
                         isClosing = true;
                         Intent intent = new Intent(Rinnai21HomeScreen.this, Rinnai34Lighting.class);
                         startActivity(intent);
@@ -818,7 +825,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         // RELEASED
                         ViewId_button_navview5.setTextColor(Color.parseColor("#FFFFFFFF"));
                         resetguardtimeRinnai21HomeScreen();
-                        startupCheckTimer.cancel();
+                        cancelTimers();
                         isClosing = true;
                         Intent intent = new Intent(Rinnai21HomeScreen.this, Rinnai11hRegistration.class);
                         startActivity(intent);
@@ -2363,7 +2370,15 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     public void startTxRN171DeviceGetStatus() {
 
         if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
-            Log.d("ttt", "update remote...");
+
+            remoteTimer = new Timer();
+            remoteTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    getRemoteStat();
+                }
+            }, 0, 2000);
+
         } else {
             this.startupCheckTimerCount = 0;
 
@@ -2706,7 +2721,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                             //Operation state = Error stop:[0x02]
                                             else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 2) {
                                                 resetguardtimeRinnai21HomeScreen();
-                                                startupCheckTimer.cancel();
+                                                cancelTimers();
                                                 isClosing = true;
                                                 intent = new Intent(Rinnai21HomeScreen.this, Rinnai26Fault.class);
                                                 startActivity(intent);
@@ -2715,7 +2730,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                                 Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen_clientCallBackTCP: startActivity(Rinnai26Fault).");
                                             } else {
                                                 resetguardtimeRinnai21HomeScreen();
-                                                startupCheckTimer.cancel();
+                                                cancelTimers();
                                                 isClosing = true;
                                                 intent = new Intent(Rinnai21HomeScreen.this, Rinnai26Fault.class);
                                                 startActivity(intent);
@@ -2745,7 +2760,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                             //Burning state = Ignite:[0x01]
                                             else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 1) {
                                                 resetguardtimeRinnai21HomeScreen();
-                                                startupCheckTimer.cancel();
+                                                cancelTimers();
                                                 isClosing = true;
                                                 intent = new Intent(Rinnai21HomeScreen.this, Rinnai22IgnitionSequence.class);
                                                 startActivity(intent);
@@ -2778,7 +2793,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                                 //Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
                                             } else {
                                                 resetguardtimeRinnai21HomeScreen();
-                                                startupCheckTimer.cancel();
+                                                cancelTimers();
                                                 isClosing = true;
                                                 intent = new Intent(Rinnai21HomeScreen.this, Rinnai26Fault.class);
                                                 startActivity(intent);
@@ -2815,7 +2830,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                                 AppGlobals.Button_flame_settemp_actionvisible = false;
                                             } else {
                                                 resetguardtimeRinnai21HomeScreen();
-                                                startupCheckTimer.cancel();
+                                                cancelTimers();
                                                 isClosing = true;
                                                 intent = new Intent(Rinnai21HomeScreen.this, Rinnai26Fault.class);
                                                 startActivity(intent);
@@ -3004,7 +3019,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
                                         } else {
                                             resetguardtimeRinnai21HomeScreen();
-                                            startupCheckTimer.cancel();
+                                            cancelTimers();
                                             isClosing = true;
                                             intent = new Intent(Rinnai21HomeScreen.this, Rinnai26Fault.class);
                                             startActivity(intent);
@@ -3016,7 +3031,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                     //Main power switch = OFF:[0x01]
                                     else {
                                         resetguardtimeRinnai21HomeScreen();
-                                        startupCheckTimer.cancel();
+                                        cancelTimers();
                                         isClosing = true;
                                         intent = new Intent(Rinnai21HomeScreen.this, Rinnai26PowerOff.class);
                                         startActivity(intent);
@@ -3165,7 +3180,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     @Override
     public void timereventCallBackTimer(int timerID) {
         resetguardtimeRinnai21HomeScreen();
-        startupCheckTimer.cancel();
+        cancelTimers();
         isClosing = true;
         intent = new Intent(Rinnai21HomeScreen.this, Rinnai26Fault.class);
         startActivity(intent);
@@ -3216,7 +3231,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     //Timers a - Scheduled Timers
     public void goToActivity_Rinnai33a_Timers(View view) {
         resetguardtimeRinnai21HomeScreen();
-        startupCheckTimer.cancel();
+        cancelTimers();
         isClosing = true;
         Intent intent = new Intent(this, Rinnai33aTimers.class);
         startActivity(intent);
@@ -3236,7 +3251,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     //Visit Rinnai
     public void goToActivity_Rinnai35_Visit_Rinnai(View view) {
         resetguardtimeRinnai21HomeScreen();
-        startupCheckTimer.cancel();
+        cancelTimers();
         isClosing = true;
         Intent intent = new Intent(this, Rinnai35VisitRinnai.class);
         startActivity(intent);
@@ -3347,7 +3362,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     //Lighting
     public void goToActivity_Rinnai34_Lighting(View view) {
         resetguardtimeRinnai21HomeScreen();
-        startupCheckTimer.cancel();
+        cancelTimers();
         isClosing = true;
         Intent intent = new Intent(this, Rinnai34Lighting.class);
         startActivity(intent);
@@ -3359,7 +3374,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     //Rinnai Account
     public void goToActivity_Rinnai11h_Registration(View view) {
         resetguardtimeRinnai21HomeScreen();
-        startupCheckTimer.cancel();
+        cancelTimers();
         isClosing = true;
         Intent intent = new Intent(this, Rinnai11hRegistration.class);
         startActivity(intent);
@@ -3459,5 +3474,95 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                     }
                 });
         alertDialog.show();
+    }
+
+    private void getRemoteStat() {
+        String uuid = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).UUID;
+        AWSconnection.remoteControlSelectURL(uuid,
+
+                //Call interface to retrieve Async results
+                new AWSconnection.textResult() {
+                    @Override
+
+                    public void getResult(String result) {
+
+                        //Log outputs
+                        Log.d("RC Values::", result);
+                        try {
+                            JSONObject jObject = new JSONObject(result);
+                            JSONArray jArray = jObject.getJSONArray("Items");
+                            int setFlame = jArray.getJSONObject(0).getInt("set_flame");
+                            int currentTemp = jArray.getJSONObject(0).getInt("current_temp");
+                            int mode = jArray.getJSONObject(0).getInt("mode");
+                            int setTemp = jArray.getJSONObject(0).getInt("set_temp");
+                            String faultCode = jArray.getJSONObject(0).getString("fault");
+                            remoteSetting = new RemoteSetting(faultCode, setTemp, setFlame, currentTemp, mode);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateUI();
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void updateUI() {
+        ViewId_imagebutton2 = (ImageButton) findViewById(R.id.imageButton2);
+        ViewId_imagebutton2.setVisibility(View.INVISIBLE);
+        ViewId_imageview = (ImageView) findViewById(R.id.imageView);
+        ViewId_imageview.setVisibility(View.INVISIBLE);
+
+        if (remoteSetting != null) {
+            ViewId_textview3 = (TextView) findViewById(R.id.textView3);
+            ViewId_textview3.setText(remoteSetting.currentTemp + "°");
+            ViewId_textview58 = (TextView) findViewById(R.id.textView58);
+            ViewId_textview58.setText(remoteSetting.currentTemp + "°");
+
+            ViewId_textview7 = (TextView) findViewById(R.id.textView7);
+            ViewId_textview7.setText("  " + remoteSetting.setTemp + "  ");
+
+            ViewId_textview6 = (TextView) findViewById(R.id.textView6);
+            ViewId_textview6.setText("  " + remoteSetting.setFlame + "  ");
+
+            if (remoteSetting.mode == 0) {
+                AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = false;
+                setStandby();
+            } else if (remoteSetting.mode == 1) {
+                AppGlobals.Button_flame_settemp_actionvisible = true;
+                setFlameSettempVisibility();
+            } else if (remoteSetting.mode == 2) {
+                AppGlobals.Button_flame_settemp_actionvisible = false;
+                setFlameSettempVisibility();
+            } else if (remoteSetting.mode == 3) {
+                resetguardtimeRinnai21HomeScreen();
+                cancelTimers();
+                isClosing = true;
+                intent = new Intent(Rinnai21HomeScreen.this, Rinnai26Fault.class);
+                startActivity(intent);
+                finish();
+            } else if (remoteSetting.mode == 4) {
+                resetguardtimeRinnai21HomeScreen();
+                cancelTimers();
+                isClosing = true;
+                intent = new Intent(Rinnai21HomeScreen.this, Rinnai26PowerOff.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+    }
+
+    private void cancelTimers() {
+        if (startupCheckTimer != null) {
+            startupCheckTimer.cancel();
+        }
+        if (remoteTimer != null) {
+            remoteTimer.cancel();
+        }
     }
 }

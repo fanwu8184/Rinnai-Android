@@ -1372,6 +1372,70 @@ public class AWSconnection {
 
     }
 
+    /////////////////////////////////////////
+    //Remote Control - Select
+    /////////////////////////////////////////
+
+    public static void remoteControlSelectURL(String wifi_dongle_UUID,
+                                              final textResult result) {
+
+
+        //HTTP initiate
+        OkHttpClient httpClient = new OkHttpClient();
+        JSONArray array = new JSONArray();
+
+
+        try {
+            //Create JSON object
+            JSONObject item = new JSONObject();
+            item.put("wifi_dongle_UUID", wifi_dongle_UUID);
+            array.put(item);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Format JSON to be posted
+        String postArray = array.toString();
+        postArray = postArray.replaceAll("[\\[\\]]", "");
+        Log.i("JSONarray: ", postArray);
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+
+        //Configure HTTP headers and body
+        RequestBody body = RequestBody.create(mediaType, postArray);
+        Request request = new Request.Builder()
+                .url("https://y49sqtdtv4.execute-api.ap-southeast-2.amazonaws.com/prod/remotecontrol/remotecontrolselect")
+                .post(body)
+                .addHeader("x-api-key", xAPI())
+                .addHeader("content-type", "application/json")
+                .build();
+
+
+        //okhttp asynchronous call
+        httpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("error", "error in getting response using async okhttp call");
+            }
+
+            //Callback
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    throw new IOException("Error response " + response);
+                }
+
+                //Format Callback message to String
+                String jsonData = response.body().string();
+
+                //Send callback results to interface so it can be retrieved by another class
+                result.getResult(jsonData);
+
+
+            }
+        });
+
+    }
 
 }
 

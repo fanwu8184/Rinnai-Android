@@ -8,12 +8,19 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
+import AWSmodule.AWSconnection;
 
 /**
  * Created by jconci on 9/10/2017.
@@ -35,6 +42,9 @@ public class Rinnai26Fault extends MillecActivityBase
 
     LinearLayout ViewId_linearlayout_multiunit_row;
 
+    RemoteSetting remoteSetting;
+    Timer remoteTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +57,7 @@ public class Rinnai26Fault extends MillecActivityBase
             @Override
             public void onClick(View v) {
 
-                startupCheckTimer.cancel();
+                cancelTimers();
                 isClosing = true;
                 Intent intent = new Intent(Rinnai26Fault.this, Rinnai33ServiceFaultCodes.class);
                 startActivity(intent);
@@ -210,9 +220,7 @@ public class Rinnai26Fault extends MillecActivityBase
         super.onStop();
         Log.d("myApp_ActivityLifecycle", "Rinnai26Fault_onStop.");
 
-        if (startupCheckTimer != null) {
-            startupCheckTimer.cancel();
-        }
+        cancelTimers();
         isClosing = true;
     }
 
@@ -237,7 +245,15 @@ public class Rinnai26Fault extends MillecActivityBase
     public void startTxRN171DeviceGetStatus() {
 
         if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
-            Log.d("ttt", "update remote...");
+
+            remoteTimer = new Timer();
+            remoteTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    getRemoteStat();
+                }
+            }, 0, 2000);
+
         } else {
             this.startupCheckTimerCount = 0;
 
@@ -347,7 +363,7 @@ public class Rinnai26Fault extends MillecActivityBase
 
                                     //Burning state = Extinguish:[0x00]
                                     if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 0) {
-                                        startupCheckTimer.cancel();
+                                        cancelTimers();
                                         isClosing = true;
                                         intent = new Intent(Rinnai26Fault.this, Rinnai21HomeScreen.class);
                                         startActivity(intent);
@@ -358,7 +374,7 @@ public class Rinnai26Fault extends MillecActivityBase
 
                                     //Burning state = Ignite:[0x01]
                                     else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 1) {
-                                        startupCheckTimer.cancel();
+                                        cancelTimers();
                                         isClosing = true;
                                         intent = new Intent(Rinnai26Fault.this, Rinnai22IgnitionSequence.class);
                                         startActivity(intent);
@@ -371,7 +387,7 @@ public class Rinnai26Fault extends MillecActivityBase
 
                                     //Burning state = Thermostat:[0x02]
                                     else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 2) {
-                                        startupCheckTimer.cancel();
+                                        cancelTimers();
                                         isClosing = true;
                                         intent = new Intent(Rinnai26Fault.this, Rinnai21HomeScreen.class);
                                         startActivity(intent);
@@ -382,7 +398,7 @@ public class Rinnai26Fault extends MillecActivityBase
 
                                     //Burning state = Thermostat OFF:[0x03]
                                     else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 3) {
-                                        startupCheckTimer.cancel();
+                                        cancelTimers();
                                         isClosing = true;
                                         intent = new Intent(Rinnai26Fault.this, Rinnai21HomeScreen.class);
                                         startActivity(intent);
@@ -411,7 +427,7 @@ public class Rinnai26Fault extends MillecActivityBase
                             }
                             //Main power switch = OFF:[0x01]
                             else {
-                                startupCheckTimer.cancel();
+                                cancelTimers();
                                 isClosing = true;
                                 intent = new Intent(Rinnai26Fault.this, Rinnai26PowerOff.class);
                                 startActivity(intent);
@@ -625,7 +641,7 @@ public class Rinnai26Fault extends MillecActivityBase
 
     //Fault - Service Fault Codes
     public void goToActivity_Rinnai33_Service_Fault_Codes(View view) {
-        startupCheckTimer.cancel();
+        cancelTimers();
         isClosing = true;
         Intent intent = new Intent(this, Rinnai33ServiceFaultCodes.class);
         startActivity(intent);
@@ -648,4 +664,62 @@ public class Rinnai26Fault extends MillecActivityBase
     //    startActivity(intent);
     //}
 
+    private void getRemoteStat() {
+        String uuid = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).UUID;
+        AWSconnection.remoteControlSelectURL(uuid,
+
+                //Call interface to retrieve Async results
+                new AWSconnection.textResult() {
+                    @Override
+
+                    public void getResult(String result) {
+
+                        //Log outputs
+                        Log.d("RC Values::", result);
+                        try {
+                            JSONObject jObject = new JSONObject(result);
+                            JSONArray jArray = jObject.getJSONArray("Items");
+                            int setFlame = jArray.getJSONObject(0).getInt("set_flame");
+                            int currentTemp = jArray.getJSONObject(0).getInt("current_temp");
+                            int mode = jArray.getJSONObject(0).getInt("mode");
+                            int setTemp = jArray.getJSONObject(0).getInt("set_temp");
+                            String faultCode = jArray.getJSONObject(0).getString("fault");
+                            remoteSetting = new RemoteSetting(faultCode, setTemp, setFlame, currentTemp, mode);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateUI();
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void updateUI() {
+
+        if (remoteSetting != null) {
+
+            if (remoteSetting.mode != 3) {
+                cancelTimers();
+                isClosing = true;
+                intent = new Intent(Rinnai26Fault.this, Rinnai21HomeScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+    }
+
+    private void cancelTimers() {
+        if (startupCheckTimer != null) {
+            startupCheckTimer.cancel();
+        }
+        if (remoteTimer != null) {
+            remoteTimer.cancel();
+        }
+    }
 }
