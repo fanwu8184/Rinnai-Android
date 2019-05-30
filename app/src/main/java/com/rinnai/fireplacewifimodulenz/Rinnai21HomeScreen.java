@@ -2377,7 +2377,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                 public void run() {
                     getRemoteStat();
                 }
-            }, 0, 2000);
+            }, 0, 10000);
 
         } else {
             this.startupCheckTimerCount = 0;
@@ -3081,30 +3081,47 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     //***** RN171_DEVICE_SET_FLAME *****//
     public void Tx_RN171DeviceSetFlame() {
 
-        try {
-            TCPClient tcpClient = new TCPClient(
-                    3000,
-                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
-                    this,
-                    "RINNAI_32," + String.format("%02X", AppGlobals.ViewId_textview6_flamevalue) + ",E\n", false);
-            tcpClient.start();
-        } catch (Exception e) {
-            Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: Tx_RN171DeviceSetFlame(Exception - " + e + ")");
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+            if (remoteSetting != null) {
+                remoteSetting.setFlame = AppGlobals.ViewId_textview6_flamevalue;
+                remoteSetting.mode = 1;
+                updateRemote();
+                updateFlameShadow();
+            }
+        } else {
+            try {
+                TCPClient tcpClient = new TCPClient(
+                        3000,
+                        AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                        this,
+                        "RINNAI_32," + String.format("%02X", AppGlobals.ViewId_textview6_flamevalue) + ",E\n", false);
+                tcpClient.start();
+            } catch (Exception e) {
+                Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: Tx_RN171DeviceSetFlame(Exception - " + e + ")");
+            }
         }
     }
 
     //***** RN171_DEVICE_SET_TEMP *****//
     public void Tx_RN171DeviceSetTemp() {
 
-        try {
-            TCPClient tcpClient = new TCPClient(
-                    3000,
-                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
-                    this,
-                    "RINNAI_33," + String.format("%02X", AppGlobals.ViewId_textview7_settempvalue) + ",E\n", false);
-            tcpClient.start();
-        } catch (Exception e) {
-            Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: Tx_RN171DeviceSetTemp(Exception - " + e + ")");
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+            if (remoteSetting != null) {
+                remoteSetting.setTemp = AppGlobals.ViewId_textview7_settempvalue;
+                remoteSetting.mode = 2;
+                updateRemote();
+            }
+        } else {
+            try {
+                TCPClient tcpClient = new TCPClient(
+                        3000,
+                        AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                        this,
+                        "RINNAI_33," + String.format("%02X", AppGlobals.ViewId_textview7_settempvalue) + ",E\n", false);
+                tcpClient.start();
+            } catch (Exception e) {
+                Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: Tx_RN171DeviceSetTemp(Exception - " + e + ")");
+            }
         }
     }
 
@@ -3113,15 +3130,31 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         int myInt_Opstate = (AppGlobals.ViewId_imagebutton3_imagebutton22_actionup) ? 1 : 0;
 
-        try {
-            TCPClient tcpClient = new TCPClient(
-                    3000,
-                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
-                    this,
-                    "RINNAI_34," + String.format("%02X", myInt_Opstate) + ",E\n", false);
-            tcpClient.start();
-        } catch (Exception e) {
-            Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: Tx_RN171DeviceSetOpState(Exception - " + e + ")");
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+            if (remoteSetting != null) {
+                if (myInt_Opstate == 0) {
+                    remoteSetting.mode = 0;
+                } else {
+                    remoteSetting.mode = 2;
+
+                    AppGlobals.Button_flame_settemp_actionvisible = false;
+                    setStandby();
+                    setShowHints();
+                    setFlameSettempVisibility();
+                }
+                updateRemote();
+            }
+        } else {
+            try {
+                TCPClient tcpClient = new TCPClient(
+                        3000,
+                        AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                        this,
+                        "RINNAI_34," + String.format("%02X", myInt_Opstate) + ",E\n", false);
+                tcpClient.start();
+            } catch (Exception e) {
+                Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen: Tx_RN171DeviceSetOpState(Exception - " + e + ")");
+            }
         }
     }
 
@@ -3477,7 +3510,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     }
 
     private void getRemoteStat() {
-        String uuid = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).UUID;
+        final String uuid = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).UUID;
         AWSconnection.remoteControlSelectURL(uuid,
 
                 //Call interface to retrieve Async results
@@ -3496,7 +3529,10 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                             int mode = jArray.getJSONObject(0).getInt("mode");
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
-                            remoteSetting = new RemoteSetting(faultCode, setTemp, setFlame, currentTemp, mode);
+                            remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode);
+                            Log.d("ttt", "mode is: " + remoteSetting.mode);
+                            Log.d("ttt", "setTemp is: " + remoteSetting.setTemp);
+                            Log.d("ttt", "setFlame is: " + remoteSetting.setFlame);
 
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -3510,6 +3546,25 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         }
                     }
                 });
+    }
+
+    private void updateFlameShadow() {
+        final Timer shadowTimer = new Timer();
+        shadowTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                ViewId_myseekbar = (VerticalSeekBar) findViewById(R.id.mySeekBar);
+                ViewId_myseekbar3 = (VerticalSeekBar) findViewById(R.id.mySeekBar3);
+
+                if (ViewId_myseekbar3.getProgress() < ViewId_myseekbar.getProgress()) {
+                    ViewId_myseekbar3.setProgress(seekbar_shadow_flamevalue++);
+                } else if (ViewId_myseekbar3.getProgress() > ViewId_myseekbar.getProgress()) {
+                    ViewId_myseekbar3.setProgress(seekbar_shadow_flamevalue--);
+                } else {
+                    shadowTimer.cancel();
+                }
+            }
+        }, 0, 50);
     }
 
     private void updateUI() {
@@ -3526,9 +3581,80 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
             ViewId_textview7 = (TextView) findViewById(R.id.textView7);
             ViewId_textview7.setText("  " + remoteSetting.setTemp + "  ");
+            ViewId_myseekbar2 = (VerticalSeekBar) findViewById(R.id.mySeekBar2);
+            switch (remoteSetting.setTemp) {
+                case 16:
+                    ViewId_myseekbar2.setProgress(0);
+                    break;
+                case 17:
+                    ViewId_myseekbar2.setProgress(7);
+                    break;
+                case 18:
+                    ViewId_myseekbar2.setProgress(14);
+                    break;
+                case 19:
+                    ViewId_myseekbar2.setProgress(21);
+                    break;
+                case 20:
+                    ViewId_myseekbar2.setProgress(29);
+                    break;
+                case 21:
+                    ViewId_myseekbar2.setProgress(36);
+                    break;
+                case 22:
+                    ViewId_myseekbar2.setProgress(43);
+                    break;
+                case 23:
+                    ViewId_myseekbar2.setProgress(50);
+                    break;
+                case 24:
+                    ViewId_myseekbar2.setProgress(57);
+                    break;
+                case 25:
+                    ViewId_myseekbar2.setProgress(64);
+                    break;
+                case 26:
+                    ViewId_myseekbar2.setProgress(71);
+                    break;
+                case 27:
+                    ViewId_myseekbar2.setProgress(79);
+                    break;
+                case 28:
+                    ViewId_myseekbar2.setProgress(86);
+                    break;
+                case 29:
+                    ViewId_myseekbar2.setProgress(93);
+                    break;
+                case 30:
+                    ViewId_myseekbar2.setProgress(100);
+                    break;
+                default:
+                    break;
+            }
 
             ViewId_textview6 = (TextView) findViewById(R.id.textView6);
             ViewId_textview6.setText("  " + remoteSetting.setFlame + "  ");
+            ViewId_myseekbar = (VerticalSeekBar) findViewById(R.id.mySeekBar);
+            switch (remoteSetting.setFlame) {
+                case 1:
+                    ViewId_myseekbar.setProgress(0);
+                    break;
+                case 2:
+                    ViewId_myseekbar.setProgress(25);
+                    break;
+                case 3:
+                    ViewId_myseekbar.setProgress(50);
+                    break;
+                case 4:
+                    ViewId_myseekbar.setProgress(75);
+                    break;
+                case 5:
+                    ViewId_myseekbar.setProgress(100);
+                    break;
+                default:
+                    break;
+            }
+            updateFlameShadow();
 
             if (remoteSetting.mode == 0) {
                 AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = false;
@@ -3563,6 +3689,27 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         }
         if (remoteTimer != null) {
             remoteTimer.cancel();
+        }
+    }
+
+    private void updateRemote() {
+        if (remoteSetting != null) {
+            AWSconnection.remoteControlInsertURL(remoteSetting.uuid, remoteSetting.mode, remoteSetting.currentTemp, remoteSetting.setTemp, remoteSetting.setFlame, remoteSetting.faultCode,
+
+                    //Call interface to retrieve Async results
+                    new AWSconnection.textResult() {
+                        @Override
+
+                        public void getResult(String result) {
+
+                            //Log outputs
+                            //Success:
+                            //"remote control values updated"
+                            //Error:
+                            //"UUID must exist and belong to an appliance serial number in the appliance table"
+                            Log.i("RC Insert status:", result);
+                        }
+                    });
         }
     }
 }

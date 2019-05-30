@@ -551,7 +551,7 @@ public class Rinnai26PowerOff extends MillecActivityBase
     //}
 
     private void getRemoteStat() {
-        String uuid = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).UUID;
+        final String uuid = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).UUID;
         AWSconnection.remoteControlSelectURL(uuid,
 
                 //Call interface to retrieve Async results
@@ -570,7 +570,7 @@ public class Rinnai26PowerOff extends MillecActivityBase
                             int mode = jArray.getJSONObject(0).getInt("mode");
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
-                            remoteSetting = new RemoteSetting(faultCode, setTemp, setFlame, currentTemp, mode);
+                            remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode);
 
                             runOnUiThread(new Runnable() {
                                 @Override
