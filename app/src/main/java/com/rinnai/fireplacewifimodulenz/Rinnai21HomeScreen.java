@@ -2377,7 +2377,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                 public void run() {
                     getRemoteStat();
                 }
-            }, 0, 10000);
+            }, 0, 5000);
 
         } else {
             this.startupCheckTimerCount = 0;
@@ -3137,9 +3137,9 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                 } else {
                     remoteSetting.mode = 2;
 
-                    AppGlobals.Button_flame_settemp_actionvisible = false;
                     setStandby();
                     setShowHints();
+                    AppGlobals.Button_flame_settemp_actionvisible = false;
                     setFlameSettempVisibility();
                 }
                 updateRemote();
@@ -3530,9 +3530,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
                             remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode);
-                            Log.d("ttt", "mode is: " + remoteSetting.mode);
-                            Log.d("ttt", "setTemp is: " + remoteSetting.setTemp);
-                            Log.d("ttt", "setFlame is: " + remoteSetting.setFlame);
+                            Log.d("ttt", "fault is: " + remoteSetting.faultCode);
 
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -3578,6 +3576,56 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_textview3.setText(remoteSetting.currentTemp + "°");
             ViewId_textview58 = (TextView) findViewById(R.id.textView58);
             ViewId_textview58.setText(remoteSetting.currentTemp + "°");
+            ViewId_myseekbar4 = (VerticalSeekBar) findViewById(R.id.mySeekBar4);
+            switch (remoteSetting.currentTemp) {
+                case 16:
+                    ViewId_myseekbar4.setProgress(0);
+                    break;
+                case 17:
+                    ViewId_myseekbar4.setProgress(7);
+                    break;
+                case 18:
+                    ViewId_myseekbar4.setProgress(14);
+                    break;
+                case 19:
+                    ViewId_myseekbar4.setProgress(21);
+                    break;
+                case 20:
+                    ViewId_myseekbar4.setProgress(29);
+                    break;
+                case 21:
+                    ViewId_myseekbar4.setProgress(36);
+                    break;
+                case 22:
+                    ViewId_myseekbar4.setProgress(43);
+                    break;
+                case 23:
+                    ViewId_myseekbar4.setProgress(50);
+                    break;
+                case 24:
+                    ViewId_myseekbar4.setProgress(57);
+                    break;
+                case 25:
+                    ViewId_myseekbar4.setProgress(64);
+                    break;
+                case 26:
+                    ViewId_myseekbar4.setProgress(71);
+                    break;
+                case 27:
+                    ViewId_myseekbar4.setProgress(79);
+                    break;
+                case 28:
+                    ViewId_myseekbar4.setProgress(86);
+                    break;
+                case 29:
+                    ViewId_myseekbar4.setProgress(93);
+                    break;
+                case 30:
+                    ViewId_myseekbar4.setProgress(100);
+                    break;
+                default:
+                    break;
+            }
 
             ViewId_textview7 = (TextView) findViewById(R.id.textView7);
             ViewId_textview7.setText("  " + remoteSetting.setTemp + "  ");
@@ -3660,9 +3708,19 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                 AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = false;
                 setStandby();
             } else if (remoteSetting.mode == 1) {
+                if (AppGlobals.ViewId_imagebutton3_imagebutton22_actionup == false) {
+                    AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = true;
+                    setStandby();
+                    setShowHints();
+                }
                 AppGlobals.Button_flame_settemp_actionvisible = true;
                 setFlameSettempVisibility();
             } else if (remoteSetting.mode == 2) {
+                if (AppGlobals.ViewId_imagebutton3_imagebutton22_actionup == false) {
+                    AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = true;
+                    setStandby();
+                    setShowHints();
+                }
                 AppGlobals.Button_flame_settemp_actionvisible = false;
                 setFlameSettempVisibility();
             } else if (remoteSetting.mode == 3) {

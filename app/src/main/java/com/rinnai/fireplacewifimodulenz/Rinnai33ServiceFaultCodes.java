@@ -43,38 +43,6 @@ public class Rinnai33ServiceFaultCodes extends MillecActivityBase
 
         Log.d("myApp_ActivityLifecycle", "Rinnai33ServiceFaultCodes_onCreate.");
 
-
-        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
-            String faultCode = getIntent().getStringExtra("FAULTCODE");
-            Log.d("ttt", "code is: " + faultCode);
-
-            int servicefaultCode = Integer.parseInt(faultCode);
-
-            ServiceFaultCodes_Info sfc_info = ServiceFaultCodes_Info.GetServiceFaultCodes_Info(servicefaultCode);
-
-            //Service Fault Code Text - Fault Code
-            ViewId_textview46 = (TextView) findViewById(R.id.textView46);
-
-            ViewId_textview46.setText(faultCode);
-
-            //Service Fault Code Text - Probable Cause
-            ViewId_textview48 = (TextView) findViewById(R.id.textView48);
-
-            ViewId_textview48.setText(sfc_info.faultCause);
-
-            //Service Fault Code Text - Description
-            ViewId_textview50 = (TextView) findViewById(R.id.textView50);
-
-            ViewId_textview50.setText(sfc_info.faultDescription);
-
-            //Service Fault Code Text - Action
-            ViewId_textview52 = (TextView) findViewById(R.id.textView52);
-
-            ViewId_textview52.setText(sfc_info.faultAction);
-        } else {
-            startTxRN171DeviceGetStatus();
-        }
-
         ViewId_faultcodeandfix_tableLayout = (TableLayout) findViewById(R.id.faultcodeandfix_tableLayout);
         //tl.setOnTouchListener(new AutoTimerTableTouchListener());
 
@@ -98,6 +66,30 @@ public class Rinnai33ServiceFaultCodes extends MillecActivityBase
 
         //Add the Row to the table
         ViewId_faultcodeandfix_tableLayout.addView(ViewId_scrollview_row_rinnai33_service_fault_codes);
+
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+            String faultCode = getIntent().getStringExtra("FAULTCODE");
+            Log.d("ttt", "code is: " + faultCode);
+
+            int servicefaultCode = Integer.parseInt(faultCode);
+
+            ServiceFaultCodes_Info sfc_info = ServiceFaultCodes_Info.GetServiceFaultCodes_Info(servicefaultCode);
+
+            //Service Fault Code Text - Fault Code
+            ViewId_textview46 = (TextView) findViewById(R.id.textView46);
+            ViewId_textview46.setText(faultCode);
+            //Service Fault Code Text - Probable Cause
+            ViewId_textview48 = (TextView) findViewById(R.id.textView48);
+            ViewId_textview48.setText(sfc_info.faultCause);
+            //Service Fault Code Text - Description
+            ViewId_textview50 = (TextView) findViewById(R.id.textView50);
+            ViewId_textview50.setText(sfc_info.faultDescription);
+            //Service Fault Code Text - Action
+            ViewId_textview52 = (TextView) findViewById(R.id.textView52);
+            ViewId_textview52.setText(sfc_info.faultAction);
+        } else {
+            startTxRN171DeviceGetStatus();
+        }
     }
 
     @Override
