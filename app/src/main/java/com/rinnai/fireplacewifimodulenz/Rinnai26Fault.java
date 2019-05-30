@@ -60,8 +60,10 @@ public class Rinnai26Fault extends MillecActivityBase
                 cancelTimers();
                 isClosing = true;
                 Intent intent = new Intent(Rinnai26Fault.this, Rinnai33ServiceFaultCodes.class);
+                if (remoteSetting != null) {
+                    intent.putExtra("FAULTCODE", remoteSetting.faultCode);
+                }
                 startActivity(intent);
-
                 finish();
                 Log.d("myApp", "Rinnai26Fault_onClick: startActivity(Rinnai33ServiceFaultCodes).");
             }
