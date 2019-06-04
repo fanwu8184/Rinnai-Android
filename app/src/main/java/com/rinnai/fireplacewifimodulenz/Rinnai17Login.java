@@ -425,9 +425,11 @@ public class Rinnai17Login extends MillecActivityBase
 
             isAccessPoint = false;
 
-            if(!AppGlobals.rfwmEmail.equals("NA")) {
-                getAWSCustomerAppliance();
-            }
+           if(AppGlobals.rfwmEmail != null){
+               if(!AppGlobals.rfwmEmail.equals("NA")) {
+                   getAWSCustomerAppliance();
+               }
+           }
         }
 
         startTxRN171DeviceGetStatus();
@@ -696,7 +698,13 @@ public class Rinnai17Login extends MillecActivityBase
 
                                     startupCheckTimer.cancel();
                                     //fireanimationCheckTimer.cancel();
-                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                        }
+                                    });
+
                                     isClosing = true;
                                     isAccessPoint = false;
                                     intent = new Intent(Rinnai17Login.this, Rinnai00fInitialSetupNetwork.class);
@@ -738,7 +746,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                 startupCheckTimer.cancel();
                                 //fireanimationCheckTimer.cancel();
-                                progressBarOnStart.setVisibility(View.INVISIBLE);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                    }
+                                });
                                 isClosing = true;
                                 intent = new Intent(Rinnai17Login.this, Rinnai11aRegistration.class);
                                 startActivity(intent);
@@ -801,7 +814,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                     startupCheckTimer.cancel();
                                     //fireanimationCheckTimer.cancel();
-                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                        }
+                                    });
                                     isClosing = true;
                                     intent = new Intent(Rinnai17Login.this, Rinnai12OTA.class);
                                     startActivity(intent);
@@ -870,7 +888,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                             startupCheckTimer.cancel();
                                             //fireanimationCheckTimer.cancel();
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                }
+                                            });
                                             isClosing = true;
                                             intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
                                             startActivity(intent);
@@ -882,7 +905,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                             startupCheckTimer.cancel();
                                             //fireanimationCheckTimer.cancel();
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                }
+                                            });
                                             isClosing = true;
                                             intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
                                             startActivity(intent);
@@ -903,7 +931,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                             startupCheckTimer.cancel();
                                             //fireanimationCheckTimer.cancel();
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                }
+                                            });
                                             isClosing = true;
 
                                             if(AppGlobals.rfwmEmail.equals("NA")){
@@ -924,7 +957,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                             startupCheckTimer.cancel();
                                             //fireanimationCheckTimer.cancel();
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                }
+                                            });
                                             isClosing = true;
                                             intent = new Intent(Rinnai17Login.this, Rinnai22IgnitionSequence.class);
                                             startActivity(intent);
@@ -939,7 +977,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                             startupCheckTimer.cancel();
                                             //fireanimationCheckTimer.cancel();
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                }
+                                            });
                                             isClosing = true;
                                             intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
                                             startActivity(intent);
@@ -954,7 +997,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                             startupCheckTimer.cancel();
                                             //fireanimationCheckTimer.cancel();
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                }
+                                            });
                                             isClosing = true;
                                             intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
                                             startActivity(intent);
@@ -966,7 +1014,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                             startupCheckTimer.cancel();
                                             //fireanimationCheckTimer.cancel();
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                }
+                                            });
                                             isClosing = true;
                                             intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
                                             startActivity(intent);
@@ -980,7 +1033,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                         startupCheckTimer.cancel();
                                         //fireanimationCheckTimer.cancel();
-                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                progressBarOnStart.setVisibility(View.INVISIBLE);
+                                            }
+                                        });
                                         isClosing = true;
                                         intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
                                         startActivity(intent);
@@ -995,7 +1053,12 @@ public class Rinnai17Login extends MillecActivityBase
 
                                     startupCheckTimer.cancel();
                                     //fireanimationCheckTimer.cancel();
-                                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressBarOnStart.setVisibility(View.INVISIBLE);
+                                        }
+                                    });
 
                                     intent = new Intent(Rinnai17Login.this, Rinnai26PowerOff.class);
                                     startActivity(intent);
@@ -1012,7 +1075,12 @@ public class Rinnai17Login extends MillecActivityBase
                         startupCheckTimer.cancel();
                         //fireanimationCheckTimer.cancel();
 
-                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBarOnStart.setVisibility(View.INVISIBLE);
+                            }
+                        });
                         showWifiList();
                     }
 
