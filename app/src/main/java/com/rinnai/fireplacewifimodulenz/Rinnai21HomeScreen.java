@@ -1719,94 +1719,131 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
                         enableguardtimeRinnai21HomeScreen();
 
-                        //***** srccompat - imagebutton23Standby (Multi-unit) *****//
-                        AppGlobals.ViewId_imagebutton23standby_actionup = !AppGlobals.ViewId_imagebutton23standby_actionup;
 
-                        //Multi-unit button OFF, Multi-unit List ON = [0x00]
-                        //Multi-unit button ON, Multi-unit List OFF = [0x01]
-                        if (AppGlobals.ViewId_imagebutton23standby_actionup == true) {
+                        AppGlobals.ViewId_imagebutton23standby_actionup = true;
 
-                            //***** button - ViewId_button7 (Flame) *****//
-                            ViewId_button7.setVisibility(View.VISIBLE);
+                        //***** Visibility - Multi-unit Lockout *****//
+                        ViewId_include_multiunit_lockout.setVisibility(View.VISIBLE);
+                        //***** Visibility - Multi-unit *****//
+                        ViewId_include_multiunit.setVisibility(View.VISIBLE);
+                        ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
+                        //tl.setOnTouchListener(new AutoTimerTableTouchListener());
+                        //clear the table, start with blank table
+                        ViewId_multiunit_tableLayout.removeAllViews();
 
-                            //***** button - ViewId_button8 (Set Temp) *****//
-                            ViewId_button8.setVisibility(View.VISIBLE);
+                        int id = 0;
 
-                            //***** Alpha - Flame *****//
-                            ViewId_textview4.setAlpha(0.10f);
-                            ViewId_textview6.setAlpha(0.10f);
-                            ViewId_imageview2.setAlpha(0.25f);
-                            ViewId_imageview4.setAlpha(0.25f);
-                            ViewId_linearlayout_seekbar_flame.setAlpha(0.50f);
-                            ViewId_myseekbar3.setAlpha(0.25f);
+                        for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
 
-                            //***** Alpha - Set Temp *****//
-                            ViewId_textview5.setAlpha(0.10f);
-                            ViewId_textview7.setAlpha(0.10f);
-                            ViewId_imageview3.setAlpha(0.25f);
-                            ViewId_imageview5.setAlpha(0.25f);
-                            ViewId_linearlayout_seekbar_settemp.setAlpha(0.50f);
-                            ViewId_myseekbar4.setAlpha(0.25f);
+                            View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
 
-                            //***** Alpha - Multi-unit (button/text) *****//
-                            ViewId_include_button_multiunit_standby.setAlpha(1.0f);
+                            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
 
-                            //***** include - ViewId_include_showhints_flame *****//
-                            ViewId_include_showhints_flame.setVisibility(View.INVISIBLE);
+                            //add listener
+                            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(scrollviewrowmultiunitrinnai21homescreenOnClickListener);//add OnClickListener Here
 
-                            //***** include - ViewId_include_showhints_settemp *****//
-                            ViewId_include_showhints_settemp.setVisibility(View.INVISIBLE);
+                            //add listener
+                            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
 
-                            //***** include - ViewId_include_showhints_economy *****//
-                            ViewId_include_showhints_economy.setVisibility(View.INVISIBLE);
+                            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
 
-                            //***** Visibility - Multi-unit Lockout *****//
-                            ViewId_include_multiunit_lockout.setVisibility(View.INVISIBLE);
+                            //Add the Row to the table
+                            ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
 
-                            //***** Visibility - Multi-unit *****//
-                            ViewId_include_multiunit.setVisibility(View.INVISIBLE);
-
-                        } else {
-                            //***** Alpha - Multi-unit (button/text) *****//
-                            ViewId_include_button_multiunit_standby.setAlpha(0.10f);
-
-                            //***** Visibility - Multi-unit Lockout *****//
-                            ViewId_include_multiunit_lockout.setVisibility(View.VISIBLE);
-
-                            //***** Visibility - Multi-unit *****//
-                            ViewId_include_multiunit.setVisibility(View.VISIBLE);
-
-                            ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
-                            //tl.setOnTouchListener(new AutoTimerTableTouchListener());
-
-                            //clear the table, start with blank table
-                            ViewId_multiunit_tableLayout.removeAllViews();
-
-                            int id = 0;
-
-                            for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
-
-                                View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
-
-                                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
-
-                                //add listener
-                                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(scrollviewrowmultiunitrinnai21homescreenOnClickListener);//add OnClickListener Here
-
-                                //add listener
-                                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
-
-                                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
-
-                                //Add the Row to the table
-                                ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
-
-                                //Next
-                                id++;
-
-                            }
+                            //Next
+                            id++;
 
                         }
+
+
+//                        //***** srccompat - imagebutton23Standby (Multi-unit) *****//
+//                        AppGlobals.ViewId_imagebutton23standby_actionup = !AppGlobals.ViewId_imagebutton23standby_actionup;
+//
+//                        //Multi-unit button OFF, Multi-unit List ON = [0x00]
+//                        //Multi-unit button ON, Multi-unit List OFF = [0x01]
+//                        if (AppGlobals.ViewId_imagebutton23standby_actionup == true) {
+//
+//                            //***** button - ViewId_button7 (Flame) *****//
+//                            ViewId_button7.setVisibility(View.VISIBLE);
+//
+//                            //***** button - ViewId_button8 (Set Temp) *****//
+//                            ViewId_button8.setVisibility(View.VISIBLE);
+//
+//                            //***** Alpha - Flame *****//
+//                            ViewId_textview4.setAlpha(0.10f);
+//                            ViewId_textview6.setAlpha(0.10f);
+//                            ViewId_imageview2.setAlpha(0.25f);
+//                            ViewId_imageview4.setAlpha(0.25f);
+//                            ViewId_linearlayout_seekbar_flame.setAlpha(0.50f);
+//                            ViewId_myseekbar3.setAlpha(0.25f);
+//
+//                            //***** Alpha - Set Temp *****//
+//                            ViewId_textview5.setAlpha(0.10f);
+//                            ViewId_textview7.setAlpha(0.10f);
+//                            ViewId_imageview3.setAlpha(0.25f);
+//                            ViewId_imageview5.setAlpha(0.25f);
+//                            ViewId_linearlayout_seekbar_settemp.setAlpha(0.50f);
+//                            ViewId_myseekbar4.setAlpha(0.25f);
+//
+//                            //***** Alpha - Multi-unit (button/text) *****//
+//                            ViewId_include_button_multiunit_standby.setAlpha(1.0f);
+//
+//                            //***** include - ViewId_include_showhints_flame *****//
+//                            ViewId_include_showhints_flame.setVisibility(View.INVISIBLE);
+//
+//                            //***** include - ViewId_include_showhints_settemp *****//
+//                            ViewId_include_showhints_settemp.setVisibility(View.INVISIBLE);
+//
+//                            //***** include - ViewId_include_showhints_economy *****//
+//                            ViewId_include_showhints_economy.setVisibility(View.INVISIBLE);
+//
+//                            //***** Visibility - Multi-unit Lockout *****//
+//                            ViewId_include_multiunit_lockout.setVisibility(View.INVISIBLE);
+//
+//                            //***** Visibility - Multi-unit *****//
+//                            ViewId_include_multiunit.setVisibility(View.INVISIBLE);
+//
+//                        } else {
+//                            //***** Alpha - Multi-unit (button/text) *****//
+//                            //ViewId_include_button_multiunit_standby.setAlpha(0.10f);
+//
+//                            //***** Visibility - Multi-unit Lockout *****//
+//                            ViewId_include_multiunit_lockout.setVisibility(View.VISIBLE);
+//
+//                            //***** Visibility - Multi-unit *****//
+//                            ViewId_include_multiunit.setVisibility(View.VISIBLE);
+//
+//                            ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
+//                            //tl.setOnTouchListener(new AutoTimerTableTouchListener());
+//
+//                            //clear the table, start with blank table
+//                            ViewId_multiunit_tableLayout.removeAllViews();
+//
+//                            int id = 0;
+//
+//                            for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
+//
+//                                View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
+//
+//                                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
+//
+//                                //add listener
+//                                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(scrollviewrowmultiunitrinnai21homescreenOnClickListener);//add OnClickListener Here
+//
+//                                //add listener
+//                                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
+//
+//                                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
+//
+//                                //Add the Row to the table
+//                                ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
+//
+//                                //Next
+//                                id++;
+//
+//                            }
+//
+//                        }
 
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:
@@ -1862,94 +1899,141 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
                         enableguardtimeRinnai21HomeScreen();
 
-                        //***** srccompat - imagebutton23 (Multi-unit) *****//
-                        AppGlobals.ViewId_imagebutton23_actionup = !AppGlobals.ViewId_imagebutton23_actionup;
 
-                        //Multi-unit button OFF, Multi-unit List ON = [0x00]
-                        //Multi-unit button ON, Multi-unit List OFF = [0x01]
-                        if (AppGlobals.ViewId_imagebutton23_actionup == true) {
 
-                            //***** button - ViewId_button7 (Flame) *****//
-                            ViewId_button7.setVisibility(View.VISIBLE);
+                        AppGlobals.ViewId_imagebutton23_actionup = true;
 
-                            //***** button - ViewId_button8 (Set Temp) *****//
-                            ViewId_button8.setVisibility(View.VISIBLE);
+                        //***** Alpha - Multi-unit (button/text) *****//
+                        ViewId_include_button_multiunit.setAlpha(1.0f);
+                        //***** include - ViewId_include_showhints_flame *****//
+                        ViewId_include_showhints_flame.setVisibility(View.INVISIBLE);
+                        //***** include - ViewId_include_showhints_settemp *****//
+                        ViewId_include_showhints_settemp.setVisibility(View.INVISIBLE);
+                        //***** include - ViewId_include_showhints_economy *****//
+                        ViewId_include_showhints_economy.setVisibility(View.INVISIBLE);
+                        //***** Visibility - Multi-unit Lockout *****//
+                        ViewId_include_multiunit_lockout.setVisibility(View.VISIBLE);
+                        //***** Visibility - Multi-unit *****//
+                        ViewId_include_multiunit.setVisibility(View.VISIBLE);
 
-                            //***** Alpha - Flame *****//
-                            ViewId_textview4.setAlpha(0.10f);
-                            ViewId_textview6.setAlpha(0.10f);
-                            ViewId_imageview2.setAlpha(0.25f);
-                            ViewId_imageview4.setAlpha(0.25f);
-                            ViewId_linearlayout_seekbar_flame.setAlpha(0.50f);
-                            ViewId_myseekbar3.setAlpha(0.25f);
+                        ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
+                        //clear the table, start with blank table
+                        ViewId_multiunit_tableLayout.removeAllViews();
 
-                            //***** Alpha - Set Temp *****//
-                            ViewId_textview5.setAlpha(0.10f);
-                            ViewId_textview7.setAlpha(0.10f);
-                            ViewId_imageview3.setAlpha(0.25f);
-                            ViewId_imageview5.setAlpha(0.25f);
-                            ViewId_linearlayout_seekbar_settemp.setAlpha(0.50f);
-                            ViewId_myseekbar4.setAlpha(0.25f);
+                        int id = 0;
 
-                            //***** Alpha - Multi-unit (button/text) *****//
-                            ViewId_include_button_multiunit.setAlpha(1.0f);
+                        for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
 
-                            //***** include - ViewId_include_showhints_flame *****//
-                            ViewId_include_showhints_flame.setVisibility(View.INVISIBLE);
+                            View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
 
-                            //***** include - ViewId_include_showhints_settemp *****//
-                            ViewId_include_showhints_settemp.setVisibility(View.INVISIBLE);
+                            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
 
-                            //***** include - ViewId_include_showhints_economy *****//
-                            ViewId_include_showhints_economy.setVisibility(View.INVISIBLE);
+                            //add listener
+                            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(scrollviewrowmultiunitrinnai21homescreenOnClickListener);//add OnClickListener Here
 
-                            //***** Visibility - Multi-unit Lockout *****//
-                            ViewId_include_multiunit_lockout.setVisibility(View.INVISIBLE);
+                            //add listener
+                            ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
 
-                            //***** Visibility - Multi-unit *****//
-                            ViewId_include_multiunit.setVisibility(View.INVISIBLE);
+                            ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
 
-                        } else {
-                            //***** Alpha - Multi-unit (button/text) *****//
-                            ViewId_include_button_multiunit.setAlpha(0.10f);
+                            //Add the Row to the table
+                            ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
 
-                            //***** Visibility - Multi-unit Lockout *****//
-                            ViewId_include_multiunit_lockout.setVisibility(View.VISIBLE);
-
-                            //***** Visibility - Multi-unit *****//
-                            ViewId_include_multiunit.setVisibility(View.VISIBLE);
-
-                            ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
-                            //tl.setOnTouchListener(new AutoTimerTableTouchListener());
-
-                            //clear the table, start with blank table
-                            ViewId_multiunit_tableLayout.removeAllViews();
-
-                            int id = 0;
-
-                            for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
-
-                                View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
-
-                                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
-
-                                //add listener
-                                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(scrollviewrowmultiunitrinnai21homescreenOnClickListener);//add OnClickListener Here
-
-                                //add listener
-                                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
-
-                                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
-
-                                //Add the Row to the table
-                                ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
-
-                                //Next
-                                id++;
-
-                            }
+                            //Next
+                            id++;
 
                         }
+
+
+
+//                        //***** srccompat - imagebutton23 (Multi-unit) *****//
+//                        AppGlobals.ViewId_imagebutton23_actionup = !AppGlobals.ViewId_imagebutton23_actionup;
+//
+//                        //Multi-unit button OFF, Multi-unit List ON = [0x00]
+//                        //Multi-unit button ON, Multi-unit List OFF = [0x01]
+//                        if (AppGlobals.ViewId_imagebutton23_actionup == true) {
+//
+//                            //***** button - ViewId_button7 (Flame) *****//
+//                            ViewId_button7.setVisibility(View.VISIBLE);
+//
+//                            //***** button - ViewId_button8 (Set Temp) *****//
+//                            ViewId_button8.setVisibility(View.VISIBLE);
+//
+//                            //***** Alpha - Flame *****//
+//                            ViewId_textview4.setAlpha(0.10f);
+//                            ViewId_textview6.setAlpha(0.10f);
+//                            ViewId_imageview2.setAlpha(0.25f);
+//                            ViewId_imageview4.setAlpha(0.25f);
+//                            ViewId_linearlayout_seekbar_flame.setAlpha(0.50f);
+//                            ViewId_myseekbar3.setAlpha(0.25f);
+//
+//                            //***** Alpha - Set Temp *****//
+//                            ViewId_textview5.setAlpha(0.10f);
+//                            ViewId_textview7.setAlpha(0.10f);
+//                            ViewId_imageview3.setAlpha(0.25f);
+//                            ViewId_imageview5.setAlpha(0.25f);
+//                            ViewId_linearlayout_seekbar_settemp.setAlpha(0.50f);
+//                            ViewId_myseekbar4.setAlpha(0.25f);
+//
+//                            //***** Alpha - Multi-unit (button/text) *****//
+//                            ViewId_include_button_multiunit.setAlpha(1.0f);
+//
+//                            //***** include - ViewId_include_showhints_flame *****//
+//                            ViewId_include_showhints_flame.setVisibility(View.INVISIBLE);
+//
+//                            //***** include - ViewId_include_showhints_settemp *****//
+//                            ViewId_include_showhints_settemp.setVisibility(View.INVISIBLE);
+//
+//                            //***** include - ViewId_include_showhints_economy *****//
+//                            ViewId_include_showhints_economy.setVisibility(View.INVISIBLE);
+//
+//                            //***** Visibility - Multi-unit Lockout *****//
+//                            ViewId_include_multiunit_lockout.setVisibility(View.INVISIBLE);
+//
+//                            //***** Visibility - Multi-unit *****//
+//                            ViewId_include_multiunit.setVisibility(View.INVISIBLE);
+//
+//                        } else {
+//                            //***** Alpha - Multi-unit (button/text) *****//
+//                            //ViewId_include_button_multiunit.setAlpha(0.10f);
+//
+//                            //***** Visibility - Multi-unit Lockout *****//
+//                            ViewId_include_multiunit_lockout.setVisibility(View.VISIBLE);
+//
+//                            //***** Visibility - Multi-unit *****//
+//                            ViewId_include_multiunit.setVisibility(View.VISIBLE);
+//
+//                            ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
+//                            //tl.setOnTouchListener(new AutoTimerTableTouchListener());
+//
+//                            //clear the table, start with blank table
+//                            ViewId_multiunit_tableLayout.removeAllViews();
+//
+//                            int id = 0;
+//
+//                            for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
+//
+//                                View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
+//
+//                                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
+//
+//                                //add listener
+//                                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(scrollviewrowmultiunitrinnai21homescreenOnClickListener);//add OnClickListener Here
+//
+//                                //add listener
+//                                ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnLongClickListener(scrollviewrowmultiunitrinnai21homescreenOnLongClickListener);//add OnClickListener Here
+//
+//                                ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView77)).setText(AppGlobals.fireplaceWifi.get(i).DeviceName + "");
+//
+//                                //Add the Row to the table
+//                                ViewId_multiunit_tableLayout.addView(ViewId_scrollview_row_multiunit_rinnai21_home_screen);
+//
+//                                //Next
+//                                id++;
+//
+//                            }
+//
+//                        }
 
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:
@@ -2239,10 +2323,10 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_myseekbar4.setAlpha(0.25f);
 
             //***** Alpha - Multi-unit (button/text) *****//
-            ViewId_include_button_multiunit.setAlpha(0.10f);
+            //ViewId_include_button_multiunit.setAlpha(0.10f);
 
             //***** Alpha - Multi-unit (button/text) *****//
-            ViewId_include_button_multiunit_standby.setAlpha(0.10f);
+            //ViewId_include_button_multiunit_standby.setAlpha(0.10f);
 
             //***** Set Text - Multi-unit (button/text) *****//
             ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
@@ -2284,10 +2368,10 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_myseekbar4.setAlpha(0.50f);
 
             //***** Alpha - Multi-unit (button/text) *****//
-            ViewId_include_button_multiunit.setAlpha(0.10f);
+            //ViewId_include_button_multiunit.setAlpha(0.10f);
 
             //***** Alpha - Multi-unit (button/text) *****//
-            ViewId_include_button_multiunit_standby.setAlpha(0.10f);
+            //ViewId_include_button_multiunit_standby.setAlpha(0.10f);
 
             //***** Set Text - Multi-unit (button/text) *****//
 //            ViewId_textview71.setText(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName + "");
@@ -2334,7 +2418,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_include_button_multiunit_standby.setVisibility(View.VISIBLE);
 
             //***** Alpha - Multi-unit (button/text) *****//
-            ViewId_include_button_multiunit_standby.setAlpha(0.10f);
+            //ViewId_include_button_multiunit_standby.setAlpha(0.10f);
 
             AppGlobals.ViewId_imagebutton23standby_actionup = false;
         } else {
@@ -3530,7 +3614,6 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
                             remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode);
-                            Log.d("ttt", "fault is: " + remoteSetting.faultCode);
 
                             runOnUiThread(new Runnable() {
                                 @Override
