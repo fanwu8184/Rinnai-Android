@@ -300,6 +300,7 @@ public class AWSconnection {
 
                     JSONObject Jobject = new JSONObject(jsonData);
                     JSONArray Jarray = Jobject.getJSONArray("Items");
+
                     ArrayList<String> list = new ArrayList();
 
 

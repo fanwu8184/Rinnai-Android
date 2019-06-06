@@ -69,7 +69,6 @@ public class Rinnai33ServiceFaultCodes extends MillecActivityBase
 
         if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
             String faultCode = getIntent().getStringExtra("FAULTCODE");
-            Log.d("ttt", "code is: " + faultCode);
 
             int servicefaultCode = Integer.parseInt(faultCode);
 

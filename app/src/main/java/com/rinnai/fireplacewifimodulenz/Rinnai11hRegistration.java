@@ -19,6 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import AWSmodule.AWSconnection;
@@ -913,100 +916,38 @@ public class Rinnai11hRegistration extends MillecActivityBase {
 
                 //Do stuff with results here
                 int listSize = resultList.size();
+
                 for (int i = 0; i < listSize; i++) {
                     //Log.i("Appliance: ", resultList.get(i));
                     Log.d("myApp_AWS", "Select Customer: " + resultList.get(i));
-                }
 
-                final ArrayList<String> ui_resultList = resultList;
+                    try {
+                        JSONObject json = new JSONObject(resultList.get(i));
+                        String first_name = json.getString("first_name");
+                        String last_name = json.getString("last_name");
+                        String email = json.getString("email");
+                        String password = json.getString("password");
+                        String street_address = json.getString("street_address");
+                        String suburb = json.getString("suburb");
+                        String city = json.getString("city");
+                        String country = json.getString("country");
+                        String postcode = json.getString("postcode");
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                        AppGlobals.userregInfo.userregistrationFirstName = first_name;
+                        AppGlobals.userregInfo.userregistrationLastName = last_name;
+                        AppGlobals.userregInfo.userregistrationEmail = email;
+                        AppGlobals.userregInfo.userregistrationPassword = password;
+                        AppGlobals.userregInfo.userregistrationStreetAddress = street_address;
+                        AppGlobals.userregInfo.userregistrationSuburb = suburb;
+                        AppGlobals.userregInfo.userregistrationCityRegion = city;
+                        AppGlobals.userregInfo.userregistrationCountry = country;
+                        AppGlobals.userregInfo.userregistrationPostcode = postcode;
 
-                        try {
-                            if (ui_resultList.size() > 0) {
 
-                                //Raw split
-                                String[] ui_resultListsplit = ui_resultList.get(0).split("\"");
+                        runOnUiThread(new Runnable() {
 
-                                Log.d("myApp_AWS", "First Name: " + ui_resultListsplit[3]);
-                                Log.d("myApp_AWS", "Email: " + ui_resultListsplit[7]);
-                                Log.d("myApp_AWS", "Suburb: " + ui_resultListsplit[11]);
-                                Log.d("myApp_AWS", "Last Name: " + ui_resultListsplit[15]);
-                                Log.d("myApp_AWS", "Street Address: " + ui_resultListsplit[19]);
-                                Log.d("myApp_AWS", "Postcode: " + ui_resultListsplit[22]);
-                                Log.d("myApp_AWS", "Password: " + ui_resultListsplit[25]);
-                                Log.d("myApp_AWS", "City / Region: " + ui_resultListsplit[29]);
-                                Log.d("myApp_AWS", "Country: " + ui_resultListsplit[33]);
-
-                                //Split "first_name"
-                                String[] ui_firstnamesplita = ui_resultList.get(0).split("first_name\":\"");
-                                String[] ui_firstnamesplitb = ui_firstnamesplita[1].split("\"");
-                                Log.d("myApp_AWS", "First Name(split): " + ui_firstnamesplitb[0]);
-
-                                //Split "email"
-                                String[] ui_emailsplita = ui_resultList.get(0).split("email\":\"");
-                                String[] ui_emailsplitb = ui_emailsplita[1].split("\"");
-                                Log.d("myApp_AWS", "Email(split): " + ui_emailsplitb[0]);
-
-                                //Split "suburb"
-                                String[] ui_suburbsplita = ui_resultList.get(0).split("suburb\":\"");
-                                String[] ui_suburbsplitb = ui_suburbsplita[1].split("\"");
-                                Log.d("myApp_AWS", "Suburb(split): " + ui_suburbsplitb[0]);
-
-                                //Split "last_name"
-                                String[] ui_lastnamesplita = ui_resultList.get(0).split("last_name\":\"");
-                                String[] ui_lastnamesplitb = ui_lastnamesplita[1].split("\"");
-                                Log.d("myApp_AWS", "Last Name(split): " + ui_lastnamesplitb[0]);
-
-                                //Split "street_address"
-                                String[] ui_streetaddresssplita = ui_resultList.get(0).split("street_address\":\"");
-                                String[] ui_streetaddresssplitb = ui_streetaddresssplita[1].split("\"");
-                                Log.d("myApp_AWS", "Street Address(split): " + ui_streetaddresssplitb[0]);
-
-                                //Split "street_address"
-                                String[] ui_streetaddresssplit2 = ui_resultList.get(0).split("postcode\":\"");
-                                String[] ui_streetaddresssplit2b = ui_streetaddresssplit2[1].split("\"");
-                                Log.d("myApp_AWS", "Street Address(split): " + ui_streetaddresssplit2b[0]);
-
-                                //Split "postcode 2"
-                                String[] ui_postcodesplitc = ui_resultList.get(0).split("postcode\":\"");
-                                String[] ui_postcodesplitd = ui_postcodesplitc[1].split("\"");
-                                Log.d("myApp_AWS", "postcode 2(split): " + ui_postcodesplitd[0]);
-
-//                                //Split "postcode"
-//                                String[] ui_postcodesplita = ui_resultList.get(0).split("postcode");
-//                                String[] ui_postcodesplitb = ui_postcodesplita[1].split("\"");
-//                                String[] ui_postcodesplitc = ui_postcodesplitb[1].split(":");
-//                                String[] ui_postcodesplitd = ui_postcodesplitc[1].split(",");
-//                                Log.d("myApp_AWS", "Postcode(split): " + ui_postcodesplitd[0]);
-
-                                //Split "password"
-                                String[] ui_passwordsplita = ui_resultList.get(0).split("password\":\"");
-                                String[] ui_passwordsplitb = ui_passwordsplita[1].split("\"");
-                                Log.d("myApp_AWS", "Password(split): " + ui_passwordsplitb[0]);
-
-                                //Split "city"
-                                String[] ui_cityregionsplita = ui_resultList.get(0).split("city\":\"");
-                                String[] ui_cityregionsplitb = ui_cityregionsplita[1].split("\"");
-                                Log.d("myApp_AWS", "City / Region(split): " + ui_cityregionsplitb[0]);
-
-                                //Split "country"
-                                String[] ui_countrysplita = ui_resultList.get(0).split("country\":\"");
-                                String[] ui_countrysplitb = ui_countrysplita[1].split("\"");
-                                Log.d("myApp_AWS", "Country(split): " + ui_countrysplitb[0]);
-
-                                AppGlobals.userregInfo.userregistrationFirstName = ui_firstnamesplitb[0];
-                                AppGlobals.userregInfo.userregistrationEmail = ui_emailsplitb[0];
-                                AppGlobals.userregInfo.userregistrationSuburb = ui_suburbsplitb[0];
-                                AppGlobals.userregInfo.userregistrationLastName = ui_lastnamesplitb[0];
-                                AppGlobals.userregInfo.userregistrationStreetAddress = ui_streetaddresssplitb[0];
-                                AppGlobals.userregInfo.userregistrationPostcode = ui_postcodesplitd[0];
-                                AppGlobals.userregInfo.userregistrationPassword = ui_passwordsplitb[0];
-                                AppGlobals.userregInfo.userregistrationCityRegion = ui_cityregionsplitb[0];
-                                AppGlobals.userregInfo.userregistrationCountry = ui_countrysplitb[0];
-
+                            @Override
+                            public void run() {
                                 //***** Text (Street Address from AWS) - ViewId_edittext25 *****//
                                 ViewId_edittext25 = (EditText) findViewById(R.id.editText25);
                                 ViewId_edittext25.setText(AppGlobals.userregInfo.userregistrationStreetAddress);
@@ -1038,18 +979,147 @@ public class Rinnai11hRegistration extends MillecActivityBase {
                                 //***** Text (Last Name from AWS) - ViewId_edittext36 *****//
                                 ViewId_edittext36 = (EditText) findViewById(R.id.editText36);
                                 ViewId_edittext36.setText(AppGlobals.userregInfo.userregistrationLastName);
-                            } else {
-                                Toast.makeText(Rinnai11hRegistration.this, "Web Services Error.",
-                                        Toast.LENGTH_LONG).show();
                             }
-                        } catch (Exception e) {
-                            Log.d("myApp_AWS", "Select Customer: (Exception - " + e + ")");
+                        });
 
-                            Toast.makeText(Rinnai11hRegistration.this, "Web Services Error. \nTry again.",
-                                    Toast.LENGTH_LONG).show();
-                        }
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                        Toast.makeText(Rinnai11hRegistration.this, "Web Services Error.",
+                                        Toast.LENGTH_LONG).show();
                     }
-                });
+                }
+
+
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        try {
+//                            if (ui_resultList.size() > 0) {
+//
+//                                //Raw split
+//                                String[] ui_resultListsplit = ui_resultList.get(0).split("\"");
+//
+//                                Log.d("myApp_AWS", "First Name: " + ui_resultListsplit[3]);
+//                                Log.d("myApp_AWS", "Email: " + ui_resultListsplit[7]);
+//                                Log.d("myApp_AWS", "Suburb: " + ui_resultListsplit[11]);
+//                                Log.d("myApp_AWS", "Last Name: " + ui_resultListsplit[15]);
+//                                Log.d("myApp_AWS", "Street Address: " + ui_resultListsplit[19]);
+//                                Log.d("myApp_AWS", "Postcode: " + ui_resultListsplit[22]);
+//                                Log.d("myApp_AWS", "Password: " + ui_resultListsplit[25]);
+//                                Log.d("myApp_AWS", "City / Region: " + ui_resultListsplit[29]);
+//                                Log.d("myApp_AWS", "Country: " + ui_resultListsplit[33]);
+//
+//                                //Split "first_name"
+//                                String[] ui_firstnamesplita = ui_resultList.get(0).split("first_name\":\"");
+//                                String[] ui_firstnamesplitb = ui_firstnamesplita[1].split("\"");
+//                                Log.d("myApp_AWS", "First Name(split): " + ui_firstnamesplitb[0]);
+//
+//                                //Split "email"
+//                                String[] ui_emailsplita = ui_resultList.get(0).split("email\":\"");
+//                                String[] ui_emailsplitb = ui_emailsplita[1].split("\"");
+//                                Log.d("myApp_AWS", "Email(split): " + ui_emailsplitb[0]);
+//
+//                                //Split "suburb"
+//                                String[] ui_suburbsplita = ui_resultList.get(0).split("suburb\":\"");
+//                                String[] ui_suburbsplitb = ui_suburbsplita[1].split("\"");
+//                                Log.d("myApp_AWS", "Suburb(split): " + ui_suburbsplitb[0]);
+//
+//                                //Split "last_name"
+//                                String[] ui_lastnamesplita = ui_resultList.get(0).split("last_name\":\"");
+//                                String[] ui_lastnamesplitb = ui_lastnamesplita[1].split("\"");
+//                                Log.d("myApp_AWS", "Last Name(split): " + ui_lastnamesplitb[0]);
+//
+//                                //Split "street_address"
+//                                String[] ui_streetaddresssplita = ui_resultList.get(0).split("street_address\":\"");
+//                                String[] ui_streetaddresssplitb = ui_streetaddresssplita[1].split("\"");
+//                                Log.d("myApp_AWS", "Street Address(split): " + ui_streetaddresssplitb[0]);
+//
+//                                //Split "street_address"
+//                                String[] ui_streetaddresssplit2 = ui_resultList.get(0).split("postcode\":\"");
+//                                String[] ui_streetaddresssplit2b = ui_streetaddresssplit2[1].split("\"");
+//                                Log.d("myApp_AWS", "Street Address(split): " + ui_streetaddresssplit2b[0]);
+//
+//                                //Split "postcode 2"
+//                                String[] ui_postcodesplitc = ui_resultList.get(0).split("postcode\":\"");
+//                                String[] ui_postcodesplitd = ui_postcodesplitc[1].split("\"");
+//                                Log.d("myApp_AWS", "postcode 2(split): " + ui_postcodesplitd[0]);
+//
+////                                //Split "postcode"
+////                                String[] ui_postcodesplita = ui_resultList.get(0).split("postcode");
+////                                String[] ui_postcodesplitb = ui_postcodesplita[1].split("\"");
+////                                String[] ui_postcodesplitc = ui_postcodesplitb[1].split(":");
+////                                String[] ui_postcodesplitd = ui_postcodesplitc[1].split(",");
+////                                Log.d("myApp_AWS", "Postcode(split): " + ui_postcodesplitd[0]);
+//
+//                                //Split "password"
+//                                String[] ui_passwordsplita = ui_resultList.get(0).split("password\":\"");
+//                                String[] ui_passwordsplitb = ui_passwordsplita[1].split("\"");
+//                                Log.d("myApp_AWS", "Password(split): " + ui_passwordsplitb[0]);
+//
+//                                //Split "city"
+//                                String[] ui_cityregionsplita = ui_resultList.get(0).split("city\":\"");
+//                                String[] ui_cityregionsplitb = ui_cityregionsplita[1].split("\"");
+//                                Log.d("myApp_AWS", "City / Region(split): " + ui_cityregionsplitb[0]);
+//
+//                                //Split "country"
+//                                String[] ui_countrysplita = ui_resultList.get(0).split("country\":\"");
+//                                String[] ui_countrysplitb = ui_countrysplita[1].split("\"");
+//                                Log.d("myApp_AWS", "Country(split): " + ui_countrysplitb[0]);
+//
+//                                //AppGlobals.userregInfo.userregistrationFirstName = ui_firstnamesplitb[0];
+//                                AppGlobals.userregInfo.userregistrationEmail = ui_emailsplitb[0];
+//                                AppGlobals.userregInfo.userregistrationSuburb = ui_suburbsplitb[0];
+//                                AppGlobals.userregInfo.userregistrationLastName = ui_lastnamesplitb[0];
+//                                AppGlobals.userregInfo.userregistrationStreetAddress = ui_streetaddresssplitb[0];
+//                                AppGlobals.userregInfo.userregistrationPostcode = ui_postcodesplitd[0];
+//                                AppGlobals.userregInfo.userregistrationPassword = ui_passwordsplitb[0];
+//                                AppGlobals.userregInfo.userregistrationCityRegion = ui_cityregionsplitb[0];
+//                                AppGlobals.userregInfo.userregistrationCountry = ui_countrysplitb[0];
+//
+//                                //***** Text (Street Address from AWS) - ViewId_edittext25 *****//
+//                                ViewId_edittext25 = (EditText) findViewById(R.id.editText25);
+//                                ViewId_edittext25.setText(AppGlobals.userregInfo.userregistrationStreetAddress);
+//
+//                                //***** Text (Suburb from AWS) - ViewId_edittext26 *****//
+//                                ViewId_edittext26 = (EditText) findViewById(R.id.editText26);
+//                                ViewId_edittext26.setText(AppGlobals.userregInfo.userregistrationSuburb);
+//
+//                                //***** Text (City / Region from AWS) - ViewId_edittext27 *****//
+//                                ViewId_edittext27 = (EditText) findViewById(R.id.editText27);
+//                                ViewId_edittext27.setText(AppGlobals.userregInfo.userregistrationCityRegion);
+//
+//                                //***** Text (Postcode from AWS) - ViewId_edittext28 *****//
+//                                ViewId_edittext28 = (EditText) findViewById(R.id.editText28);
+//                                ViewId_edittext28.setText(AppGlobals.userregInfo.userregistrationPostcode);
+//
+//                                //***** Text (Password from AWS) - ViewId_edittext29 *****//
+//                                ViewId_edittext29 = (EditText) findViewById(R.id.editText29);
+//                                ViewId_edittext29.setText(AppGlobals.userregInfo.userregistrationPassword);
+//
+//                                //***** Text (Email from AWS) - ViewId_edittext34 *****//
+//                                ViewId_edittext34 = (EditText) findViewById(R.id.editText34);
+//                                ViewId_edittext34.setText(AppGlobals.userregInfo.userregistrationEmail);
+//
+//                                //***** Text (First Name from AWS) - ViewId_edittext35 *****//
+//                                ViewId_edittext35 = (EditText) findViewById(R.id.editText35);
+//                                ViewId_edittext35.setText(AppGlobals.userregInfo.userregistrationFirstName);
+//
+//                                //***** Text (Last Name from AWS) - ViewId_edittext36 *****//
+//                                ViewId_edittext36 = (EditText) findViewById(R.id.editText36);
+//                                ViewId_edittext36.setText(AppGlobals.userregInfo.userregistrationLastName);
+//                            } else {
+//                                Toast.makeText(Rinnai11hRegistration.this, "Web Services Error.",
+//                                        Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (Exception e) {
+//                            Log.d("myApp_AWS", "Select Customer: (Exception - " + e + ")");
+//
+//                            Toast.makeText(Rinnai11hRegistration.this, "Web Services Error. \nTry again.",
+//                                    Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
 
             }
         });
