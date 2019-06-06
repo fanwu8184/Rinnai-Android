@@ -136,7 +136,8 @@ public class Rinnai11cRegistration extends MillecActivityBase
                         JSONObject json = new JSONObject(resultList.get(i));
                         String countryCode = json.getString("fire_country");
                         if (locale.equals(countryCode)) {
-                            filteredResult.add(resultList.get(i));
+                            String fireType = json.getString("fire_type");
+                            filteredResult.add(fireType);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -163,8 +164,6 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                 for (int i = 0; i <= ui_resultList.size() - 1; i++) {
                                     Log.d("myApp_AWS", "Rinnai11cRegistration: Fire Model (" + ui_resultList + ")");
 
-                                    String[] ui_resultListsplit = ui_resultList.get(i).split("\"");
-
                                     View ViewId_scrollview_row_rinnai11c_registration = getLayoutInflater().inflate(R.layout.scrollview_row_rinnai11c_registration, null, false);
 
                                     ViewId_scrollview_row_rinnai11c_registration.setId(id);
@@ -178,7 +177,7 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                     ViewId_scrollview_row_rinnai11c_registration.setOnClickListener(scrollviewrowrinnai11cregistrationOnClickListener);//add OnClickListener Here
 
                                     //set it on the row - textView63, wifiaccesspointName
-                                    ((TextView) ViewId_scrollview_row_rinnai11c_registration.findViewById(R.id.textView173)).setText(ui_resultListsplit[3]);
+                                    ((TextView) ViewId_scrollview_row_rinnai11c_registration.findViewById(R.id.textView173)).setText(ui_resultList.get(i));
 
                                     //Add the Row to the table
                                     ViewId_firemodel_tableLayout.addView(ViewId_scrollview_row_rinnai11c_registration);
