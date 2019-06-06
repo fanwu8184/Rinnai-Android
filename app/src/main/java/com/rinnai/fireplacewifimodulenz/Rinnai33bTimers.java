@@ -309,7 +309,7 @@ public class Rinnai33bTimers extends MillecActivityBase
 
                         AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersOperationMode = 0;
 
-                        AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersOnOff = 0;
+                        AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersOnOff = 1;
 
                         Tx_RN171DeviceSetTimers();
 
