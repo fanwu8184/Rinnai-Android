@@ -395,45 +395,54 @@ public class Rinnai17Login extends MillecActivityBase
     //********************//
 
     void appStart() {
-
-        try {
-            AppGlobals.UDPSrv.stopServer();
-            AppGlobals.UDPSrv.setCurrentActivity(this);
-            AppGlobals.UDPSrv.start();
-        } catch (Exception e) {
-            Log.d("myApp_WiFiUDP", "Rinnai17Login: appStart(Exception - " + e + ")");
-        }
-
         AppGlobals.loadPersistentStorage(Rinnai17Login.this);
 
-        AppGlobals.userregInfo.userregistrationEmail = AppGlobals.rfwmEmail;
-        AppGlobals.userregInfo.userregistrationPassword = AppGlobals.rfwmPassword;
-
-        String compareAP = "RinnaiWiFi_";
-        String currentAP = NetworkFunctions.getCurrentAccessPointName(this);
-
-        Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: AP FOUND (" + currentAP + ")");
-        Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: AP FOUND Length (" + currentAP.length() + ")");
-
-        if (currentAP.contains(compareAP) && currentAP.length() == 17) {
-            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CONNECTED TO AP.");
-
-            isAccessPoint = true;
-
+        if (AppGlobals.rfwmEmail.equals("NA")) {
+            isClosing = true;
+            AppGlobals.CommErrorFault.stopTimer();
+            Intent intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+            startActivity(intent);
+            finish();
         } else {
-            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart:NOT CONNECTED IN AP.");
+            try {
+                AppGlobals.UDPSrv.stopServer();
+                AppGlobals.UDPSrv.setCurrentActivity(this);
+                AppGlobals.UDPSrv.start();
+            } catch (Exception e) {
+                Log.d("myApp_WiFiUDP", "Rinnai17Login: appStart(Exception - " + e + ")");
+            }
 
-            isAccessPoint = false;
+            //AppGlobals.loadPersistentStorage(Rinnai17Login.this);
 
-           if(AppGlobals.rfwmEmail != null){
-               if(!AppGlobals.rfwmEmail.equals("NA")) {
-                   getAWSCustomerAppliance();
-               }
-           }
+            AppGlobals.userregInfo.userregistrationEmail = AppGlobals.rfwmEmail;
+            AppGlobals.userregInfo.userregistrationPassword = AppGlobals.rfwmPassword;
+
+
+            String compareAP = "RinnaiWiFi_";
+            String currentAP = NetworkFunctions.getCurrentAccessPointName(this);
+
+            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: AP FOUND (" + currentAP + ")");
+            Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: AP FOUND Length (" + currentAP.length() + ")");
+
+            if (currentAP.contains(compareAP) && currentAP.length() == 17) {
+                Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart: CONNECTED TO AP.");
+
+                isAccessPoint = true;
+
+            } else {
+                Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart:NOT CONNECTED IN AP.");
+
+                isAccessPoint = false;
+
+                if(AppGlobals.rfwmEmail != null){
+                    if(!AppGlobals.rfwmEmail.equals("NA")) {
+                        getAWSCustomerAppliance();
+                    }
+                }
+            }
+
+            startTxRN171DeviceGetStatus();
         }
-
-        startTxRN171DeviceGetStatus();
-
     }
 
     //******************************//
