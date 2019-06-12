@@ -156,7 +156,15 @@ public class Rinnai17Login extends MillecActivityBase
 
         startTxRN171DeviceGetStatus();
 
-            showWifiList();
+        if(AppGlobals.rfwmEmail != null){
+            if(!AppGlobals.rfwmEmail.equals("NA")) {
+                showWifiList();
+            } else {
+                goToLoginPage();
+            }
+        } else {
+            goToLoginPage();
+        }
     }
 
     @Override
@@ -393,18 +401,16 @@ public class Rinnai17Login extends MillecActivityBase
     //********************//
     //***** appStart *****//
     //********************//
+    void goToLoginPage() {
+        isClosing = true;
+        AppGlobals.CommErrorFault.stopTimer();
+        Intent intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+        startActivity(intent);
+        finish();
+    }
 
     void appStart() {
-        AppGlobals.loadPersistentStorage(Rinnai17Login.this);
 
-        if(AppGlobals.rfwmEmail != null){
-            if (AppGlobals.rfwmEmail.equals("NA")) {
-                isClosing = true;
-                AppGlobals.CommErrorFault.stopTimer();
-                Intent intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
-                startActivity(intent);
-                finish();
-            } else {
                 try {
                     AppGlobals.UDPSrv.stopServer();
                     AppGlobals.UDPSrv.setCurrentActivity(this);
@@ -413,7 +419,7 @@ public class Rinnai17Login extends MillecActivityBase
                     Log.d("myApp_WiFiUDP", "Rinnai17Login: appStart(Exception - " + e + ")");
                 }
 
-                //AppGlobals.loadPersistentStorage(Rinnai17Login.this);
+                AppGlobals.loadPersistentStorage(Rinnai17Login.this);
 
                 AppGlobals.userregInfo.userregistrationEmail = AppGlobals.rfwmEmail;
                 AppGlobals.userregInfo.userregistrationPassword = AppGlobals.rfwmPassword;
@@ -438,20 +444,15 @@ public class Rinnai17Login extends MillecActivityBase
                     if(AppGlobals.rfwmEmail != null){
                         if(!AppGlobals.rfwmEmail.equals("NA")) {
                             getAWSCustomerAppliance();
+                        } else {
+                            //goToLoginPage();
                         }
+                    } else {
+                        //goToLoginPage();
                     }
                 }
 
                 startTxRN171DeviceGetStatus();
-            }
-        }else{
-            isClosing = true;
-            AppGlobals.CommErrorFault.stopTimer();
-            Intent intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
-            startActivity(intent);
-            finish();
-        }
-
     }
 
     //******************************//
@@ -957,13 +958,16 @@ public class Rinnai17Login extends MillecActivityBase
                                             });
                                             isClosing = true;
 
-                                            if(AppGlobals.rfwmEmail.equals("NA")){
-                                                AppGlobals.CommErrorFault.stopTimer();
-                                                intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }else{
-                                                showWifiList();
+
+
+                                            if(AppGlobals.rfwmEmail != null){
+                                                if(!AppGlobals.rfwmEmail.equals("NA")) {
+                                                    showWifiList();
+                                                } else {
+                                                    goToLoginPage();
+                                                }
+                                            } else {
+                                                goToLoginPage();
                                             }
 
                                             Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
@@ -1099,7 +1103,16 @@ public class Rinnai17Login extends MillecActivityBase
                                 progressBarOnStart.setVisibility(View.INVISIBLE);
                             }
                         });
-                        showWifiList();
+
+                        if(AppGlobals.rfwmEmail != null){
+                            if(!AppGlobals.rfwmEmail.equals("NA")) {
+                                showWifiList();
+                            } else {
+                                goToLoginPage();
+                            }
+                        } else {
+                            goToLoginPage();
+                        }
                     }
 
                 }
@@ -1171,7 +1184,7 @@ public class Rinnai17Login extends MillecActivityBase
     @Override
     public void timereventCallBackTimer(int timerID) {
 
-        if(!isShowList){
+        if(isAccessPoint){
             startupCheckTimer.cancel();
             //fireanimationCheckTimer.cancel();
             progressBarOnStart.setVisibility(View.INVISIBLE);
@@ -1183,6 +1196,8 @@ public class Rinnai17Login extends MillecActivityBase
 
             finish();
             Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai00aInitialSetupThanks).");
+        } else if (!isShowList) {
+            goToLoginPage();
         }
     }
 
