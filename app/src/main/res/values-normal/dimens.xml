@@ -4,7 +4,7 @@
     <dimen name="seekbar_flame_width">45dp</dimen>
     <dimen name="seekbar_settemp_height">45dp</dimen>
     <dimen name="seekbar_settemp_width">45dp</dimen>
-    <dimen name="seekbar_flame_paddingend">17dp</dimen>
+    <dimen name="seekbar_flame_paddingend">20dp</dimen>
     <dimen name="seekbar_flame_paddingstart">17dp</dimen>
     <dimen name="seekbar_settemp_paddingend">17dp</dimen>
     <dimen name="seekbar_settemp_paddingstart">17dp</dimen>

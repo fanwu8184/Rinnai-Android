@@ -10,7 +10,7 @@
         </shape>
     </item>
     <item android:drawable="@drawable/slider_thumb_3"
-
+        android:right="10dp"
         />
 
 </layer-list>

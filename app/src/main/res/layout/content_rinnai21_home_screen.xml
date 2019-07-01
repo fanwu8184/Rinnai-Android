@@ -397,13 +397,13 @@
                     <!-- This library requires pair of the VerticalSeekBar and VerticalSeekBarWrapper classes -->
                     <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="670">
+                        android:layout_height="@dimen/_250sdp"
+                        >
 
                         <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBar
                             android:id="@+id/mySeekBar"
-                            android:layout_width="50dp"
-                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
                             android:paddingEnd="@dimen/seekbar_flame_paddingend"
                             android:paddingStart="@dimen/seekbar_flame_paddingstart"
                             android:progressDrawable="@drawable/seekbar_flame_progress"
@@ -520,13 +520,13 @@
 
                         <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBar
                             android:id="@+id/mySeekBar2"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="0dp"
-                            android:paddingEnd="@dimen/seekbar_settemp_paddingend"
-                            android:paddingStart="@dimen/seekbar_settemp_paddingstart"
+                            android:paddingEnd="@dimen/seekbar_flame_paddingend"
+                            android:paddingStart="@dimen/seekbar_flame_paddingstart"
                             android:progressDrawable="@drawable/seekbar_settemp_progress"
                             android:splitTrack="false"
-                            android:thumb="@drawable/seekbar_settemp_thumb"
+                            android:thumb="@drawable/seekbar_flame_thumb"
                             app:seekBarRotation="CW270" /> <!-- Rotation: CW90 or CW270 -->
                     </com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper>
 

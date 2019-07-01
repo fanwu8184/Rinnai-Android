@@ -1,17 +1,21 @@
 package com.rinnai.fireplacewifimodulenz;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -96,74 +100,74 @@ public class Rinnai11bRegistration extends MillecActivityBase {
                         ViewId_textview86.setTextColor(Color.parseColor("#FFFFFFFF"));
 
                         if (!ViewId_edittext3.getText().toString().equals("") &&
-                                !ViewId_edittext4.getText().toString().equals("")) {
+                                    !ViewId_edittext4.getText().toString().equals("")) {
 
-                            /////////////////////////////////////////////////
-                            //Select Customer
-                            /////////////////////////////////////////////////
-                            AWSconnection.selectCustomerURL(ViewId_edittext3.getText().toString(), ViewId_edittext4.getText().toString(), new AWSconnection.arrayResult() {
-                                @Override
+                                /////////////////////////////////////////////////
+                                //Select Customer
+                                /////////////////////////////////////////////////
+                                AWSconnection.selectCustomerURL(ViewId_edittext3.getText().toString(), ViewId_edittext4.getText().toString(), new AWSconnection.arrayResult() {
+                                    @Override
 
-                                //Get Async callback results
-                                public void getResult(ArrayList<String> resultList) {
+                                    //Get Async callback results
+                                    public void getResult(ArrayList<String> resultList) {
 
-                                    //Do stuff with results here
-                                    int listSize = resultList.size();
-                                    for (int i = 0; i < listSize; i++) {
-                                        //Log.i("Appliance: ", resultList.get(i));
-                                        Log.d("myApp_AWS", "Select Customer: " + resultList.get(i));
-                                    }
+                                        //Do stuff with results here
+                                        int listSize = resultList.size();
+                                        for (int i = 0; i < listSize; i++) {
+                                            //Log.i("Appliance: ", resultList.get(i));
+                                            Log.d("myApp_AWS", "Select Customer: " + resultList.get(i));
+                                        }
 
-                                    final ArrayList<String> ui_resultList = resultList;
+                                        final ArrayList<String> ui_resultList = resultList;
 
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
 
-                                            try {
-                                                if (ui_resultList.size() > 0) {
+                                                try {
+                                                    if (ui_resultList.size() > 0) {
 
-                                                    String[] ui_resultListsplit = ui_resultList.get(0).split("\"");
+                                                        String[] ui_resultListsplit = ui_resultList.get(0).split("\"");
 
-                                                    Log.d("myApp_AWS", "First Name: " + ui_resultListsplit[3]);
-                                                    Log.d("myApp_AWS", "Email: " + ui_resultListsplit[7]);
-                                                    Log.d("myApp_AWS", "Suburb: " + ui_resultListsplit[11]);
-                                                    Log.d("myApp_AWS", "Last Name: " + ui_resultListsplit[15]);
-                                                    Log.d("myApp_AWS", "Street Address: " + ui_resultListsplit[19]);
-                                                    Log.d("myApp_AWS", "Postcode: " + ui_resultListsplit[22]);
-                                                    Log.d("myApp_AWS", "Password: " + ui_resultListsplit[25]);
-                                                    Log.d("myApp_AWS", "City / Region: " + ui_resultListsplit[29]);
-                                                    Log.d("myApp_AWS", "Country: " + ui_resultListsplit[33]);
+                                                        Log.d("myApp_AWS", "First Name: " + ui_resultListsplit[3]);
+                                                        Log.d("myApp_AWS", "Email: " + ui_resultListsplit[7]);
+                                                        Log.d("myApp_AWS", "Suburb: " + ui_resultListsplit[11]);
+                                                        Log.d("myApp_AWS", "Last Name: " + ui_resultListsplit[15]);
+                                                        Log.d("myApp_AWS", "Street Address: " + ui_resultListsplit[19]);
+                                                        Log.d("myApp_AWS", "Postcode: " + ui_resultListsplit[22]);
+                                                        Log.d("myApp_AWS", "Password: " + ui_resultListsplit[25]);
+                                                        Log.d("myApp_AWS", "City / Region: " + ui_resultListsplit[29]);
+                                                        Log.d("myApp_AWS", "Country: " + ui_resultListsplit[33]);
 
-                                                    //Split "first_name"
-                                                    String[] ui_firstnamesplita = ui_resultList.get(0).split("first_name\":\"");
-                                                    String[] ui_firstnamesplitb = ui_firstnamesplita[1].split("\"");
-                                                    Log.d("myApp_AWS", "First Name(split): " + ui_firstnamesplitb[0]);
+                                                        //Split "first_name"
+                                                        String[] ui_firstnamesplita = ui_resultList.get(0).split("first_name\":\"");
+                                                        String[] ui_firstnamesplitb = ui_firstnamesplita[1].split("\"");
+                                                        Log.d("myApp_AWS", "First Name(split): " + ui_firstnamesplitb[0]);
 
-                                                    //Split "email"
-                                                    String[] ui_emailsplita = ui_resultList.get(0).split("email\":\"");
-                                                    String[] ui_emailsplitb = ui_emailsplita[1].split("\"");
-                                                    Log.d("myApp_AWS", "Email(split): " + ui_emailsplitb[0]);
+                                                        //Split "email"
+                                                        String[] ui_emailsplita = ui_resultList.get(0).split("email\":\"");
+                                                        String[] ui_emailsplitb = ui_emailsplita[1].split("\"");
+                                                        Log.d("myApp_AWS", "Email(split): " + ui_emailsplitb[0]);
 
-                                                    //Split "suburb"
-                                                    String[] ui_suburbsplita = ui_resultList.get(0).split("suburb\":\"");
-                                                    String[] ui_suburbsplitb = ui_suburbsplita[1].split("\"");
-                                                    Log.d("myApp_AWS", "Suburb(split): " + ui_suburbsplitb[0]);
+                                                        //Split "suburb"
+                                                        String[] ui_suburbsplita = ui_resultList.get(0).split("suburb\":\"");
+                                                        String[] ui_suburbsplitb = ui_suburbsplita[1].split("\"");
+                                                        Log.d("myApp_AWS", "Suburb(split): " + ui_suburbsplitb[0]);
 
-                                                    //Split "last_name"
-                                                    String[] ui_lastnamesplita = ui_resultList.get(0).split("last_name\":\"");
-                                                    String[] ui_lastnamesplitb = ui_lastnamesplita[1].split("\"");
-                                                    Log.d("myApp_AWS", "Last Name(split): " + ui_lastnamesplitb[0]);
+                                                        //Split "last_name"
+                                                        String[] ui_lastnamesplita = ui_resultList.get(0).split("last_name\":\"");
+                                                        String[] ui_lastnamesplitb = ui_lastnamesplita[1].split("\"");
+                                                        Log.d("myApp_AWS", "Last Name(split): " + ui_lastnamesplitb[0]);
 
-                                                    //Split "street_address"
-                                                    String[] ui_streetaddresssplita = ui_resultList.get(0).split("street_address\":\"");
-                                                    String[] ui_streetaddresssplitb = ui_streetaddresssplita[1].split("\"");
-                                                    Log.d("myApp_AWS", "Street Address(split): " + ui_streetaddresssplitb[0]);
+                                                        //Split "street_address"
+                                                        String[] ui_streetaddresssplita = ui_resultList.get(0).split("street_address\":\"");
+                                                        String[] ui_streetaddresssplitb = ui_streetaddresssplita[1].split("\"");
+                                                        Log.d("myApp_AWS", "Street Address(split): " + ui_streetaddresssplitb[0]);
 
-                                                    //Split "postcode 2"
-                                                    String[] ui_postcodesplitc = ui_resultList.get(0).split("postcode\":\"");
-                                                    String[] ui_postcodesplitd = ui_postcodesplitc[1].split("\"");
-                                                    Log.d("myApp_AWS", "postcode 2(split): " + ui_postcodesplitd[0]);
+                                                        //Split "postcode 2"
+                                                        String[] ui_postcodesplitc = ui_resultList.get(0).split("postcode\":\"");
+                                                        String[] ui_postcodesplitd = ui_postcodesplitc[1].split("\"");
+                                                        Log.d("myApp_AWS", "postcode 2(split): " + ui_postcodesplitd[0]);
 
 //                                                    //Split "postcode"
 //                                                    String[] ui_postcodesplita = ui_resultList.get(0).split("postcode");
@@ -172,67 +176,69 @@ public class Rinnai11bRegistration extends MillecActivityBase {
 //                                                    String[] ui_postcodesplitd = ui_postcodesplitc[1].split(",");
 //                                                    Log.d("myApp_AWS", "Postcode(split): " + ui_postcodesplitd[0]);
 
-                                                    //Split "password"
-                                                    String[] ui_passwordsplita = ui_resultList.get(0).split("password\":\"");
-                                                    String[] ui_passwordsplitb = ui_passwordsplita[1].split("\"");
-                                                    Log.d("myApp_AWS", "Password(split): " + ui_passwordsplitb[0]);
+                                                        //Split "password"
+                                                        String[] ui_passwordsplita = ui_resultList.get(0).split("password\":\"");
+                                                        String[] ui_passwordsplitb = ui_passwordsplita[1].split("\"");
+                                                        Log.d("myApp_AWS", "Password(split): " + ui_passwordsplitb[0]);
 
-                                                    //Split "city"
-                                                    String[] ui_cityregionsplita = ui_resultList.get(0).split("city\":\"");
-                                                    String[] ui_cityregionsplitb = ui_cityregionsplita[1].split("\"");
-                                                    Log.d("myApp_AWS", "City / Region(split): " + ui_cityregionsplitb[0]);
+                                                        //Split "city"
+                                                        String[] ui_cityregionsplita = ui_resultList.get(0).split("city\":\"");
+                                                        String[] ui_cityregionsplitb = ui_cityregionsplita[1].split("\"");
+                                                        Log.d("myApp_AWS", "City / Region(split): " + ui_cityregionsplitb[0]);
 
-                                                    //Split "country"
-                                                    String[] ui_countrysplita = ui_resultList.get(0).split("country\":\"");
-                                                    String[] ui_countrysplitb = ui_countrysplita[1].split("\"");
-                                                    Log.d("myApp_AWS", "Country(split): " + ui_countrysplitb[0]);
+                                                        //Split "country"
+                                                        String[] ui_countrysplita = ui_resultList.get(0).split("country\":\"");
+                                                        String[] ui_countrysplitb = ui_countrysplita[1].split("\"");
+                                                        Log.d("myApp_AWS", "Country(split): " + ui_countrysplitb[0]);
 
-                                                    AppGlobals.userregInfo.userregistrationFirstName = ui_firstnamesplitb[0];
-                                                    AppGlobals.userregInfo.userregistrationEmail = ui_emailsplitb[0];
-                                                    AppGlobals.userregInfo.userregistrationSuburb = ui_suburbsplitb[0];
-                                                    AppGlobals.userregInfo.userregistrationLastName = ui_lastnamesplitb[0];
-                                                    AppGlobals.userregInfo.userregistrationStreetAddress = ui_streetaddresssplitb[0];
-                                                    AppGlobals.userregInfo.userregistrationPostcode = ui_postcodesplitd[0];
-                                                    AppGlobals.userregInfo.userregistrationPassword = ui_passwordsplitb[0];
-                                                    AppGlobals.userregInfo.userregistrationCityRegion = ui_cityregionsplitb[0];
-                                                    AppGlobals.userregInfo.userregistrationCountry = ui_countrysplitb[0];
+                                                        AppGlobals.userregInfo.userregistrationFirstName = ui_firstnamesplitb[0];
+                                                        AppGlobals.userregInfo.userregistrationEmail = ui_emailsplitb[0];
+                                                        AppGlobals.userregInfo.userregistrationSuburb = ui_suburbsplitb[0];
+                                                        AppGlobals.userregInfo.userregistrationLastName = ui_lastnamesplitb[0];
+                                                        AppGlobals.userregInfo.userregistrationStreetAddress = ui_streetaddresssplitb[0];
+                                                        AppGlobals.userregInfo.userregistrationPostcode = ui_postcodesplitd[0];
+                                                        AppGlobals.userregInfo.userregistrationPassword = ui_passwordsplitb[0];
+                                                        AppGlobals.userregInfo.userregistrationCityRegion = ui_cityregionsplitb[0];
+                                                        AppGlobals.userregInfo.userregistrationCountry = ui_countrysplitb[0];
 
-                                                    AppGlobals.rfwmInitialSetupFlag = true;
-                                                    AppGlobals.rfwmUserFlag = 1;
-                                                    AppGlobals.UDPSrv = new UDPServer(3500);
-                                                    AppGlobals.fireplaceWifi.clear();
-                                                    AppGlobals.WiFiAccessPointInfo_List.clear();
-                                                    AppGlobals.TimersInfo_List.clear();
+                                                        AppGlobals.rfwmInitialSetupFlag = true;
+                                                        AppGlobals.rfwmUserFlag = 1;
+                                                        AppGlobals.UDPSrv = new UDPServer(3500);
+                                                        AppGlobals.fireplaceWifi.clear();
+                                                        AppGlobals.WiFiAccessPointInfo_List.clear();
+                                                        AppGlobals.TimersInfo_List.clear();
 
-                                                    AppGlobals.saveRinnaiFireplaceWiFiModuleCredentials(Rinnai11bRegistration.this, AppGlobals.userregInfo.userregistrationEmail, AppGlobals.userregInfo.userregistrationPassword);
+                                                        AppGlobals.saveRinnaiFireplaceWiFiModuleCredentials(Rinnai11bRegistration.this, AppGlobals.userregInfo.userregistrationEmail, AppGlobals.userregInfo.userregistrationPassword);
 
-                                                    isClosing = true;
-                                                    intent = new Intent(Rinnai11bRegistration.this, Rinnai17Login.class);
-                                                    startActivity(intent);
+                                                        isClosing = true;
+                                                        intent = new Intent(Rinnai11bRegistration.this, Rinnai17Login.class);
+                                                        startActivity(intent);
 
-                                                    finish();
-                                                    Log.d("myApp", "Rinnai11bRegistration: startActivity(Rinnai17Login).");
+                                                        finish();
+                                                        Log.d("myApp", "Rinnai11bRegistration: startActivity(Rinnai17Login).");
 
-                                                } else {
-                                                    Toast.makeText(Rinnai11bRegistration.this, "Email, Password or Web Services Error. \nTry entering details again.",
+                                                    } else {
+                                                        Toast.makeText(Rinnai11bRegistration.this, "Email, Password or Web Services Error. \nTry entering details again.",
+                                                                Toast.LENGTH_LONG).show();
+                                                    }
+                                                } catch (Exception e) {
+                                                    Log.d("myApp_AWS", "Select Customer: (Exception - " + e + ")");
+
+                                                    Toast.makeText(Rinnai11bRegistration.this, "Web Services Error. \nTry again.",
                                                             Toast.LENGTH_LONG).show();
                                                 }
-                                            } catch (Exception e) {
-                                                Log.d("myApp_AWS", "Select Customer: (Exception - " + e + ")");
-
-                                                Toast.makeText(Rinnai11bRegistration.this, "Web Services Error. \nTry again.",
-                                                        Toast.LENGTH_LONG).show();
                                             }
-                                        }
-                                    });
+                                        });
 
-                                }
-                            });
+                                    }
+                                });
 
-                        } else {
-                            Toast.makeText(Rinnai11bRegistration.this, "1- Enter Email, \n2- Enter Password.",
-                                    Toast.LENGTH_LONG).show();
-                        }
+                            } else {
+                                Toast.makeText(Rinnai11bRegistration.this, "1- Enter Email, \n2- Enter Password.",
+                                        Toast.LENGTH_LONG).show();
+                            }
+
+
 
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:
@@ -262,13 +268,21 @@ public class Rinnai11bRegistration extends MillecActivityBase {
                         ViewId_button19.setBackgroundResource(R.drawable.registration_button_red_background);
                         ViewId_textview87.setTextColor(Color.parseColor("#FFFFFFFF"));
 
-                        isClosing = true;
-                        intent = new Intent(Rinnai11bRegistration.this, Rinnai11cRegistration.class);
-                        startActivity(intent);
+                        if (AppGlobals.fireplaceWifi.size() >= 1) {
 
-                        finish();
-                        Log.d("myApp", "Rinnai11bRegistration: startActivity(Rinnai11cRegistration).");
-                        return true; // if you want to handle the touch event
+                            isClosing = true;
+                            intent = new Intent(Rinnai11bRegistration.this, Rinnai11cRegistration.class);
+                            startActivity(intent);
+
+                            finish();
+                            Log.d("myApp", "Rinnai11bRegistration: startActivity(Rinnai11cRegistration).");
+                            return true; // if you want to handle the touch event
+
+                        }else{
+//                            show popup
+                            showPopup();
+                        }
+
                     case MotionEvent.ACTION_CANCEL:
                         // ABORTED
                         ViewId_button19.setBackgroundResource(R.drawable.registration_button_red_background);
@@ -458,6 +472,39 @@ public class Rinnai11bRegistration extends MillecActivityBase {
                 }
             }
         });
+    }
+
+    private void showPopup(){
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+
+        builder.setTitle("No Flame Device Found!")
+                .setMessage("Please setup your flame device first.")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        intent = new Intent(Rinnai11bRegistration.this, Rinnai00aInitialSetupThanks.class);
+                        startActivity(intent);
+
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog al = builder.create();
+        al.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        al.show();
     }
 
     @Override

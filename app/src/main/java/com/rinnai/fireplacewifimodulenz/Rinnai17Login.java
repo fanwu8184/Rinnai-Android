@@ -156,15 +156,15 @@ public class Rinnai17Login extends MillecActivityBase
 
         startTxRN171DeviceGetStatus();
 
-        if(AppGlobals.rfwmEmail != null){
-            if(!AppGlobals.rfwmEmail.equals("NA")) {
-                showWifiList();
-            } else {
-                goToLoginPage();
-            }
-        } else {
-            goToLoginPage();
-        }
+//        if(AppGlobals.rfwmEmail != null){
+//            if(!AppGlobals.rfwmEmail.equals("NA")) {
+//                showWifiList();
+//            } else {
+//                goToLoginPage();
+//            }
+//        } else {
+//            goToLoginPage();
+//        }
     }
 
     @Override
