@@ -81,7 +81,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     ImageView ViewId_imageview;
     ImageView ViewId_imageview2;
     ImageView ViewId_imageview3;
-    ImageView ViewId_imageview4;
+    LinearLayout ViewId_imageview4;
     ImageView ViewId_imageview5;
     ImageView imageView53;
 
@@ -1686,7 +1686,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         ViewId_imageview2 = (ImageView) findViewById(R.id.imageView2);
         ViewId_imageview3 = (ImageView) findViewById(R.id.imageView3);
-        ViewId_imageview4 = (ImageView) findViewById(R.id.imageView4);
+        ViewId_imageview4 = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
         ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
 
         ViewId_linearlayout_seekbar_flame = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
@@ -1866,7 +1866,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         ViewId_imageview2 = (ImageView) findViewById(R.id.imageView2);
         ViewId_imageview3 = (ImageView) findViewById(R.id.imageView3);
-        ViewId_imageview4 = (ImageView) findViewById(R.id.imageView4);
+        ViewId_imageview4 = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
         ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
 
         ViewId_linearlayout_seekbar_flame = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
@@ -2284,7 +2284,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         ViewId_imageview2 = (ImageView) findViewById(R.id.imageView2);
         ViewId_imageview3 = (ImageView) findViewById(R.id.imageView3);
-        ViewId_imageview4 = (ImageView) findViewById(R.id.imageView4);
+        ViewId_imageview4 = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
         ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
 
         ViewId_linearlayout_seekbar_flame = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);

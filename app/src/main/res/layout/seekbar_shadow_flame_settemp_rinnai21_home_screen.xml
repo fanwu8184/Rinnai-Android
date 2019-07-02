@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,26 +32,27 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="115"
-                android:orientation="horizontal"></LinearLayout>
+                android:layout_height="@dimen/_35sdp"></LinearLayout>
 
             <!-- This library requires pair of the VerticalSeekBar and VerticalSeekBarWrapper classes -->
             <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="670">
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_gravity="center"
+               >
 
                 <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBar
                     android:id="@+id/mySeekBar3"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:paddingEnd="@dimen/seekbar_flame_paddingend"
-                    android:paddingStart="@dimen/seekbar_flame_paddingstart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingEnd="@dimen/_20sdp"
+                    android:paddingStart="@dimen/_20sdp"
                     android:progressDrawable="@drawable/seekbar_flame_progress"
                     android:splitTrack="false"
-                    android:thumb="@drawable/seekbar_flame_thumb"
+                    android:thumb="@drawable/seekbar_settemp_thumb"
                     app:seekBarRotation="CW270" /> <!-- Rotation: CW90 or CW270 -->
+
+
             </com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper>
 
             <LinearLayout
