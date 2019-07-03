@@ -1696,7 +1696,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         ViewId_imageview2 = (ImageView) findViewById(R.id.imageView2);
         ViewId_imageview3 = (ImageView) findViewById(R.id.imageView3);
         ViewId_imageview4 = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
-        ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
+//        ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
 
         ViewId_linearlayout_seekbar_flame = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
         ViewId_linearlayout_seekbar_settemp = (LinearLayout) findViewById(R.id.linearlayout_seekbar_settemp);
@@ -1876,7 +1876,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         ViewId_imageview2 = (ImageView) findViewById(R.id.imageView2);
         ViewId_imageview3 = (ImageView) findViewById(R.id.imageView3);
         ViewId_imageview4 = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
-        ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
+//        ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
 
         ViewId_linearlayout_seekbar_flame = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
         ViewId_linearlayout_seekbar_settemp = (LinearLayout) findViewById(R.id.linearlayout_seekbar_settemp);
@@ -2294,7 +2294,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         ViewId_imageview2 = (ImageView) findViewById(R.id.imageView2);
         ViewId_imageview3 = (ImageView) findViewById(R.id.imageView3);
         ViewId_imageview4 = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
-        ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
+//        ViewId_imageview5 = (ImageView) findViewById(R.id.imageView5);
 
         ViewId_linearlayout_seekbar_flame = (LinearLayout) findViewById(R.id.linearlayout_seekbar_flame);
         ViewId_linearlayout_seekbar_settemp = (LinearLayout) findViewById(R.id.linearlayout_seekbar_settemp);
@@ -2327,7 +2327,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_textview5.setAlpha(0.10f);
             ViewId_textview7.setAlpha(0.10f);
             ViewId_imageview3.setAlpha(0.25f);
-            ViewId_imageview5.setAlpha(0.25f);
+//            ViewId_imageview5.setAlpha(0.25f);
             ViewId_linearlayout_seekbar_settemp.setAlpha(0.50f);
             ViewId_myseekbar4.setAlpha(0.25f);
 
@@ -2372,7 +2372,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_textview5.setAlpha(1.0f);
             ViewId_textview7.setAlpha(1.0f);
             ViewId_imageview3.setAlpha(1.0f);
-            ViewId_imageview5.setAlpha(1.0f);
+//            ViewId_imageview5.setAlpha(1.0f);
             ViewId_linearlayout_seekbar_settemp.setAlpha(1.0f);
             ViewId_myseekbar4.setAlpha(0.50f);
 
