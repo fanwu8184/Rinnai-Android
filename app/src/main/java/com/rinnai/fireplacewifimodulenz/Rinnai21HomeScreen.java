@@ -1096,6 +1096,9 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                     case MotionEvent.ACTION_UP:
                         // RELEASED
 
+                        AppGlobals.Button_flame_settemp_actionvisible = true;
+
+                        setFlameSettempVisibility();
                         //***** text - ViewId_textview6 *****//
                         if (AppGlobals.ViewId_textview6_flamevalue < 5) {
                             AppGlobals.ViewId_textview6_flamevalue++;
@@ -1126,6 +1129,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         }
 
                         ViewId_button.setPressed(false);
+
+
 
                         enableguardtimeRinnai21HomeScreen();
 
@@ -1185,6 +1190,10 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                             default:
                                 break;
                         }
+
+                        AppGlobals.Button_flame_settemp_actionvisible = true;
+
+                        setFlameSettempVisibility();
 
                         ViewId_button2.setPressed(false);
 

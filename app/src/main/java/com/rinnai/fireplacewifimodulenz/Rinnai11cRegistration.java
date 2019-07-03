@@ -29,6 +29,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,6 +96,8 @@ public class Rinnai11cRegistration extends MillecActivityBase
 
     String locale;
 
+    private  ArrayList<FireModelDao> fireModelList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +129,7 @@ public class Rinnai11cRegistration extends MillecActivityBase
             //Get Async callback results
             public void getResult(ArrayList<String> resultList) {
 
-                ArrayList<String> filteredResult = new ArrayList<String>();
+                fireModelList = new ArrayList<FireModelDao>();
                 //Do stuff with results here
                 int listSize = resultList.size();
                 for (int i = 0; i < listSize; i++) {
@@ -136,15 +140,30 @@ public class Rinnai11cRegistration extends MillecActivityBase
                         JSONObject json = new JSONObject(resultList.get(i));
                         String countryCode = json.getString("fire_country");
                         if (locale.equals(countryCode)) {
+
+                            FireModelDao fireModelDao = new FireModelDao();
                             String fireType = json.getString("fire_type");
-                            filteredResult.add(fireType);
+                            String countryCode1 = json.getString("fire_country");
+                            String fireModel= json.getString("fire_model");
+
+                            fireModelDao.setFireCountry(countryCode1);
+                            fireModelDao.setFireModel(fireModel);
+                            fireModelDao.setFireType(fireType);
+                            fireModelList.add(fireModelDao);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
 
-                final ArrayList<String> ui_resultList = filteredResult;
+                Collections.sort(fireModelList, new CustomComparator());
+//
+//                Collections.sort(fireModelList);
+//
+//                for(ToSort toSort : sortList){
+//                    System.out.println(toSort.toString());
+//                }
+                final ArrayList<FireModelDao> ui_resultList = fireModelList;
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -177,7 +196,7 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                     ViewId_scrollview_row_rinnai11c_registration.setOnClickListener(scrollviewrowrinnai11cregistrationOnClickListener);//add OnClickListener Here
 
                                     //set it on the row - textView63, wifiaccesspointName
-                                    ((TextView) ViewId_scrollview_row_rinnai11c_registration.findViewById(R.id.textView173)).setText(ui_resultList.get(i));
+                                    ((TextView) ViewId_scrollview_row_rinnai11c_registration.findViewById(R.id.textView173)).setText(ui_resultList.get(i).getFireType());
 
                                     //Add the Row to the table
                                     ViewId_firemodel_tableLayout.addView(ViewId_scrollview_row_rinnai11c_registration);
@@ -790,54 +809,25 @@ public class Rinnai11cRegistration extends MillecActivityBase
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText11.");
 
                 if (!ViewId_edittext11.getText().toString().equals("")) {
-                    Map<String,String> auMap =  new HashMap<String,String>();
-                    auMap.put("AB", "RIB2312");
-                    auMap.put("AD", "RHFE952");
-                    auMap.put("AF", "RHFE1252");
-                    auMap.put("AH", "RDV600");
-                    auMap.put("AK", "RDV700");
-                    auMap.put("AM", "RHFE800SF");
-                    auMap.put("AP", "RHFE800DF");
-                    auMap.put("AR", "RHFE800S");
-                    auMap.put("AT", "RHFE800D");
-                    auMap.put("AV", "RHFE1000S");
-                    auMap.put("AX", "RHFE1000D");
-                    auMap.put("BA", "RHFE1500S");
-                    auMap.put("BC", "RHFE1500D");
-                    Map<String,String> nzMap =  new HashMap<String,String>();
-                    nzMap.put("AA", "RIB2312");
-                    nzMap.put("AC", "RHFE952");
-                    nzMap.put("AE", "RHFE1252");
-                    nzMap.put("AG", "RDV600");
-                    nzMap.put("AJ", "RDV700");
-                    nzMap.put("AL", "RHFE800SF");
-                    nzMap.put("AN", "RHFE800DF");
-                    nzMap.put("AQ", "RHFE800S");
-                    nzMap.put("AS", "RHFE800D");
-                    nzMap.put("AU", "RHFE1000S");
-                    nzMap.put("AW", "RHFE1000D");
-                    nzMap.put("AZ", "RHFE1500S");
-                    nzMap.put("BB", "RHFE1500D");
 
                     String inputString = ViewId_edittext10.getText().toString().toUpperCase() + ViewId_edittext11.getText().toString().toUpperCase();
                     String modelString = "***";
-                    String type = ViewId_textview174.getText().toString();
+                    Boolean isExist = false;
 
                     if (locale.equals("AU")) {
-                        String getString = (String) auMap.get(inputString);
-                        if (getString != null) {
-                            modelString = getString;
+
+                        if(findFireModel(inputString) != null){
+                            isExist = true;
                         }
+
                     } else if (locale.equals("NZ")) {
-                        String getString = (String) nzMap.get(inputString);
-                        if (getString != null) {
-                            modelString = getString;
+                        if(findFireModel(inputString) != null){
+                            isExist = true;
                         }
                     }
 
 
-                    if (type != "") {
-                        if (type.contains(modelString)) {
+                        if (isExist) {
                             ViewId_edittext12.requestFocus();
                         } else {
                             AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
@@ -871,7 +861,6 @@ public class Rinnai11cRegistration extends MillecActivityBase
 //                {
 //                    ViewId_edittext12.requestFocus();
 //                }
-            }
         });
 
         //***** TextChangedListener - ViewId_edittext12 (Registration Serial Number (Digit 7)) *****//
@@ -1051,6 +1040,15 @@ public class Rinnai11cRegistration extends MillecActivityBase
         });
     }
 
+    private FireModelDao findFireModel(String codeIsIn) {
+        for(FireModelDao fireModel : fireModelList) {
+            if(fireModel.getFireModel().equals(codeIsIn)) {
+                return fireModel;
+            }
+        }
+        return null;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -1152,6 +1150,15 @@ public class Rinnai11cRegistration extends MillecActivityBase
         ViewId_include_showhints_serialnumber.setVisibility(View.INVISIBLE);
         ViewId_include_showhints_lockout_registrationc.setVisibility(View.INVISIBLE);
 
+    }
+
+
+    public class CustomComparator implements Comparator<FireModelDao> {
+
+        @Override
+        public int compare(FireModelDao o1, FireModelDao o2) {
+            return o1.getFireModel().compareTo(o2.getFireModel());
+        }
     }
 
     @Override
