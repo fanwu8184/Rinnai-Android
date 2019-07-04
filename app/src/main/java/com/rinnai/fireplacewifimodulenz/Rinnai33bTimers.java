@@ -1,15 +1,19 @@
 package com.rinnai.fireplacewifimodulenz;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
@@ -276,48 +280,58 @@ public class Rinnai33bTimers extends MillecActivityBase
                         ViewId_textview36.setTextColor(Color.parseColor("#FF808080"));
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_UP:
+                        if(!AppGlobals.ViewId_imagebutton14_actionup && !AppGlobals.ViewId_imagebutton15_actionup && !AppGlobals.ViewId_imagebutton16_actionup && !AppGlobals.ViewId_imagebutton17_actionup &&
+                        !AppGlobals.ViewId_imagebutton18_actionup && !AppGlobals.ViewId_imagebutton19_actionup && !AppGlobals.ViewId_imagebutton20_actionup){
+
+                            showPopup();
+
+                         }else{
+
+
+                            ViewId_textview36.setTextColor(Color.parseColor("#FFFFFFFF"));
+
+                            if (ViewId_numberpicker4.getValue() == 1) {
+                                AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue() + 12;
+                            } else {
+
+                                if (ViewId_numberpicker2.getValue() == 12) {
+                                    AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue() - 12;
+                                } else {
+                                    AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue();
+                                }
+                            }
+
+                            AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersMinutesOn = ViewId_numberpicker3.getValue();
+
+                            if (ViewId_numberpicker7.getValue() == 1) {
+                                AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue() + 12;
+                            } else {
+
+                                if (ViewId_numberpicker5.getValue() == 12) {
+                                    AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue() - 12;
+                                } else {
+                                    AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue();
+                                }
+                            }
+
+                            AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersMinutesOff = ViewId_numberpicker6.getValue();
+
+                            AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersSetTemperature = ViewId_numberpicker.getValue();
+
+                            AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersOperationMode = 0;
+
+                            AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersOnOff = 1;
+
+                            Tx_RN171DeviceSetTimers();
+
+                            Intent intent = new Intent(Rinnai33bTimers.this, Rinnai33aTimers.class);
+                            startActivity(intent);
+
+                            finish();
+                            Log.d("myApp", "Rinnai33bTimers_onTouch: startActivity(Rinnai33aTimers).");
+                        }
                         // RELEASED
-                        ViewId_textview36.setTextColor(Color.parseColor("#FFFFFFFF"));
 
-                        if (ViewId_numberpicker4.getValue() == 1) {
-                            AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue() + 12;
-                        } else {
-
-                            if (ViewId_numberpicker2.getValue() == 12) {
-                                AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue() - 12;
-                            } else {
-                                AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue();
-                            }
-                        }
-
-                        AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersMinutesOn = ViewId_numberpicker3.getValue();
-
-                        if (ViewId_numberpicker7.getValue() == 1) {
-                            AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue() + 12;
-                        } else {
-
-                            if (ViewId_numberpicker5.getValue() == 12) {
-                                AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue() - 12;
-                            } else {
-                                AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue();
-                            }
-                        }
-
-                        AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersMinutesOff = ViewId_numberpicker6.getValue();
-
-                        AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersSetTemperature = ViewId_numberpicker.getValue();
-
-                        AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersOperationMode = 0;
-
-                        AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersOnOff = 1;
-
-                        Tx_RN171DeviceSetTimers();
-
-                        Intent intent = new Intent(Rinnai33bTimers.this, Rinnai33aTimers.class);
-                        startActivity(intent);
-
-                        finish();
-                        Log.d("myApp", "Rinnai33bTimers_onTouch: startActivity(Rinnai33aTimers).");
 
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:
@@ -566,6 +580,28 @@ public class Rinnai33bTimers extends MillecActivityBase
             }
         });
 
+    }
+
+    private void showPopup(){
+
+        final AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+
+        builder.setTitle("Sorry")
+                .setMessage("Please pick the days for your timer.")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog al = builder.create();
+        al.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        al.show();
     }
 
     @Override

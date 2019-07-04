@@ -156,7 +156,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
+        android:layout_weight="50"
         android:orientation="horizontal"></LinearLayout>
 
     <LinearLayout
@@ -171,113 +171,64 @@
             android:layout_weight="80"
             android:orientation="vertical"></LinearLayout>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="920"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginRight="20dp">
+                android:id="@+id/frameLayout"
+                android:layout_width="@dimen/_125sdp"
+                android:layout_height="@dimen/_35sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/imageButton12"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:background="@null"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/timersa_button_addnew_background"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/timersa_button_addnew_background" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="35"
-                        android:orientation="horizontal"></LinearLayout>
-
-                    <com.lb.auto_fit_textview.AutoResizeTextView
-                    android:id="@+id/textView30"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="80"
-                    android:gravity="center"
-                    android:text="Add New"
-                    android:textColor="#FFFFFF"
-                    android:textSize="1000sp" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="35"
-                        android:orientation="horizontal"></LinearLayout>
+                        android:text="Add New"
+                        android:textAllCaps="false"
+                        android:textColor="@drawable/button_selector"
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
             </FrameLayout>
-
 
 
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="@dimen/_125sdp"
+                android:layout_height="@dimen/_35sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/clearTimersImageButton"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:background="@null"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/timersa_button_addnew_background"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/timersa_button_addnew_background" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="35"
-                        android:orientation="horizontal"></LinearLayout>
-
-                    <com.lb.auto_fit_textview.AutoResizeTextView
-                        android:id="@+id/clearTimerstextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="80"
-                        android:gravity="center"
                         android:text="Clear Timers"
-                        android:textColor="#FFFFFF"
-                        android:textSize="1000sp" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="35"
-                        android:orientation="horizontal"></LinearLayout>
+                        android:textAllCaps="false"
+                        android:textColor="@drawable/button_selector"
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
             </FrameLayout>
@@ -285,7 +236,7 @@
 
 
 
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="0dp"

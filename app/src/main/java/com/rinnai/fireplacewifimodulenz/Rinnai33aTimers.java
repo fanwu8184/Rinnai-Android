@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -59,8 +60,8 @@ public class Rinnai33aTimers extends MillecActivityBase
     TextView ViewId_textview67;
     TextView ViewId_clearTimerstextView;
 
-    ImageButton ViewId_imagebutton12;
-    ImageButton ViewId_clearTimersImageButton;
+    Button ViewId_imagebutton12;
+    Button ViewId_clearTimersImageButton;
 
     View ViewId_scrollview_row_rinnai33a_timers;
     View ViewId_scrollview_row_switch_rinnai33a_timers;
@@ -92,100 +93,64 @@ public class Rinnai33aTimers extends MillecActivityBase
         //***************************//
 
         //***** OnTouchListener - imagebutton12 (Add New) *****//
-        ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
-        ViewId_textview30 = (TextView) findViewById(R.id.textView30);
-
-        ViewId_imagebutton12.setOnTouchListener(new View.OnTouchListener() {
+        ViewId_imagebutton12 = (Button) findViewById(R.id.imageButton12);
+        ViewId_imagebutton12.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // PRESSED
-                        ViewId_textview30.setTextColor(Color.parseColor("#FF808080"));
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_UP:
-                        // RELEASED
-                        ViewId_textview30.setTextColor(Color.parseColor("#FFFFFFFF"));
+            public void onClick(View v) {
+                if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).tmrstotal >= 8) {
+                    Toast.makeText(Rinnai33aTimers.this, "Maximum of 8 Timers reached. \nPlease Edit or Delete a Timer.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    startupCheckTimer.cancel();
+                    isClosing = true;
+                    scrollviewrowrinnai33atimers_id = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).tmrstotal;
+                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).tmrstotal++;
 
-                        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).tmrstotal >= 8) {
-                            Toast.makeText(Rinnai33aTimers.this, "Maximum of 8 Timers reached. \nPlease Edit or Delete a Timer.",
-                                    Toast.LENGTH_LONG).show();
-                        } else {
-                            startupCheckTimer.cancel();
-                            isClosing = true;
-                            scrollviewrowrinnai33atimers_id = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).tmrstotal;
-                            AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).tmrstotal++;
+                    //defaults
+                    AppGlobals.selected_scrollviewrowrinnai33atimersmeridianon = 0;
+                    AppGlobals.selected_scrollviewrowrinnai33atimershourson = 0;
+                    AppGlobals.selected_scrollviewrowrinnai33atimersminuteson = 0;
+                    AppGlobals.selected_scrollviewrowrinnai33atimersmeridianoff = 0;
+                    AppGlobals.selected_scrollviewrowrinnai33atimershoursoff = 0;
+                    AppGlobals.selected_scrollviewrowrinnai33atimersminutesoff = 0;
+                    AppGlobals.selected_scrollviewrowrinnai33atimersdaysofweek = 0;
+                    AppGlobals.selected_scrollviewrowrinnai33atimerssettemperature = 16;
 
-                            //defaults
-                            AppGlobals.selected_scrollviewrowrinnai33atimersmeridianon = 0;
-                            AppGlobals.selected_scrollviewrowrinnai33atimershourson = 0;
-                            AppGlobals.selected_scrollviewrowrinnai33atimersminuteson = 0;
-                            AppGlobals.selected_scrollviewrowrinnai33atimersmeridianoff = 0;
-                            AppGlobals.selected_scrollviewrowrinnai33atimershoursoff = 0;
-                            AppGlobals.selected_scrollviewrowrinnai33atimersminutesoff = 0;
-                            AppGlobals.selected_scrollviewrowrinnai33atimersdaysofweek = 0;
-                            AppGlobals.selected_scrollviewrowrinnai33atimerssettemperature = 16;
+                    Intent intent = new Intent(Rinnai33aTimers.this, Rinnai33bTimers.class);
+                    intent.putExtra("selected_scrollviewrowrinnai33atimersid", scrollviewrowrinnai33atimers_id);
+                    startActivity(intent);
 
-                            Intent intent = new Intent(Rinnai33aTimers.this, Rinnai33bTimers.class);
-                            intent.putExtra("selected_scrollviewrowrinnai33atimersid", scrollviewrowrinnai33atimers_id);
-                            startActivity(intent);
-
-                            finish();
-                            Log.d("myApp", "Rinnai33aTimers_onClick: startActivity(Rinnai33bTimers).");
-                        }
-
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_CANCEL:
-                        // ABORTED
-                        ViewId_textview30.setTextColor(Color.parseColor("#FFFFFFFF"));
+                    finish();
+                    Log.d("myApp", "Rinnai33aTimers_onClick: startActivity(Rinnai33bTimers).");
                 }
-                return false;
             }
         });
 
-        ViewId_clearTimersImageButton = (ImageButton) findViewById(R.id.clearTimersImageButton);
-        ViewId_clearTimerstextView = (TextView) findViewById(R.id.clearTimerstextView);
-
-        ViewId_clearTimersImageButton.setOnTouchListener(new View.OnTouchListener() {
+        ViewId_clearTimersImageButton = (Button) findViewById(R.id.clearTimersImageButton);
+        ViewId_clearTimersImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // PRESSED
-                        ViewId_clearTimerstextView.setTextColor(Color.parseColor("#FF808080"));
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_UP:
-                        // RELEASED
-                        ViewId_clearTimerstextView.setTextColor(Color.parseColor("#FFFFFFFF"));
+            public void onClick(View v) {
+                if(isThereATimerRunning()) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(Rinnai33aTimers.this).create();
+                    alertDialog.setTitle("Warning Automatic OFF Function Disabled");
+                    alertDialog.setMessage("Please note that there is a unit is running on this time. If you delete timers you will have to operate the appliance manually.");
 
-                        if(isThereATimerRunning()) {
-                            AlertDialog alertDialog = new AlertDialog.Builder(Rinnai33aTimers.this).create();
-                            alertDialog.setTitle("Warning Automatic OFF Function Disabled");
-                            alertDialog.setMessage("Please note that there is a unit is running on this time. If you delete timers you will have to operate the appliance manually.");
-
-                            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            clearTimers();
-                                        }
-                                    });
-                            alertDialog.show();
-                        } else {
-                            clearTimers();
-                        }
-
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_CANCEL:
-                        // ABORTED
-                        ViewId_clearTimerstextView.setTextColor(Color.parseColor("#FFFFFFFF"));
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    clearTimers();
+                                }
+                            });
+                    alertDialog.show();
+                } else {
+                    clearTimers();
                 }
-                return false;
             }
         });
 
@@ -218,7 +183,7 @@ public class Rinnai33aTimers extends MillecActivityBase
         ViewId_timersa_tableLayout.setVisibility(View.INVISIBLE);
 
         //***** Add New Button - ViewId_imagebutton12 *****//
-        ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
+        ViewId_imagebutton12 = (Button) findViewById(R.id.imageButton12);
 
         ViewId_imagebutton12.setEnabled(false);
 
@@ -324,7 +289,7 @@ public class Rinnai33aTimers extends MillecActivityBase
         ViewId_timersa_tableLayout.setVisibility(View.INVISIBLE);
 
         //***** Add New Button - ViewId_imagebutton12 *****//
-        ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
+        ViewId_imagebutton12 = (Button) findViewById(R.id.imageButton12);
 
         ViewId_imagebutton12.setEnabled(false);
 
@@ -639,7 +604,7 @@ public class Rinnai33aTimers extends MillecActivityBase
         ViewId_include_scrollview_lockout_timersa.setVisibility(View.VISIBLE);
 
         //***** Add New Button - ViewId_imagebutton12 *****//
-        ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
+        ViewId_imagebutton12 = (Button) findViewById(R.id.imageButton12);
 
         ViewId_imagebutton12.setEnabled(false);
         ViewId_clearTimersImageButton.setEnabled(false);
@@ -664,7 +629,7 @@ public class Rinnai33aTimers extends MillecActivityBase
         ViewId_include_scrollview_lockout_timersa.setVisibility(View.VISIBLE);
 
         //***** Add New Button - ViewId_imagebutton12 *****//
-        ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
+        ViewId_imagebutton12 = (Button) findViewById(R.id.imageButton12);
 
         ViewId_imagebutton12.setEnabled(false);
         ViewId_clearTimersImageButton.setEnabled(false);
@@ -981,7 +946,7 @@ public class Rinnai33aTimers extends MillecActivityBase
                             ViewId_timersa_tableLayout.setVisibility(View.VISIBLE);
 
                             //***** Add New Button - ViewId_imagebutton12 *****//
-                            ViewId_imagebutton12 = (ImageButton) findViewById(R.id.imageButton12);
+                            ViewId_imagebutton12 = (Button) findViewById(R.id.imageButton12);
 
                             ViewId_imagebutton12.setEnabled(true);
                             ViewId_clearTimersImageButton.setEnabled(true);
