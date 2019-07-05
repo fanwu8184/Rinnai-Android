@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="125"
-            android:theme="@style/NumberPickerText"
             android:scaleX="@dimen/timepicker_off_scalex"
-            android:scaleY="@dimen/timepicker_off_scaley" />
+            android:scaleY="@dimen/timepicker_off_scaley"
+            android:theme="@style/NumberPickerText" />
 
         <LinearLayout
             android:layout_width="0dp"

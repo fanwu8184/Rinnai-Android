@@ -20,6 +20,9 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Timer;
 
 /**
@@ -83,6 +86,7 @@ public class Rinnai33bTimers extends MillecActivityBase
 
         //include - numberPicker2 - Hours (timepicker_on_rinnai33b_timers)
         ViewId_numberpicker2 = (NumberPicker) findViewById(R.id.numberPicker2);
+
         String[] nums2 = new String[12];
         for (int j = 0; j < nums2.length; j++)
             nums2[j] = Integer.toString(j + 1);
@@ -91,12 +95,19 @@ public class Rinnai33bTimers extends MillecActivityBase
         ViewId_numberpicker2.setMaxValue(12);
         ViewId_numberpicker2.setWrapSelectorWheel(true);
         ViewId_numberpicker2.setDisplayedValues(nums2);
-        ViewId_numberpicker2.setValue(AppGlobals.selected_scrollviewrowrinnai33atimershourson);
+        ViewId_numberpicker2.setValue(getCurrentTimeHours());
+//        ViewId_numberpicker2.setValue(AppGlobals.selected_scrollviewrowrinnai33atimershourson);
         setNumberPickerTextColor(ViewId_numberpicker2, Color.parseColor("#FFFFFFFF"));
         setDividerColor(ViewId_numberpicker2, Color.parseColor("#FF000000"));
-
+        ViewId_numberpicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                ViewId_numberpicker5.setValue(newVal);
+            }
+        });
         //include - numberPicker3 - Minutes (timepicker_on_rinnai33b_timers)
         ViewId_numberpicker3 = (NumberPicker) findViewById(R.id.numberPicker3);
+
         String[] nums3 = new String[60];
         for (int k = 0; k < nums3.length; k++) {
             nums3[k] = String.format("%02d", k);
@@ -106,10 +117,16 @@ public class Rinnai33bTimers extends MillecActivityBase
         ViewId_numberpicker3.setMaxValue(59);
         ViewId_numberpicker3.setWrapSelectorWheel(true);
         ViewId_numberpicker3.setDisplayedValues(nums3);
-        ViewId_numberpicker3.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersminuteson);
+        ViewId_numberpicker3.setValue(getCurrentTimeMinute());
+//        ViewId_numberpicker3.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersminuteson);
         setNumberPickerTextColor(ViewId_numberpicker3, Color.parseColor("#FFFFFFFF"));
         setDividerColor(ViewId_numberpicker3, Color.parseColor("#FF000000"));
-
+        ViewId_numberpicker3.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                ViewId_numberpicker6.setValue(newVal);
+            }
+        });
         //include - numberPicker4 - Merdian (timepicker_on_rinnai33b_timers)
         ViewId_numberpicker4 = (NumberPicker) findViewById(R.id.numberPicker4);
         String[] nums4 = new String[2];
@@ -121,9 +138,16 @@ public class Rinnai33bTimers extends MillecActivityBase
         ViewId_numberpicker4.setMaxValue(1);
         ViewId_numberpicker4.setWrapSelectorWheel(false);
         ViewId_numberpicker4.setDisplayedValues(nums4);
-        ViewId_numberpicker4.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersmeridianon);
+        ViewId_numberpicker4.setValue(getAmPm());
+//        ViewId_numberpicker4.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersmeridianon);
         setNumberPickerTextColor(ViewId_numberpicker4, Color.parseColor("#FFFFFFFF"));
         setDividerColor(ViewId_numberpicker4, Color.parseColor("#FF000000"));
+        ViewId_numberpicker4.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                ViewId_numberpicker7.setValue(newVal);
+            }
+        });
 
         //include - numberPicker5 - Hours (timepicker_off_rinnai33b_timers)
         ViewId_numberpicker5 = (NumberPicker) findViewById(R.id.numberPicker5);
@@ -135,7 +159,7 @@ public class Rinnai33bTimers extends MillecActivityBase
         ViewId_numberpicker5.setMaxValue(12);
         ViewId_numberpicker5.setWrapSelectorWheel(true);
         ViewId_numberpicker5.setDisplayedValues(nums5);
-        ViewId_numberpicker5.setValue(AppGlobals.selected_scrollviewrowrinnai33atimershoursoff);
+        ViewId_numberpicker5.setValue(getCurrentTimeHours());
         setNumberPickerTextColor(ViewId_numberpicker5, Color.parseColor("#FFFFFFFF"));
         setDividerColor(ViewId_numberpicker5, Color.parseColor("#FF000000"));
 
@@ -150,7 +174,7 @@ public class Rinnai33bTimers extends MillecActivityBase
         ViewId_numberpicker6.setMaxValue(59);
         ViewId_numberpicker6.setWrapSelectorWheel(true);
         ViewId_numberpicker6.setDisplayedValues(nums6);
-        ViewId_numberpicker6.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersminutesoff);
+        ViewId_numberpicker6.setValue(getCurrentTimeMinute());
         setNumberPickerTextColor(ViewId_numberpicker6, Color.parseColor("#FFFFFFFF"));
         setDividerColor(ViewId_numberpicker6, Color.parseColor("#FF000000"));
 
@@ -165,7 +189,7 @@ public class Rinnai33bTimers extends MillecActivityBase
         ViewId_numberpicker7.setMaxValue(1);
         ViewId_numberpicker7.setWrapSelectorWheel(false);
         ViewId_numberpicker7.setDisplayedValues(nums7);
-        ViewId_numberpicker7.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersmeridianoff);
+        ViewId_numberpicker7.setValue(getAmPm());
         setNumberPickerTextColor(ViewId_numberpicker7, Color.parseColor("#FFFFFFFF"));
         setDividerColor(ViewId_numberpicker7, Color.parseColor("#FF000000"));
 
@@ -280,6 +304,9 @@ public class Rinnai33bTimers extends MillecActivityBase
                         ViewId_textview36.setTextColor(Color.parseColor("#FF808080"));
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_UP:
+
+                        ViewId_textview36.setTextColor(Color.parseColor("#FFFFFFFF"));
+
                         if(!AppGlobals.ViewId_imagebutton14_actionup && !AppGlobals.ViewId_imagebutton15_actionup && !AppGlobals.ViewId_imagebutton16_actionup && !AppGlobals.ViewId_imagebutton17_actionup &&
                         !AppGlobals.ViewId_imagebutton18_actionup && !AppGlobals.ViewId_imagebutton19_actionup && !AppGlobals.ViewId_imagebutton20_actionup){
 
@@ -288,7 +315,7 @@ public class Rinnai33bTimers extends MillecActivityBase
                          }else{
 
 
-                            ViewId_textview36.setTextColor(Color.parseColor("#FFFFFFFF"));
+
 
                             if (ViewId_numberpicker4.getValue() == 1) {
                                 AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue() + 12;
@@ -580,6 +607,29 @@ public class Rinnai33bTimers extends MillecActivityBase
             }
         });
 
+    }
+
+    private int getCurrentTimeHours(){
+        Calendar cal = Calendar.getInstance();
+        int currentHour = cal.get(Calendar.HOUR);
+        return currentHour;
+    }
+
+    private int getCurrentTimeMinute(){
+        Calendar cal = Calendar.getInstance();
+        int currentMinute = cal.get(Calendar.MINUTE);
+        return currentMinute;
+    }
+
+    private int getAmPm(){
+        int pm = 2;
+        Calendar now = Calendar.getInstance();
+        int a = now.get(Calendar.AM_PM);
+        if(a == Calendar.AM) {
+           return pm = 1;
+        }
+
+        return pm;
     }
 
     private void showPopup(){
