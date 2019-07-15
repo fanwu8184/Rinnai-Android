@@ -86,12 +86,8 @@
         android:id="@+id/include_multiunit"
         layout="@layout/multiunit_rinnai21_home_screen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 
 </android.support.constraint.ConstraintLayout>
