@@ -137,11 +137,20 @@ public class Rinnai22IgnitionSequence extends MillecActivityBase
                     }
                 });
 
-                if (startupCheckTimerCount % 20 == 0) {
-                    Tx_RN171DeviceGetStatus();
-                }
+//                if (startupCheckTimerCount % 20 == 0) {
+//                    Tx_RN171DeviceGetStatus();
+//                }
 
                 startupCheckTimerCount++;
+
+               if(startupCheckTimerCount == 60){
+                   AppGlobals.isStandbyOn = false;
+                   startupCheckTimer.cancel();
+                   isClosing = true;
+                   intent = new Intent(Rinnai22IgnitionSequence.this, Rinnai21HomeScreen.class);
+                   startActivity(intent);
+                   finish();
+               }
 
                 //AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmappSettingsChangeGuardTime--;
 

@@ -962,8 +962,10 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                             AppGlobals.ShowHints_economy_actionvisible = false;
                             AppGlobals.ShowHints_flame_actionvisible = false;
                             AppGlobals.ShowHints_settemp_actionvisible = true;
+
                         } else {
                             ViewId_imagebutton2.setImageResource(R.drawable.economy_white_press);
+
                             AppGlobals.ShowHints_economy_actionvisible = true;
                             AppGlobals.ShowHints_flame_actionvisible = false;
                             AppGlobals.ShowHints_settemp_actionvisible = true;
@@ -978,6 +980,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         ViewId_imagebutton2.setPressed(false);
 
                         enableguardtimeRinnai21HomeScreen();
+
+                        AppGlobals.isStandbyOn = false;
 
                         Tx_RN171DeviceSetEcon();
 
@@ -1642,6 +1646,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = true;
 
                         ViewId_imagebutton22.setPressed(false);
+
+                        AppGlobals.isStandbyOn = true;
 
                         Tx_RN171DeviceSetOpState();
 
@@ -2852,12 +2858,17 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
                                             //Burning state = Ignite:[0x01]
                                             else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 1) {
-                                                resetguardtimeRinnai21HomeScreen();
-                                                cancelTimers();
-                                                isClosing = true;
-                                                intent = new Intent(Rinnai21HomeScreen.this, Rinnai22IgnitionSequence.class);
-                                                startActivity(intent);
-                                                finish();
+
+                                                if(AppGlobals.isStandbyOn){
+
+                                                    resetguardtimeRinnai21HomeScreen();
+                                                    cancelTimers();
+                                                    isClosing = true;
+                                                    intent = new Intent(Rinnai21HomeScreen.this, Rinnai22IgnitionSequence.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+
 
                                                 Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen_clientCallBackTCP: startActivity(Rinnai22IgnitionSequence).");
                                             }

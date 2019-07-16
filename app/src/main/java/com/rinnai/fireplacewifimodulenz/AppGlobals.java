@@ -58,7 +58,7 @@ public class AppGlobals {
     public static int selected_scrollviewrowrinnai33atimersdaysofweek = 0;
     public static int selected_scrollviewrowrinnai33atimerssettemperature = 0;
     public static int selected_fireplaceWifi = 0;
-
+    public static boolean isStandbyOn = false;
     public static String PushedSSID;
 
     public static boolean rfwmInitialSetupFlag = false;
