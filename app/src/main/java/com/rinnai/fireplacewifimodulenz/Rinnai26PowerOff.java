@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -70,7 +71,16 @@ public class Rinnai26PowerOff extends MillecActivityBase
 
         isShowList = true;
 
-        ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
+        final ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
+
+        ImageButton closeBtn = (ImageButton) findViewById(R.id.imBtn_close);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ViewId_include_multiunit.setVisibility(View.GONE);
+            }
+        });
 
         ViewId_include_multiunit.setVisibility(View.VISIBLE);
 
@@ -92,6 +102,9 @@ public class Rinnai26PowerOff extends MillecActivityBase
 
             ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
 
+            if(!AppGlobals.fireplaceWifi.get(i).isRemote){
+                ((ImageView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.ivRemote)).setVisibility(View.INVISIBLE);
+            }
             //add listener
             ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(wifiListOnclickListener);//add OnClickListener Here
 

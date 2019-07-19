@@ -282,10 +282,9 @@ public class Rinnai17Login extends MillecActivityBase
 
         addRemoteDevices();
 
-//      check fireplace wifi if only one
+        //      check fireplace wifi if only one
         if(AppGlobals.fireplaceWifi.size() == 1){
             AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
-
 //          auto select only one fireplace and proceed to home screen
             intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
             startActivity(intent);
@@ -317,6 +316,9 @@ public class Rinnai17Login extends MillecActivityBase
 
                 ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
 
+                if(!AppGlobals.fireplaceWifi.get(i).isRemote){
+                    ((ImageView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.ivRemote)).setVisibility(View.INVISIBLE);
+                }
                 //add listener
                 ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(wifiListOnclickListener);//add OnClickListener Here
 
@@ -1197,7 +1199,15 @@ public class Rinnai17Login extends MillecActivityBase
             finish();
             Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai00aInitialSetupThanks).");
         } else if (!isShowList) {
-            goToLoginPage();
+            if(AppGlobals.rfwmEmail != null){
+                if(!AppGlobals.rfwmEmail.equals("NA")) {
+                    showWifiList();
+                } else {
+                    goToLoginPage();
+                }
+            } else {
+                goToLoginPage();
+            }
         }
     }
 
@@ -1404,9 +1414,9 @@ public class Rinnai17Login extends MillecActivityBase
                 int listSize = resultList.size();
                 for (int i = 0; i < listSize; i++) {
                     String[] ui_resultListsplit = resultList.get(i).split("\"");
-                    Log.d("result", "WiFi Dongle UUID: " + ui_resultListsplit[3]);
-                    Log.d("result", "Nickname: " + ui_resultListsplit[19]);
-                    appliances.add(new Appliance(ui_resultListsplit[3], ui_resultListsplit[19]));
+                    Log.d("result", "WiFi Dongle UUID: " + ui_resultListsplit[19]);
+                    Log.d("result", "Nickname: " + ui_resultListsplit[11]);
+                    appliances.add(new Appliance(ui_resultListsplit[19], ui_resultListsplit[11]));
                 }
             }
         });
@@ -1426,7 +1436,8 @@ public class Rinnai17Login extends MillecActivityBase
             if (!containsUUID(appliances.get(i).uuid)) {
                 RinnaiFireplaceWiFiModule nFireplace = new RinnaiFireplaceWiFiModule();
                 nFireplace.UUID = appliances.get(i).uuid;
-                nFireplace.DeviceName = "(R) " + appliances.get(i).name;
+                nFireplace.DeviceName = appliances.get(i).name;
+                nFireplace.isRemote = true;
                 AppGlobals.fireplaceWifi.add(nFireplace);
             }
         }

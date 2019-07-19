@@ -16,6 +16,7 @@ public class RinnaiFireplaceWiFiModule {
     public String DeviceName;
     public String UUID;
     public int WiFiHardware;
+    public boolean isRemote = false;
 
     int rfwmMainPowerSwitch = 0;
     int rfwmOperationState = 0;

@@ -293,13 +293,22 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** layout_height - linearlayout_navview *****//
         LinearLayout ViewId_linearlayout_navview = (LinearLayout) findViewById(R.id.linearlayout_navview);
 
-        int height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.30);
-        LinearLayout.LayoutParams params_linearlayout_navview = (LinearLayout.LayoutParams) ViewId_linearlayout_navview.getLayoutParams();
-        params_linearlayout_navview.height = height_screen;
-        ViewId_linearlayout_navview.setLayoutParams(params_linearlayout_navview);
+        int height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.20);
+//        LinearLayout.LayoutParams params_linearlayout_navview = (LinearLayout.LayoutParams) ViewId_linearlayout_navview.getLayoutParams();
+//        params_linearlayout_navview.height = height_screen;
+//        ViewId_linearlayout_navview.setLayoutParams(params_linearlayout_navview);
 
         //***** gravity - linearlayout_navview *****//
-        ViewId_linearlayout_navview.setGravity(Gravity.BOTTOM);
+        ViewId_linearlayout_navview.setGravity(Gravity.TOP);
+
+        ImageView closeBtnNav = (ImageView) findViewById(R.id.ivBtnNav_close);
+        closeBtnNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawer(Gravity.LEFT);
+            }
+        });
 
         //***** layout_height - textview_navview *****//
         TextView ViewId_textview_navview = (TextView) findViewById(R.id.textview_navview);
@@ -349,6 +358,10 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         //***** layout_height - button_navview2 (Timers) *****//
         ViewId_button_navview2 = (Button) findViewById(R.id.button_navview2);
+        if(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).isRemote){
+            ViewId_button_navview2.setEnabled(false);
+            ViewId_button_navview2.setBackgroundResource(0);
+        }
 
         height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.095);
         LinearLayout.LayoutParams params_button_navview2 = (LinearLayout.LayoutParams) ViewId_button_navview2.getLayoutParams();
@@ -441,6 +454,11 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         //***** layout_height - button_navview4 (Lighting) *****//
         ViewId_button_navview4 = (Button) findViewById(R.id.button_navview4);
+
+        if(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).isRemote){
+            ViewId_button_navview4.setEnabled(false);
+            ViewId_button_navview4.setBackgroundResource(0);
+        }
 
         height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.095);
         LinearLayout.LayoutParams params_button_navview4 = (LinearLayout.LayoutParams) ViewId_button_navview4.getLayoutParams();
@@ -605,8 +623,12 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** Hide Views when on Remote *****//
         //*********************************//
         if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
-            signalStrengthNav.setVisibility(View.INVISIBLE);
-            factoryResetNav.setVisibility(View.INVISIBLE);
+
+            imageView53.setVisibility(View.INVISIBLE);
+            signalStrengthNav.setBackgroundResource(0);
+
+            factoryResetBut.setEnabled(false);
+            factoryResetBut.setBackgroundResource(0);
         }
 
         //*********************************//
@@ -616,7 +638,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** layout_height - linearlayout_navview6 *****//
         LinearLayout ViewId_linearlayout_navview6 = (LinearLayout) findViewById(R.id.linearlayout_navview6);
 
-        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.23);
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
         LinearLayout.LayoutParams params_linearlayout_navview6 = (LinearLayout.LayoutParams) ViewId_linearlayout_navview6.getLayoutParams();
         params_linearlayout_navview6.height = height_screen;
         ViewId_linearlayout_navview6.setLayoutParams(params_linearlayout_navview6);
@@ -1548,6 +1570,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             }
         });
 
+
+
         //***** OnTouchListener - button5 (Show Hints Set Temp - Ok got this) *****//
         ViewId_button5 = (Button) findViewById(R.id.button5);
         ViewId_textview14 = (TextView) findViewById(R.id.textView14);
@@ -1717,6 +1741,16 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         ViewId_include_multiunit_lockout = (ViewGroup) findViewById(R.id.include_multiunit_lockout);
         ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
 
+        ImageButton closeBtn = (ImageButton) findViewById(R.id.imBtn_close);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ViewId_include_multiunit.setVisibility(View.GONE);
+                ViewId_include_multiunit_lockout.setVisibility(View.GONE);
+            }
+        });
+
         ViewId_imagebutton23Standby.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -1741,6 +1775,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         ViewId_include_multiunit_lockout.setVisibility(View.VISIBLE);
                         //***** Visibility - Multi-unit *****//
                         ViewId_include_multiunit.setVisibility(View.VISIBLE);
+
+
                         ViewId_multiunit_tableLayout = (TableLayout) findViewById(R.id.multiunit_tableLayout);
                         //tl.setOnTouchListener(new AutoTimerTableTouchListener());
                         //clear the table, start with blank table
@@ -1754,6 +1790,9 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
                             ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
 
+                            if(!AppGlobals.fireplaceWifi.get(i).isRemote){
+                                ((ImageView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.ivRemote)).setVisibility(View.INVISIBLE);
+                            }
                             //add listener
                             ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(scrollviewrowmultiunitrinnai21homescreenOnClickListener);//add OnClickListener Here
 
@@ -1943,6 +1982,9 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
                             ((TextView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.textView80)).setText(id + "");
 
+                            if(!AppGlobals.fireplaceWifi.get(i).isRemote){
+                                ((ImageView) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.ivRemote)).setVisibility(View.INVISIBLE);
+                            }
                             //add listener
                             ViewId_scrollview_row_multiunit_rinnai21_home_screen.setOnClickListener(scrollviewrowmultiunitrinnai21homescreenOnClickListener);//add OnClickListener Here
 
@@ -2141,7 +2183,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                             ViewId_include_multiunit_lockout.setVisibility(View.INVISIBLE);
 
                             //***** Visibility - Multi-unit *****//
-                            ViewId_include_multiunit.setVisibility(View.INVISIBLE);
+                            ViewId_include_multiunit.setVisibility(View.GONE);
 
                             AppGlobals.ViewId_imagebutton23_actionup = true;
 
@@ -2219,6 +2261,15 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         });
 
         return true;
+    }
+
+
+    public void closeMultiUnit() {
+
+        Toast.makeText(this, "1- Select Network, \n2- Type Password, \n3- Press OK.",
+                Toast.LENGTH_LONG).show();
+        ViewId_include_multiunit.setVisibility(View.GONE);
+
     }
 
     //************************//
@@ -2353,7 +2404,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_include_multiunit_lockout.setVisibility(View.INVISIBLE);
 
             //***** Visibility - Multi-unit *****//
-            ViewId_include_multiunit.setVisibility(View.INVISIBLE);
+            ViewId_include_multiunit.setVisibility(View.GONE);
 
             AppGlobals.ViewId_imagebutton23_actionup = false;
 
@@ -2398,7 +2449,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
             ViewId_include_multiunit_lockout.setVisibility(View.INVISIBLE);
 
             //***** Visibility - Multi-unit *****//
-            ViewId_include_multiunit.setVisibility(View.INVISIBLE);
+            ViewId_include_multiunit.setVisibility(View.GONE);
 
             AppGlobals.ViewId_imagebutton23_actionup = false;
 
@@ -2767,7 +2818,6 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                 ViewId_button5.isPressed() == false && ViewId_button6.isPressed() == false &&
                                 ViewId_imagebutton23.isPressed() == false &&
                                 ViewId_imagebutton23Standby.isPressed() == false &&
-                                ViewId_include_multiunit.getVisibility() == View.INVISIBLE &&
                                 ViewId_include_devicenameedit.getVisibility() == View.INVISIBLE && ViewId_button16.isPressed() == false &&
                                 !drawer.isDrawerOpen(GravityCompat.START)) {
 
@@ -2791,7 +2841,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                         Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen_clientCallBackTCP: Error Code HIGH (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeHI + ")");
 
                                         //***************************//
-                                        //***** Error Code LOW *****//
+                                        //***** Error Code LOW ******//
                                         //***************************//
 
                                         Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen_clientCallBackTCP: Error Code LOW (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeLO + ")");
