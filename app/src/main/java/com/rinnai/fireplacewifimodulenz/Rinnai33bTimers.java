@@ -80,7 +80,7 @@ public class Rinnai33bTimers extends MillecActivityBase
         ViewId_numberpicker.setMaxValue(30);
         ViewId_numberpicker.setWrapSelectorWheel(false);
         ViewId_numberpicker.setDisplayedValues(nums);
-        ViewId_numberpicker.setValue(AppGlobals.selected_scrollviewrowrinnai33atimerssettemperature);
+        ViewId_numberpicker.setValue(24);
         setNumberPickerTextColor(ViewId_numberpicker, Color.parseColor("#FFFFFFFF"));
         setDividerColor(ViewId_numberpicker, Color.parseColor("#FF000000"));
 
@@ -622,11 +622,12 @@ public class Rinnai33bTimers extends MillecActivityBase
     }
 
     private int getAmPm(){
-        int pm = 2;
+        int pm = 1;
         Calendar now = Calendar.getInstance();
         int a = now.get(Calendar.AM_PM);
         if(a == Calendar.AM) {
-           return pm = 1;
+            pm = 0;
+           return pm;
         }
 
         return pm;

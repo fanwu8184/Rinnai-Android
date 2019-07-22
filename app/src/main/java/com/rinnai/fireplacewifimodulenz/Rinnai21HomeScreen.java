@@ -3905,7 +3905,12 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
     private void updateRemote() {
         if (remoteSetting != null) {
-            AWSconnection.remoteControlInsertURL(remoteSetting.uuid, remoteSetting.mode, remoteSetting.currentTemp, remoteSetting.setTemp, remoteSetting.setFlame, remoteSetting.faultCode,
+
+            String mode = String.format("%02d", remoteSetting.mode);
+            String currentTemp = String.format("%02d", remoteSetting.currentTemp);
+            String flame = String.format("%02d", remoteSetting.setFlame);
+
+            AWSconnection.remoteControlInsertURL(remoteSetting.uuid, mode, currentTemp, remoteSetting.setTemp, flame, remoteSetting.faultCode,
 
                     //Call interface to retrieve Async results
                     new AWSconnection.textResult() {

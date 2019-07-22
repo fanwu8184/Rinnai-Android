@@ -1378,7 +1378,7 @@ public class AWSconnection {
     //Remote Control - Insert
     /////////////////////////////////////////
 
-    public static void remoteControlInsertURL(String wifi_dongle_UUID, int mode,int current_temp, int set_temp, int set_flame, String fault,
+    public static void remoteControlInsertURL(String wifi_dongle_UUID, String mode,String current_temp, int set_temp, String set_flame, String fault,
                                               final textResult result) {
 
 

@@ -36,15 +36,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1130">
 
-                <ImageView
-                    android:id="@+id/imageView27"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/multiunit_list_background" />
-
                 <LinearLayout
+                    android:background="@drawable/multiunit_list_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -52,7 +45,7 @@
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="50"
+                        android:layout_weight="5"
                         android:orientation="horizontal">
 
                         <ImageButton

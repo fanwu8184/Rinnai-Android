@@ -1053,6 +1053,8 @@ public class Rinnai17Login extends MillecActivityBase
                                         }
 
                                     } else {
+
+
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
@@ -1064,10 +1066,12 @@ public class Rinnai17Login extends MillecActivityBase
                                             }
                                         });
                                         isClosing = true;
-                                        intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
-                                        startActivity(intent);
 
-                                        finish();
+                                        showWifiList();
+//                                        intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+//                                        startActivity(intent);
+//
+//                                        finish();
                                         Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
                                     }
                                 }
@@ -1084,10 +1088,10 @@ public class Rinnai17Login extends MillecActivityBase
                                         }
                                     });
 
-                                    intent = new Intent(Rinnai17Login.this, Rinnai26PowerOff.class);
-                                    startActivity(intent);
-
-                                    finish();
+                                    showWifiList();
+//                                    intent = new Intent(Rinnai17Login.this, Rinnai26PowerOff.class);
+//                                    startActivity(intent);
+//                                    finish();
                                     Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26PowerOff).");
                                 }
                             }
