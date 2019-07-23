@@ -23,6 +23,10 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -1417,10 +1421,18 @@ public class Rinnai17Login extends MillecActivityBase
                 //Do stuff with results here
                 int listSize = resultList.size();
                 for (int i = 0; i < listSize; i++) {
-                    String[] ui_resultListsplit = resultList.get(i).split("\"");
-                    Log.d("result", "WiFi Dongle UUID: " + ui_resultListsplit[19]);
-                    Log.d("result", "Nickname: " + ui_resultListsplit[11]);
-                    appliances.add(new Appliance(ui_resultListsplit[19], ui_resultListsplit[11]));
+
+                    try {
+                        String jsonData = resultList.get(i).toString();
+                        JSONObject Jobject = new JSONObject(jsonData);
+                        String uuid = Jobject.getString("wifi_dongle_UUID");
+                        String nickname = Jobject.getString("nickname");
+                        appliances.add(new Appliance(uuid, nickname));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });

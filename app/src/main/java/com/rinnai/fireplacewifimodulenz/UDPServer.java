@@ -154,9 +154,6 @@ public class UDPServer extends Thread {
         } catch (SocketException e) {
             e.printStackTrace();
             Log.d("myApp_WiFiUDP", "UDPServer_run: (SocketException - " + e + ")");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d("myApp_WiFiUDP", "UDPServer_run: (IOException - " + e + ")");
         } finally {
             if (socket != null) {
                 socket.close();
