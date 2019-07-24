@@ -348,10 +348,12 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** linearlayout_navview2 *****//
         //*********************************//
 
+        double heighFactor = 0.11;
+
         //***** layout_height - linearlayout_navview2 *****//
         LinearLayout ViewId_linearlayout_navview2 = (LinearLayout) findViewById(R.id.linearlayout_navview2);
 
-        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * heighFactor);
         LinearLayout.LayoutParams params_linearlayout_navview2 = (LinearLayout.LayoutParams) ViewId_linearlayout_navview2.getLayoutParams();
         params_linearlayout_navview2.height = height_screen;
         ViewId_linearlayout_navview2.setLayoutParams(params_linearlayout_navview2);
@@ -401,7 +403,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** layout_height - linearlayout_navview3 *****//
         LinearLayout ViewId_linearlayout_navview3 = (LinearLayout) findViewById(R.id.linearlayout_navview3);
 
-        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * heighFactor);
         LinearLayout.LayoutParams params_linearlayout_navview3 = (LinearLayout.LayoutParams) ViewId_linearlayout_navview3.getLayoutParams();
         params_linearlayout_navview3.height = height_screen;
         ViewId_linearlayout_navview3.setLayoutParams(params_linearlayout_navview3);
@@ -447,7 +449,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** layout_height - linearlayout_navview4 *****//
         LinearLayout ViewId_linearlayout_navview4 = (LinearLayout) findViewById(R.id.linearlayout_navview4);
 
-        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * heighFactor);
         LinearLayout.LayoutParams params_linearlayout_navview4 = (LinearLayout.LayoutParams) ViewId_linearlayout_navview4.getLayoutParams();
         params_linearlayout_navview4.height = height_screen;
         ViewId_linearlayout_navview4.setLayoutParams(params_linearlayout_navview4);
@@ -498,7 +500,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** layout_height - linearlayout_navview5 *****//
         LinearLayout ViewId_linearlayout_navview5 = (LinearLayout) findViewById(R.id.linearlayout_navview5);
 
-        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * heighFactor);
         LinearLayout.LayoutParams params_linearlayout_navview5 = (LinearLayout.LayoutParams) ViewId_linearlayout_navview5.getLayoutParams();
         params_linearlayout_navview5.height = height_screen;
         ViewId_linearlayout_navview5.setLayoutParams(params_linearlayout_navview5);
@@ -544,7 +546,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** layout_height - signalStrengthNav *****//
         ConstraintLayout signalStrengthNav = (ConstraintLayout) findViewById(R.id.signalStrengthNav);
 
-        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * heighFactor);
         width_screen = (int) ((double) (getResources().getDisplayMetrics().widthPixels) * 0.75);
         LinearLayout.LayoutParams params_signalStrengthNav = (LinearLayout.LayoutParams) signalStrengthNav.getLayoutParams();
         params_signalStrengthNav.height = height_screen;
@@ -579,7 +581,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //*********************************//
         LinearLayout factoryResetNav = (LinearLayout) findViewById(R.id.factoryResetNav);
 
-        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * heighFactor);
         LinearLayout.LayoutParams params_factoryResetNav= (LinearLayout.LayoutParams) factoryResetNav.getLayoutParams();
         params_factoryResetNav.height = height_screen;
         factoryResetNav.setLayoutParams(params_factoryResetNav);
@@ -638,7 +640,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
         //***** layout_height - linearlayout_navview6 *****//
         LinearLayout ViewId_linearlayout_navview6 = (LinearLayout) findViewById(R.id.linearlayout_navview6);
 
-        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * 0.10);
+        height_screen = (int) ((double) (getResources().getDisplayMetrics().heightPixels) * heighFactor);
         LinearLayout.LayoutParams params_linearlayout_navview6 = (LinearLayout.LayoutParams) ViewId_linearlayout_navview6.getLayoutParams();
         params_linearlayout_navview6.height = height_screen;
         ViewId_linearlayout_navview6.setLayoutParams(params_linearlayout_navview6);

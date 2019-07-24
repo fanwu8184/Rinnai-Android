@@ -172,6 +172,7 @@
         android:layout_weight="2"
         android:orientation="vertical"></LinearLayout>
 
+
     <LinearLayout
         android:id="@+id/linearlayout_navview7"
         android:layout_width="match_parent"
@@ -189,7 +190,8 @@
             <Button
                 android:id="@+id/button_navview7"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
+
 
             <LinearLayout
                 android:id="@+id/linearlayout2_navview7"
@@ -213,8 +215,10 @@
                     android:text="Show Hints" />
             </LinearLayout>
 
+
         </FrameLayout>
 
     </LinearLayout>
+
 
 </LinearLayout>
