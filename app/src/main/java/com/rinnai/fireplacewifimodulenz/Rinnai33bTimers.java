@@ -193,6 +193,18 @@ public class Rinnai33bTimers extends MillecActivityBase
         setNumberPickerTextColor(ViewId_numberpicker7, Color.parseColor("#FFFFFFFF"));
         setDividerColor(ViewId_numberpicker7, Color.parseColor("#FF000000"));
 
+
+        Boolean isSelectedRow = (Boolean) getIntent().getBooleanExtra("isSelectedRow", false);
+        if (isSelectedRow) {
+            ViewId_numberpicker.setValue(AppGlobals.selected_scrollviewrowrinnai33atimerssettemperature);
+            ViewId_numberpicker2.setValue(AppGlobals.selected_scrollviewrowrinnai33atimershourson);
+            ViewId_numberpicker3.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersminuteson);
+            ViewId_numberpicker4.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersmeridianon);
+            ViewId_numberpicker5.setValue(AppGlobals.selected_scrollviewrowrinnai33atimershoursoff);
+            ViewId_numberpicker6.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersminutesoff);
+            ViewId_numberpicker7.setValue(AppGlobals.selected_scrollviewrowrinnai33atimersmeridianoff);
+        }
+
         //*********************************//
         //***** Selected Days of Week *****//
         //*********************************//

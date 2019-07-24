@@ -388,6 +388,7 @@ public class Rinnai33aTimers extends MillecActivityBase
             isClosing = true;
             Intent intent = new Intent(Rinnai33aTimers.this, Rinnai33bTimers.class);
             intent.putExtra("selected_scrollviewrowrinnai33atimersid", scrollviewrowrinnai33atimers_id);
+            intent.putExtra("isSelectedRow", true);
             startActivity(intent);
 
             finish();
