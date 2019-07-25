@@ -230,7 +230,9 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         isClosing = false;
 
-        startCommunicationErrorFault();
+        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress != null) {
+            startCommunicationErrorFault();
+        }
 
         startTxRN171DeviceGetStatus();
 
