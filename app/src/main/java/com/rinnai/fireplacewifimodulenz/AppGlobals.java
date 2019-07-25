@@ -192,6 +192,13 @@ public class AppGlobals {
                     PersistentStorageDefines.SHARED_PREF_DEFAULT_ID_RFWM_PASSWORD
             );
 
+            AppGlobals.ViewId_imageview_navview7_actionup = PersistentStorage.RetrieveStoredValueBoolean(
+                    context,
+                    PersistentStorageDefines.SHARED_PREF_KEY,
+                    PersistentStorageDefines.SHARED_PREF_ID_SHOW_HINT,
+                    PersistentStorageDefines.SHARED_PREF_DEFAULT_ID_SHOW_HINT
+            );
+
             Log.e("MyApp", "loadPersistentStorage: Rinnai Fireplace WiFi Module User Found {"+AppGlobals.rfwmEmail+"]");
 
         }else{

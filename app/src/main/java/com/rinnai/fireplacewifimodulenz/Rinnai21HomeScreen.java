@@ -3,9 +3,11 @@ package com.rinnai.fireplacewifimodulenz;
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
@@ -901,6 +903,12 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         //***** srccompat - imageview_navview7 *****//
                         AppGlobals.ViewId_imageview_navview7_actionup = !AppGlobals.ViewId_imageview_navview7_actionup;
 
+                        PersistentStorage.StoreValueBoolean(Rinnai21HomeScreen.this,
+                                PersistentStorageDefines.SHARED_PREF_KEY,
+                                PersistentStorageDefines.SHARED_PREF_ID_SHOW_HINT,
+                                AppGlobals.ViewId_imageview_navview7_actionup
+                        );
+
                         if (AppGlobals.ViewId_imageview_navview7_actionup == false) {
                             ViewId_imageview_navview7.setImageResource(R.drawable.checkbox1);
 
@@ -1554,7 +1562,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         ViewId_textview15.setTextColor(Color.parseColor("#FF007FFF"));
 
                         ViewId_imageview_navview7.setImageResource(R.drawable.checkbox2);
-                        AppGlobals.ViewId_imageview_navview7_actionup = true;
+                        //AppGlobals.ViewId_imageview_navview7_actionup = true;
                         AppGlobals.ShowHints_economy_actionvisible = false;
                         AppGlobals.ShowHints_flame_actionvisible = false;
                         AppGlobals.ShowHints_settemp_actionvisible = false;
@@ -1595,7 +1603,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         ViewId_textview14.setTextColor(Color.parseColor("#FF007FFF"));
 
                         ViewId_imageview_navview7.setImageResource(R.drawable.checkbox2);
-                        AppGlobals.ViewId_imageview_navview7_actionup = true;
+                        //AppGlobals.ViewId_imageview_navview7_actionup = true;
                         AppGlobals.ShowHints_economy_actionvisible = false;
                         AppGlobals.ShowHints_flame_actionvisible = false;
                         AppGlobals.ShowHints_settemp_actionvisible = false;
