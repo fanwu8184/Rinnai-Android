@@ -52,6 +52,7 @@ public class Rinnai11cRegistration extends MillecActivityBase
     Button ViewId_button45;
 
     ImageButton ViewId_imagebutton24;
+    ImageButton ViewId_imagebutton11c;
 
     TextView ViewId_textview92;
     TextView ViewId_textview93;
@@ -102,6 +103,36 @@ public class Rinnai11cRegistration extends MillecActivityBase
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai11c_registration);
+
+
+        ViewId_imagebutton11c = (ImageButton) findViewById(R.id.imageButton11c);
+        ViewId_imagebutton11c.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // PRESSED
+                        ViewId_imagebutton11c.setImageResource(R.drawable.registration_button_cross_pressed);
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_UP:
+                        // RELEASED
+                        ViewId_imagebutton11c.setImageResource(R.drawable.registration_button_cross);
+
+                        isClosing = true;
+                        intent = new Intent(Rinnai11cRegistration.this, Rinnai11bRegistration.class);
+                        startActivity(intent);
+
+                        finish();
+                        Log.d("myApp", "Rinnai11fRegistration: startActivity(Rinnai11bRegistration).");
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_CANCEL:
+                        // ABORTED
+                        ViewId_imagebutton11c.setImageResource(R.drawable.registration_button_cross);
+                }
+                return false;
+            }
+        });
+
 
         //Permit external connection attempts
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

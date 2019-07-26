@@ -21,6 +21,59 @@
         android:layout_weight="80"
         android:orientation="horizontal"></LinearLayout>
 
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="190"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="75"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="110"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/imageButton11c"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="100"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/registration_button_cross" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="90"
+                    android:orientation="horizontal"></LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="545"
+                android:orientation="vertical"></LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView32"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="350"
+                android:background="@null"
+                android:scaleType="fitEnd"
+                app:srcCompat="@drawable/rinnai_logo" />
+        </LinearLayout>
+        <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,6 +96,7 @@
             app:srcCompat="@drawable/rinnai_logo" />
 
     </LinearLayout>
+    -->
 
     <LinearLayout
         android:layout_width="match_parent"
