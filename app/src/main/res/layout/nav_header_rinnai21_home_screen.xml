@@ -20,6 +20,8 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@null"
             android:layout_gravity="right"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"
             app:srcCompat="@drawable/button_selector_close" />
 
         <TextView
