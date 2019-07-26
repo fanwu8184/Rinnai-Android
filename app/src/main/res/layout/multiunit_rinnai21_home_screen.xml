@@ -44,17 +44,19 @@
 
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="5"
+                        android:layout_height="0dp"
+                        android:layout_weight="60"
+                        android:layout_marginTop="8dp"
                         android:orientation="horizontal">
 
                         <ImageButton
                             android:id="@+id/imBtn_close"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
+                            android:layout_height="22dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginRight="8dp"
                             android:background="@null"
+                            android:scaleType="centerInside"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -286,6 +287,9 @@ public class Rinnai17Login extends MillecActivityBase
 
         addRemoteDevices();
 
+        ImageButton closeBtn = (ImageButton) findViewById(R.id.imBtn_close);
+        closeBtn.setVisibility(View.INVISIBLE);
+
         //      check fireplace wifi if only one
         if(AppGlobals.fireplaceWifi.size() == 1){
             AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
@@ -451,10 +455,10 @@ public class Rinnai17Login extends MillecActivityBase
                         if(!AppGlobals.rfwmEmail.equals("NA")) {
                             getAWSCustomerAppliance();
                         } else {
-                            //goToLoginPage();
+                            goToLoginPage();
                         }
                     } else {
-                        //goToLoginPage();
+                        goToLoginPage();
                     }
                 }
 
