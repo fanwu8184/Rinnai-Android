@@ -86,6 +86,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     LinearLayout ViewId_imageview4;
     ImageView ViewId_imageview5;
     ImageView imageView53;
+    ImageView imageView_remoteIconAtHome;
+    ImageView imageView_remoteIconAtStandby;
 
     TextView ViewId_textview3;
     TextView ViewId_textview4;
@@ -210,8 +212,15 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         disableNavigationViewScrollbars(ViewId_nav_view);
 
+        imageView_remoteIconAtHome = (ImageView) findViewById(R.id.remoteIconAtHome);
+        imageView_remoteIconAtStandby = (ImageView) findViewById(R.id.remoteIconAtStandby);
         if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress != null) {
             startCommunicationErrorFault();
+            imageView_remoteIconAtHome.setVisibility(View.INVISIBLE);
+            imageView_remoteIconAtStandby.setVisibility(View.INVISIBLE);
+        } else {
+            imageView_remoteIconAtHome.setVisibility(View.VISIBLE);
+            imageView_remoteIconAtStandby.setVisibility(View.VISIBLE);
         }
 
         startTxRN171DeviceGetStatus();
