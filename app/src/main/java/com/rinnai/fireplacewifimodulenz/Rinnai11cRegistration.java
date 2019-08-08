@@ -98,6 +98,7 @@ public class Rinnai11cRegistration extends MillecActivityBase
     String locale;
 
     private  ArrayList<FireModelDao> fireModelList;
+    private SeriesModels seriesModels = new SeriesModels();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,13 +189,12 @@ public class Rinnai11cRegistration extends MillecActivityBase
                 }
 
                 Collections.sort(fireModelList, new CustomComparator());
-//
-//                Collections.sort(fireModelList);
-//
-//                for(ToSort toSort : sortList){
-//                    System.out.println(toSort.toString());
-//                }
-                final ArrayList<FireModelDao> ui_resultList = fireModelList;
+
+                for (FireModelDao fireModelDao: fireModelList) {
+                    seriesModels.insert(fireModelDao);
+                }
+
+                final ArrayList<SeriesModel> ui_resultList = seriesModels.seriesModels;
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -227,7 +227,7 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                     ViewId_scrollview_row_rinnai11c_registration.setOnClickListener(scrollviewrowrinnai11cregistrationOnClickListener);//add OnClickListener Here
 
                                     //set it on the row - textView63, wifiaccesspointName
-                                    ((TextView) ViewId_scrollview_row_rinnai11c_registration.findViewById(R.id.textView173)).setText(ui_resultList.get(i).getFireType());
+                                    ((TextView) ViewId_scrollview_row_rinnai11c_registration.findViewById(R.id.textView173)).setText(ui_resultList.get(i).modelType);
 
                                     //Add the Row to the table
                                     ViewId_firemodel_tableLayout.addView(ViewId_scrollview_row_rinnai11c_registration);
@@ -794,29 +794,37 @@ public class Rinnai11cRegistration extends MillecActivityBase
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText10.");
+                ViewId_textview174 = (TextView) findViewById(R.id.textView174);
+                if (ViewId_textview174.getText().equals("")) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                    alertDialog.setTitle("Please Select Fire First.");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ViewId_edittext10.setText("");
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                } else {
+                    if (!ViewId_edittext10.getText().toString().equals("")) {
 
-                if (!ViewId_edittext10.getText().toString().equals("")) {
-                    String[] firstModel = { "A", "B" };
-                    if (Arrays.asList(firstModel).contains(ViewId_edittext10.getText().toString().toUpperCase())) {
-                        ViewId_edittext11.requestFocus();
-                    } else {
-                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
-                        alertDialog.setTitle("Fifth Letter Is Invalid.");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ViewId_edittext10.setText("");
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
+                        if (seriesModels.containsFirstLetterBaseOnType(ViewId_textview174.getText().toString(), ViewId_edittext10.getText().toString())) {
+                            ViewId_edittext11.requestFocus();
+                        } else {
+                            AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                            alertDialog.setTitle("Fifth Letter Is Invalid.");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ViewId_edittext10.setText("");
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
+                        }
                     }
                 }
-
-//                if (ViewId_edittext10.getText().toString().length() == 1)     //size as per your requirement
-//                {
-//                    ViewId_edittext11.requestFocus();
-//                }
             }
         });
 
@@ -838,27 +846,24 @@ public class Rinnai11cRegistration extends MillecActivityBase
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 Log.d("myApp", "Rinnai11cRegistration_onTextChanged: editText11.");
+                ViewId_textview174 = (TextView) findViewById(R.id.textView174);
+                if (ViewId_textview174.getText().equals("")) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
+                    alertDialog.setTitle("Please Select Fire First.");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ViewId_edittext10.setText("");
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                } else {
+                    if (!ViewId_edittext11.getText().toString().equals("")) {
 
-                if (!ViewId_edittext11.getText().toString().equals("")) {
+                        String inputString = ViewId_edittext10.getText().toString().toUpperCase() + ViewId_edittext11.getText().toString().toUpperCase();
 
-                    String inputString = ViewId_edittext10.getText().toString().toUpperCase() + ViewId_edittext11.getText().toString().toUpperCase();
-                    String modelString = "***";
-                    Boolean isExist = false;
-
-                    if (locale.equals("AU")) {
-
-                        if(findFireModel(inputString) != null){
-                            isExist = true;
-                        }
-
-                    } else if (locale.equals("NZ")) {
-                        if(findFireModel(inputString) != null){
-                            isExist = true;
-                        }
-                    }
-
-
-                        if (isExist) {
+                        if (seriesModels.containsModelCodeBaseOnType(ViewId_textview174.getText().toString(), inputString)) {
                             ViewId_edittext12.requestFocus();
                         } else {
                             AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
@@ -874,24 +879,9 @@ public class Rinnai11cRegistration extends MillecActivityBase
                                     });
                             alertDialog.show();
                         }
-                    } else {
-                        AlertDialog alertDialog = new AlertDialog.Builder(Rinnai11cRegistration.this).create();
-                        alertDialog.setTitle("Please Select Fire First.");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ViewId_edittext11.setText("");
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
                     }
                 }
-
-//                if (ViewId_edittext11.getText().toString().length() == 1)     //size as per your requirement
-//                {
-//                    ViewId_edittext12.requestFocus();
-//                }
+            }
         });
 
         //***** TextChangedListener - ViewId_edittext12 (Registration Serial Number (Digit 7)) *****//
