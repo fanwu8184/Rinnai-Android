@@ -133,7 +133,7 @@ public class Rinnai33aTimers extends MillecActivityBase
                 if(isThereATimerRunning()) {
                     AlertDialog alertDialog = new AlertDialog.Builder(Rinnai33aTimers.this).create();
                     alertDialog.setTitle("Warning Automatic OFF Function Disabled");
-                    alertDialog.setMessage("Please note that there is a unit is running on this time. If you delete timers you will have to operate the appliance manually.");
+                    alertDialog.setMessage("Please note that there is a unit running on this time. If you delete the timer you will have to operate the appliance manually.");
 
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
                             new DialogInterface.OnClickListener() {
@@ -651,7 +651,7 @@ public class Rinnai33aTimers extends MillecActivityBase
             } else {
                 AlertDialog alertDialog = new AlertDialog.Builder(Rinnai33aTimers.this).create();
                 alertDialog.setTitle("Warning Automatic OFF Function Disabled");
-                alertDialog.setMessage("Please note that the unit is running on this time. If you delete timers you will have to operate the appliance manually.");
+                alertDialog.setMessage("Please note that the unit running on this time. If you delete the timer you will have to operate the appliance manually.");
 
                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
                         new DialogInterface.OnClickListener() {
