@@ -454,14 +454,9 @@ public class Rinnai17Login extends MillecActivityBase
                     if(AppGlobals.rfwmEmail != null){
                         if(!AppGlobals.rfwmEmail.equals("NA")) {
                             getAWSCustomerAppliance();
-                        } else {
-                            goToLoginPage();
                         }
-                    } else {
-                        goToLoginPage();
                     }
                 }
-
                 startTxRN171DeviceGetStatus();
     }
 
@@ -744,7 +739,6 @@ public class Rinnai17Login extends MillecActivityBase
                                 }
                             }
                         } else {
-
                             if (AppGlobals.userregInfo.userregistrationEmail == null && AppGlobals.userregInfo.userregistrationPassword == null) {
                                 AppGlobals.rfwmUserFlag = 0;
                             } else {
@@ -781,12 +775,13 @@ public class Rinnai17Login extends MillecActivityBase
                                         progressBarOnStart.setVisibility(View.INVISIBLE);
                                     }
                                 });
-                                isClosing = true;
-                                intent = new Intent(Rinnai17Login.this, Rinnai11aRegistration.class);
-                                startActivity(intent);
-
-                                finish();
-                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai11aRegistration).");
+                                goToLoginPage();
+//                                isClosing = true;
+//                                intent = new Intent(Rinnai17Login.this, Rinnai11aRegistration.class);
+//                                startActivity(intent);
+//
+//                                finish();
+//                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai11aRegistration).");
                             }
                         }
                     } else {
