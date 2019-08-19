@@ -28,6 +28,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,6 +42,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import AWSmodule.AWSconnection;
+
+import static java.lang.Long.parseLong;
 
 /**
  * Created by jconci on 14/09/2017.
@@ -294,12 +303,13 @@ public class Rinnai17Login extends MillecActivityBase
         if(AppGlobals.fireplaceWifi.size() == 1){
             AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
 //          auto select only one fireplace and proceed to home screen
-            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-            startActivity(intent);
-            finish();
+            goToHomePage();
         }else{
 
             isShowList = true;
+
+            AppGlobals.UDPSrv.stopServer();
+            progressBarOnStart.setVisibility(View.INVISIBLE);
 
             ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
 
@@ -380,16 +390,6 @@ public class Rinnai17Login extends MillecActivityBase
     private View.OnClickListener wifiListOnclickListener = new View.OnClickListener() {
         public void onClick(View v) {
 
-//            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-//            startActivity(intent);
-//
-//            finish();
-
-            //if(scrollview_listener_lockout == true){
-            //    return;
-            //}
-            //scrollviewrow_pressed = true;
-
             //Get Selected Text (timersdaysofweek)
             TextView ViewId_textview80 = ((TextView) v.findViewById(R.id.textView80));
             scrollviewrowmultiunitrinnai21homescreen_id = Integer.parseInt(ViewId_textview80.getText().toString(), 10);
@@ -402,9 +402,20 @@ public class Rinnai17Login extends MillecActivityBase
             ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#32FFFFFF"));
 
             AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
-            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-            startActivity(intent);
-            finish();
+
+            ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
+            ViewId_include_multiunit.setVisibility(View.INVISIBLE);
+
+            if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+                goToHomePage();
+            } else {
+                Tx_RN171DeviceGetVersion();
+            }
+
+
+//            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+//            startActivity(intent);
+//            finish();
         }
     };
 
@@ -415,6 +426,24 @@ public class Rinnai17Login extends MillecActivityBase
         isClosing = true;
         AppGlobals.CommErrorFault.stopTimer();
         Intent intent = new Intent(Rinnai17Login.this, Rinnai11bRegistration.class);
+        startActivity(intent);
+        finish();
+    }
+
+    void goToHomePage() {
+        AppGlobals.UDPSrv.stopServer();
+        intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+        startActivity(intent);
+        finish();
+    }
+
+    void goToOTAPage() {
+        AppGlobals.UDPSrv.stopServer();
+        if (startupCheckTimer != null) {
+            startupCheckTimer.cancel();
+        }
+        isClosing = true;
+        intent = new Intent(Rinnai17Login.this, Rinnai12OTA.class);
         startActivity(intent);
         finish();
     }
@@ -748,7 +777,7 @@ public class Rinnai17Login extends MillecActivityBase
                             if (AppGlobals.rfwmUserFlag == 1) {
 
                                 if (isDeviceGetVersion == false) {
-                                    Tx_RN171DeviceGetVersion();
+                                    //Tx_RN171DeviceGetVersion();
                                     Log.d("myApp", "Rinnai17Login_startTxRN171DeviceGetStatus - Tx_RN171DeviceGetVersion");
                                 } else {
                                     if (isDeviceSetTime == false) {
@@ -825,31 +854,20 @@ public class Rinnai17Login extends MillecActivityBase
                 @Override
                 public void run() {
 
+                    if (pText.contains("RINNAI_10") && pText.contains("OTA")) {
+                        goToOTAPage();
+                    }
+
                     if(AppGlobals.fireplaceWifi.size() == 1){
                         try {
                             if (pType.contains("10")) {
                                 Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Device Version (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion + ")");
 
-                                if ((2.07f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                                if ((2.10f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                         (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                         (2.02f != AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion)) {
 
-                                    AppGlobals.UDPSrv.stopServer();
-
-                                    startupCheckTimer.cancel();
-                                    //fireanimationCheckTimer.cancel();
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
-                                        }
-                                    });
-                                    isClosing = true;
-                                    intent = new Intent(Rinnai17Login.this, Rinnai12OTA.class);
-                                    startActivity(intent);
-
-                                    finish();
-                                    Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai12OTA).");
+                                    showUpdateVersionPopup();
                                 } else {
                                     isDeviceGetVersion = true;
                                 }
@@ -974,8 +992,6 @@ public class Rinnai17Login extends MillecActivityBase
                                             } else {
                                                 goToLoginPage();
                                             }
-
-                                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
                                         }
 
                                         //Burning state = Ignite:[0x01]
@@ -1103,24 +1119,29 @@ public class Rinnai17Login extends MillecActivityBase
                             Log.d("myApp_WiFiTCP", "Rinnai17Login: clientCallBackTCP(RX - " + pText + ")");
                         }
                     }else{
-                        startupCheckTimer.cancel();
-                        //fireanimationCheckTimer.cancel();
+                        if (pType.contains("10")) {
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressBarOnStart.setVisibility(View.INVISIBLE);
-                            }
-                        });
+                            if ((2.10f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                                    (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                                    (2.02f != AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion)) {
 
-                        if(AppGlobals.rfwmEmail != null){
-                            if(!AppGlobals.rfwmEmail.equals("NA")) {
-                                showWifiList();
+                                showUpdateVersionPopup();
                             } else {
-                                goToLoginPage();
+                                isDeviceGetVersion = true;
+
+                                startupCheckTimer.cancel();
+                                //fireanimationCheckTimer.cancel();
+
+                                if(AppGlobals.rfwmEmail != null){
+                                    if(!AppGlobals.rfwmEmail.equals("NA")) {
+                                        goToHomePage();
+                                    } else {
+                                        goToLoginPage();
+                                    }
+                                } else {
+                                    goToLoginPage();
+                                }
                             }
-                        } else {
-                            goToLoginPage();
                         }
                     }
 
@@ -1456,5 +1477,117 @@ public class Rinnai17Login extends MillecActivityBase
                 AppGlobals.fireplaceWifi.add(nFireplace);
             }
         }
+    }
+
+    private String[] readHexFile() {
+        //BufferedReader reader;
+        String tContents = "";
+        try {
+            InputStream stream = getAssets().open("RinnaiWiFiMK2_V09.hex");
+            int size = stream.available();
+            byte[] buffer = new byte[size];
+            stream.read(buffer);
+            stream.close();
+            tContents = new String(buffer);
+        } catch (IOException e) {
+            Log.d("myApp", "reading file error: " + e);
+        }
+
+        String[] separated = tContents.split("\\r\\n");
+        return separated;
+    }
+
+    private String[] convertHexFileToHexData(String[] hexFile) {
+        ArrayList<String> hexData = new ArrayList<String>();
+        for (String hexFileLine: hexFile) {
+            String factor = hexFileLine.substring(1,3);
+            int endIndex = 9 + (int) Long.parseLong(factor, 16) * 2;
+            String hexDataLine = hexFileLine.substring(9, endIndex);
+            hexData.add(hexDataLine);
+        }
+        return hexData.toArray(new String[0]);
+    }
+
+    private String[] splitStringEvery(String s, int interval) {
+        int arrayLength = (int) Math.ceil(((s.length() / (double)interval)));
+        String[] result = new String[arrayLength];
+
+        int j = 0;
+        int lastIndex = result.length - 1;
+        for (int i = 0; i < lastIndex; i++) {
+            result[i] = s.substring(j, j + interval);
+            j += interval;
+        } //Add the last bit
+        result[lastIndex] = s.substring(j);
+
+        return result;
+    }
+
+    private long calculateCrc(String[] otaData) {
+        long crc = Long.parseLong("FFFFFFFF", 16);
+        long mask = 0;
+
+        for (String otaLine: otaData) {
+            String[] arr = splitStringEvery(otaLine, 2);
+
+            for (String hexString: arr) {
+                long hexlong = Long.parseLong(hexString, 16);
+                crc = crc ^ hexlong;
+
+                for (int j = 7; j >= 0; j--)    // Do eight times.
+                {
+                    if ((crc & 1) == 1) {
+                        mask = Long.parseLong("FFFFFFFF", 16);
+                    } else {
+                        mask = 0;
+                    }
+                    crc = (crc >> 1) ^ (0xEDB88320 & mask);
+                }
+            }
+        }
+        return turnIntToUnsignedInt(~crc);
+    }
+
+    private long turnIntToUnsignedInt(long value) {
+        return value & 0xffffffffl;
+    }
+
+    private String generateLinesFromHexFile(String[] hexFile, int index) {
+        String dataString = "RINNAI_99,";
+        for (int i = 0; i < 4; i++) {
+            dataString += hexFile[index];
+            index++;
+        }
+        dataString += ",E";
+        return dataString;
+    }
+
+    private void showUpdateVersionPopup(){
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+
+        builder.setTitle("Update!")
+                .setMessage("An Update for the Rinnai WiFi module is available. Press update to continue.")
+                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        goToOTAPage();
+                    }
+                })
+//                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        dialog.dismiss();
+//                    }
+//                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog al = builder.create();
+        al.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        al.show();
     }
 }

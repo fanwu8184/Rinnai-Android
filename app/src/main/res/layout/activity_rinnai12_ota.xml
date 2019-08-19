@@ -170,6 +170,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:max="100"
                                 android:progressDrawable="@drawable/ota_progess_drawable_white" />
                         </LinearLayout>
 

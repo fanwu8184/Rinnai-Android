@@ -1,8 +1,13 @@
 package com.rinnai.fireplacewifimodulenz;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
@@ -38,17 +43,22 @@ public class Rinnai12OTA extends MillecActivityBase
 
     boolean isClosing = false;
 
+    String[] fileData;
+    int fileIndex = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai12_ota);
-
         Log.d("myApp_ActivityLifecycle", "Rinnai12OTA_onCreate.");
 
-        OTAprocess();
+//        String[] hexData = convertHexFileToHexData(readHexFile());
+//        calculateCrc(hexData);
 
-        //***** TX WiFi - TCP *****//
-        Tx_RN171DeviceGetVersion();
+        //OTAprocess();
+
+        fileData = readHexFile();
+        Tx_RN171DeviceOTAStart();
     }
 
     @Override
@@ -63,9 +73,6 @@ public class Rinnai12OTA extends MillecActivityBase
         Log.d("myApp_ActivityLifecycle", "Rinnai12OTA_onRestart.");
 
         isClosing = false;
-
-        //***** TX WiFi - TCP *****//
-        Tx_RN171DeviceGetVersion();
     }
 
     @Override
@@ -312,15 +319,18 @@ public class Rinnai12OTA extends MillecActivityBase
                             }
                         }
                         if (pType.contains("9B")) {
-                            Log.d("myApp_WiFiTCP", "Rinnai12OTA_clientCallBackTCP: OTA Start Result (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otastartResult + ")");
 
                             if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otastartResult.equals("OK")) {
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: START OK!!!");
 
-                                isOTAFileTransfer = true;
-
-                                startTxRN171DeviceOTAProcess();
-
+//                                isOTAFileTransfer = true;
+//                                startTxRN171DeviceOTAProcess();
+                                new Timer().schedule(new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        sendUpdateData(fileIndex);
+                                    }
+                                }, 1000);
                             } else {
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: START FAIL!!!");
                             }
@@ -331,12 +341,24 @@ public class Rinnai12OTA extends MillecActivityBase
                             if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otafiletransferResult.equals("OK") && isOTAFileTransfer == false) {
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: FILE TRANSFER OK!!!");
 
-                                ota_filetransfer_row = ota_filetransfer_row_sent + 1;
-
-                                isOTAFileTransfer = true;
+//                                ota_filetransfer_row = ota_filetransfer_row_sent + 1;
+//                                isOTAFileTransfer = true;
+                                fileIndex += 4;
+                                sendUpdateData(fileIndex);
 
                             } else {
+                                sendUpdateData(fileIndex);
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: FILE TRANSFER FAIL!!!");
+                            }
+                        }
+                        if (pType.contains("9C")) {
+                            String crcFromDevice = pText.split(",")[1];
+                            long crcLongValueFromDevice = Long.parseLong(crcFromDevice, 16);
+                            String[] hexData = convertHexFileToHexData(fileData);
+                            if (crcLongValueFromDevice == calculateCrc(hexData)) {
+                                Tx_RN171DeviceOTAEnd();
+                            } else {
+                                showErrorPopup();
                             }
                         }
 
@@ -351,21 +373,6 @@ public class Rinnai12OTA extends MillecActivityBase
         Log.d("myApp_WiFiTCP", "Rinnai12OTA: clientCallBackTCP");
     }
 
-    //***** RN171_DEVICE_GET_VERSION *****//
-    public void Tx_RN171DeviceGetVersion() {
-
-        try {
-            TCPClient tcpClient = new TCPClient(
-                    3000,
-                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
-                    this,
-                    "RINNAI_10,E\n", true);
-            tcpClient.start();
-        } catch (Exception e) {
-            Log.d("myApp_WiFiTCP", "Rinnai17Login: Tx_RN171DeviceGetVersion(Exception - " + e + ")");
-        }
-    }
-
     //***** RN171_DEVICE_OTA_START *****//
     public void Tx_RN171DeviceOTAStart() {
 
@@ -378,6 +385,20 @@ public class Rinnai12OTA extends MillecActivityBase
             tcpClient.start();
         } catch (Exception e) {
             Log.d("myApp_WiFiTCP", "Rinnai12OTA: Tx_RN171DeviceOTAStart(Exception - " + e + ")");
+        }
+    }
+
+    public void Tx_RN171DeviceOTACRC() {
+
+        try {
+            TCPClient tcpClient = new TCPClient(
+                    3000,
+                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                    this,
+                    "RINNAI_9C,E\n", true);
+            tcpClient.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiTCP", "Rinnai12OTA: Tx_RN171DeviceOTAEnd(Exception - " + e + ")");
         }
     }
 
@@ -411,4 +432,150 @@ public class Rinnai12OTA extends MillecActivityBase
         }
     }
 
+
+
+    private String[] readHexFile() {
+        //BufferedReader reader;
+        String tContents = "";
+        try {
+            InputStream stream = getAssets().open("RinnaiWiFiMK2_V09.hex");
+            int size = stream.available();
+            byte[] buffer = new byte[size];
+            stream.read(buffer);
+            stream.close();
+            tContents = new String(buffer);
+        } catch (IOException e) {
+            Log.d("myApp", "reading file error: " + e);
+        }
+
+        String[] separated = tContents.split("\\r\\n");
+        return separated;
+    }
+
+    private String[] convertHexFileToHexData(String[] hexFile) {
+        ArrayList<String> hexData = new ArrayList<String>();
+        for (String hexFileLine: hexFile) {
+            String factor = hexFileLine.substring(1,3);
+            int endIndex = 9 + (int) Long.parseLong(factor, 16) * 2;
+            String hexDataLine = hexFileLine.substring(9, endIndex);
+            hexData.add(hexDataLine);
+        }
+        return hexData.toArray(new String[0]);
+    }
+
+    private String[] splitStringEvery(String s, int interval) {
+        int arrayLength = (int) Math.ceil(((s.length() / (double)interval)));
+        String[] result = new String[arrayLength];
+
+        int j = 0;
+        int lastIndex = result.length - 1;
+        for (int i = 0; i < lastIndex; i++) {
+            result[i] = s.substring(j, j + interval);
+            j += interval;
+        } //Add the last bit
+        result[lastIndex] = s.substring(j);
+
+        return result;
+    }
+
+    private long calculateCrc(String[] otaData) {
+        long crc = Long.parseLong("FFFFFFFF", 16);
+        long mask = 0;
+
+        for (String otaLine: otaData) {
+            String[] arr = splitStringEvery(otaLine, 2);
+
+            for (String hexString: arr) {
+                long hexlong = Long.parseLong(hexString, 16);
+                crc = crc ^ hexlong;
+
+                for (int j = 7; j >= 0; j--)    // Do eight times.
+                {
+                    if ((crc & 1) == 1) {
+                        mask = Long.parseLong("FFFFFFFF", 16);
+                    } else {
+                        mask = 0;
+                    }
+                    crc = (crc >> 1) ^ (0xEDB88320 & mask);
+                }
+            }
+        }
+        return turnIntToUnsignedInt(~crc);
+    }
+
+    private long turnIntToUnsignedInt(long value) {
+        return value & 0xffffffffl;
+    }
+
+    private String generateLinesFromHexFile(String[] hexFile, int index) {
+        String dataString = "";
+        for (int i = 0; i < 4; i++) {
+            if (index < hexFile.length) {
+                dataString += hexFile[index];
+                index++;
+            }
+        }
+        return dataString;
+    }
+
+    private void TCPSendUpdate(String data) {
+        try {
+            TCPClient tcpClient = new TCPClient(
+                    3000,
+                    AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
+                    this,
+                    "RINNAI_99," + data + "," + "E\n", true);
+            tcpClient.start();
+        } catch (Exception e) {
+            Log.d("myApp_WiFiTCP", "Rinnai33aTimers: Tx_RN171DeviceDeleteTimers(Exception - " + e + ")");
+        }
+    }
+
+    private void sendUpdateData(int index) {
+
+        if (startupCheckTimer != null) {
+            startupCheckTimer.cancel();
+        }
+
+        if(index < fileData.length) {
+            final String lines = generateLinesFromHexFile(fileData, index);
+            TCPSendUpdate(lines);
+            ViewId_progressbar4 = (ProgressBar) findViewById(R.id.progressBar4);
+            int progress = index * 100 /fileData.length;
+            ViewId_progressbar4.setProgress(progress);
+
+            this.startupCheckTimer = new Timer();
+            this.startupCheckTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    TCPSendUpdate(lines);
+                }
+            }, 5000, 5000);
+        } else {
+            Tx_RN171DeviceOTACRC();
+        }
+    }
+
+    private void showErrorPopup(){
+        fileIndex = 0;
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+
+        builder.setTitle("Error!")
+                .setMessage("An error has occured while updating the WiFi module.")
+                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Tx_RN171DeviceOTAStart();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog al = builder.create();
+        al.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        al.show();
+    }
 }
