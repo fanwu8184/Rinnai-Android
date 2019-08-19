@@ -38,6 +38,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -410,6 +411,7 @@ public class Rinnai17Login extends MillecActivityBase
                 goToHomePage();
             } else {
                 Tx_RN171DeviceGetVersion();
+                Tx_RN171DeviceSetTime();
             }
 
 
@@ -1170,12 +1172,16 @@ public class Rinnai17Login extends MillecActivityBase
     //***** RN171_DEVICE_SET_TIME *****//
     public void Tx_RN171DeviceSetTime() {
 
+        int offSetHourFromUTC = getOffSetHourFromUTC();
+        String twoDigitHex = String.format("%02X", offSetHourFromUTC);
+        String message =  twoDigitHex + "000000";
+
         try {
             TCPClient tcpClient = new TCPClient(
                     3000,
                     AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
                     this,
-                    "RINNAI_12," + secondsSinceMondayHexLittleEndian + ",E\n", true);
+                    "RINNAI_12," + message + ",E\n", true);
             tcpClient.start();
         } catch (Exception e) {
             Log.d("myApp_WiFiTCP", "Rinnai17Login: Tx_RN171DeviceSetTime(Exception - " + e + ")");
@@ -1506,5 +1512,13 @@ public class Rinnai17Login extends MillecActivityBase
         AlertDialog al = builder.create();
         al.requestWindowFeature(Window.FEATURE_NO_TITLE);
         al.show();
+    }
+
+    private int getOffSetHourFromUTC()
+    {
+        TimeZone tz = TimeZone.getDefault();
+        Date now = new Date();
+        int offsetFromUtc = tz.getOffset(now.getTime()) / 3600000;
+        return offsetFromUtc;
     }
 }

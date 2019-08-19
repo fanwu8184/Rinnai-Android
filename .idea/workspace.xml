@@ -12,9 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8964e60f-6d87-41a2-a4ee-3675787c2afc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/assets/RinnaiWiFiMK2_V10.hex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,17 +43,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="1479" column="5" selection-start-line="1479" selection-start-column="5" selection-end-line="1479" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="441" column="42" selection-start-line="441" selection-start-column="42" selection-end-line="441" selection-end-column="42" />
+            <state relative-caret-position="135">
+              <caret line="1179" selection-start-line="1179" selection-end-line="1179" selection-end-column="52" />
+              <folding>
+                <element signature="e#13232#14471#0" expanded="true" />
+                <element signature="e#14470#14471#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,8 +64,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>remoteicon</find>
-      <find>ipAddress</find>
       <find>ivRemote</find>
       <find>isRemote</find>
       <find>ip</find>
@@ -83,7 +74,6 @@
       <find>version</find>
       <find>pText</find>
       <find>onclic</find>
-      <find>onclick</find>
       <find>show</find>
       <find>startupCheckTimer</find>
       <find>cancel()</find>
@@ -101,6 +91,9 @@
       <find>RinnaiWiFiMK2_V09</find>
       <find>showUpdateVersionPopup</find>
       <find>ttt</find>
+      <find>Tx_RN171DeviceSetTime</find>
+      <find>onclick</find>
+      <find>RINNAI_12</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -275,6 +268,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="726" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.26898223" />
@@ -286,7 +280,7 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" />
-      <window_info active="true" anchor="bottom" x="-246" y="-852" width="1354" height="658" id="Logcat" order="1" type="WINDOWED" visible="true" weight="0.3643533" />
+      <window_info active="true" anchor="bottom" x="-278" y="-775" width="1354" height="658" id="Logcat" order="1" type="WINDOWED" visible="true" weight="0.3643533" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.3280757" />
@@ -615,6 +609,9 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/assets/RinnaiWiFiMK2_V10.hex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
@@ -622,13 +619,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/RinnaiWiFiMK2_V10.hex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="1479" column="5" selection-start-line="1479" selection-start-column="5" selection-end-line="1479" selection-end-column="5" />
+        <state relative-caret-position="135">
+          <caret line="1179" selection-start-line="1179" selection-end-line="1179" selection-end-column="52" />
+          <folding>
+            <element signature="e#13232#14471#0" expanded="true" />
+            <element signature="e#14470#14471#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
