@@ -438,7 +438,7 @@ public class Rinnai12OTA extends MillecActivityBase
         //BufferedReader reader;
         String tContents = "";
         try {
-            InputStream stream = getAssets().open("RinnaiWiFiMK2_V09.hex");
+            InputStream stream = getAssets().open("RinnaiWiFiMK2_V10.hex");
             int size = stream.available();
             byte[] buffer = new byte[size];
             stream.read(buffer);
