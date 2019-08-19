@@ -10,6 +10,7 @@ import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -1110,52 +1111,52 @@ public class Rinnai11cRegistration extends MillecActivityBase
 
         //***** Registration Serial Number (Digit 1) - ViewId_edittext6 *****//
         ViewId_edittext6 = (EditText) findViewById(R.id.editText6);
-        ViewId_edittext6.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext6.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
         ViewId_edittext6.setText("");
 
         //***** Registration Serial Number (Digit 2) - ViewId_edittext7 *****//
         ViewId_edittext7 = (EditText) findViewById(R.id.editText7);
-        ViewId_edittext7.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext7.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext7.setText("");
 
         //***** Registration Serial Number (Digit 3) - ViewId_edittext8 *****//
         ViewId_edittext8 = (EditText) findViewById(R.id.editText8);
-        ViewId_edittext8.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext8.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext8.setText("");
 
         //***** Registration Serial Number (Digit 4) - ViewId_edittext9 *****//
         ViewId_edittext9 = (EditText) findViewById(R.id.editText9);
-        ViewId_edittext9.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext9.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext9.setText("");
 
         //***** Registration Serial Number (Digit 5) - ViewId_edittext10 *****//
         ViewId_edittext10 = (EditText) findViewById(R.id.editText10);
-        ViewId_edittext10.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext10.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext10.setText("");
 
         //***** Registration Serial Number (Digit 6) - ViewId_edittext11 *****//
         ViewId_edittext11 = (EditText) findViewById(R.id.editText11);
-        ViewId_edittext11.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext11.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext11.setText("");
 
         //***** Registration Serial Number (Digit 7) - ViewId_edittext12 *****//
         ViewId_edittext12 = (EditText) findViewById(R.id.editText12);
-        ViewId_edittext12.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext12.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext12.setText("");
 
         //***** Registration Serial Number (Digit 8) - ViewId_edittext13 *****//
         ViewId_edittext13 = (EditText) findViewById(R.id.editText13);
-        ViewId_edittext13.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext13.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext13.setText("");
 
         //***** Registration Serial Number (Digit 9) - ViewId_edittext14 *****//
         ViewId_edittext14 = (EditText) findViewById(R.id.editText14);
-        ViewId_edittext14.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext14.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext14.setText("");
 
         //***** Registration Serial Number (Digit 10) - ViewId_edittext15 *****//
         ViewId_edittext15 = (EditText) findViewById(R.id.editText15);
-        ViewId_edittext15.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext15.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext15.setText("");
 
         //***** LinearLayout Select Fire / Fire Model  *****//
@@ -1250,43 +1251,43 @@ public class Rinnai11cRegistration extends MillecActivityBase
 
         //***** Registration Serial Number (Digit 1) - ViewId_edittext6 *****//
         ViewId_edittext6 = (EditText) findViewById(R.id.editText6);
-        ViewId_edittext6.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext6.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 2) - ViewId_edittext7 *****//
         ViewId_edittext7 = (EditText) findViewById(R.id.editText7);
-        ViewId_edittext7.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext7.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 3) - ViewId_edittext8 *****//
         ViewId_edittext8 = (EditText) findViewById(R.id.editText8);
-        ViewId_edittext8.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext8.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 4) - ViewId_edittext9 *****//
         ViewId_edittext9 = (EditText) findViewById(R.id.editText9);
-        ViewId_edittext9.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext9.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 5) - ViewId_edittext10 *****//
         ViewId_edittext10 = (EditText) findViewById(R.id.editText10);
-        ViewId_edittext10.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext10.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 6) - ViewId_edittext11 *****//
         ViewId_edittext11 = (EditText) findViewById(R.id.editText11);
-        ViewId_edittext11.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext11.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 7) - ViewId_edittext12 *****//
         ViewId_edittext12 = (EditText) findViewById(R.id.editText12);
-        ViewId_edittext12.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext12.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 8) - ViewId_edittext13 *****//
         ViewId_edittext13 = (EditText) findViewById(R.id.editText13);
-        ViewId_edittext13.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext13.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 9) - ViewId_edittext14 *****//
         ViewId_edittext14 = (EditText) findViewById(R.id.editText14);
-        ViewId_edittext14.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext14.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Serial Number (Digit 10) - ViewId_edittext15 *****//
         ViewId_edittext15 = (EditText) findViewById(R.id.editText15);
-        ViewId_edittext15.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext15.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
     }
 

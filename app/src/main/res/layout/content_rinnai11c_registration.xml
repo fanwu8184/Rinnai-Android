@@ -469,7 +469,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:imeOptions="normal|actionNext"
-                android:inputType="none"
+                android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:selectAllOnFocus="true"
                 android:textSize="@dimen/edittext_network_password_textsize" />
@@ -496,7 +496,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:imeOptions="normal|actionNext"
-                android:inputType="none"
+                android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:selectAllOnFocus="true"
                 android:textSize="@dimen/edittext_network_password_textsize" />
@@ -523,7 +523,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:imeOptions="normal|actionNext"
-                android:inputType="none"
+                android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:selectAllOnFocus="true"
                 android:textSize="@dimen/edittext_network_password_textsize" />
@@ -550,7 +550,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:imeOptions="normal|actionNext"
-                android:inputType="none"
+                android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:selectAllOnFocus="true"
                 android:textSize="@dimen/edittext_network_password_textsize" />
@@ -577,7 +577,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:imeOptions="normal|actionNext"
-                android:inputType="none"
+                android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:selectAllOnFocus="true"
                 android:textSize="@dimen/edittext_network_password_textsize" />
@@ -604,7 +604,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:imeOptions="normal|actionNext"
-                android:inputType="none"
+                android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:selectAllOnFocus="true"
                 android:textSize="@dimen/edittext_network_password_textsize" />
