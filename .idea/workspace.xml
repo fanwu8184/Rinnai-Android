@@ -43,8 +43,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="1179" selection-start-line="1179" selection-end-line="1179" selection-end-column="52" />
+            <state relative-caret-position="1302">
+              <caret line="1180" column="33" selection-start-line="1180" selection-start-column="33" selection-end-line="1180" selection-end-column="33" />
               <folding>
                 <element signature="e#13232#14471#0" expanded="true" />
                 <element signature="e#14470#14471#0" expanded="true" />
@@ -90,10 +90,10 @@
       <find>an up</find>
       <find>RinnaiWiFiMK2_V09</find>
       <find>showUpdateVersionPopup</find>
-      <find>ttt</find>
       <find>Tx_RN171DeviceSetTime</find>
       <find>onclick</find>
       <find>RINNAI_12</find>
+      <find>ttt</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -268,7 +268,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="726" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.26898223" />
@@ -621,8 +620,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="1179" selection-start-line="1179" selection-end-line="1179" selection-end-column="52" />
+        <state relative-caret-position="1302">
+          <caret line="1180" column="33" selection-start-line="1180" selection-start-column="33" selection-end-line="1180" selection-end-column="33" />
           <folding>
             <element signature="e#13232#14471#0" expanded="true" />
             <element signature="e#14470#14471#0" expanded="true" />

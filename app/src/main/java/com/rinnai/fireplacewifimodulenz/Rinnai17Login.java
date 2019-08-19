@@ -411,7 +411,6 @@ public class Rinnai17Login extends MillecActivityBase
                 goToHomePage();
             } else {
                 Tx_RN171DeviceGetVersion();
-                Tx_RN171DeviceSetTime();
             }
 
 
@@ -1129,6 +1128,8 @@ public class Rinnai17Login extends MillecActivityBase
 
                                 showUpdateVersionPopup();
                             } else {
+                                Tx_RN171DeviceSetTime();
+
                                 isDeviceGetVersion = true;
 
                                 startupCheckTimer.cancel();
