@@ -63,6 +63,8 @@ public class Rinnai17Login extends MillecActivityBase
     Timer fireanimationCheckTimer;
     int fireanimationCheckTimerCount;
 
+    Timer gettingVersionTimer;
+
     Intent intent;
 
     boolean isClosing = false;
@@ -410,7 +412,13 @@ public class Rinnai17Login extends MillecActivityBase
             if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
                 goToHomePage();
             } else {
-                Tx_RN171DeviceGetVersion();
+                gettingVersionTimer = new Timer();
+                gettingVersionTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Tx_RN171DeviceGetVersion();
+                    }
+                }, 0, 1000);
             }
 
 
@@ -845,6 +853,9 @@ public class Rinnai17Login extends MillecActivityBase
         final String pType = commandID;
         final String pText = text;
 
+        Log.d("ttt", "type: " + pType);
+        Log.d("ttt", "text: " + pText);
+
         if (isClosing == true) {
             return;
         }
@@ -863,6 +874,10 @@ public class Rinnai17Login extends MillecActivityBase
                         try {
                             if (pType.contains("10")) {
                                 Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Device Version (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion + ")");
+
+                                if (gettingVersionTimer != null) {
+                                    gettingVersionTimer.cancel();
+                                }
 
                                 if ((2.10f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                         (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
@@ -1121,6 +1136,10 @@ public class Rinnai17Login extends MillecActivityBase
                         }
                     }else{
                         if (pType.contains("10")) {
+
+                            if (gettingVersionTimer != null) {
+                                gettingVersionTimer.cancel();
+                            }
 
                             if ((2.10f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                     (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&

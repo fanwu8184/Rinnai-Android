@@ -474,14 +474,14 @@ public class Rinnai34Lighting extends MillecActivityBase
 
                                             //Burning state = Ignite:[0x01]
                                             else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 1) {
-                                                resetguardtimeRinnai34Lighting();
-                                                startupCheckTimer.cancel();
-                                                isClosing = true;
-                                                intent = new Intent(Rinnai34Lighting.this, Rinnai22IgnitionSequence.class);
-                                                startActivity(intent);
-
-                                                finish();
-                                                Log.d("myApp_WiFiTCP", "Rinnai34Lighting_clientCallBackTCP: startActivity(Rinnai22IgnitionSequence).");
+//                                                resetguardtimeRinnai34Lighting();
+//                                                startupCheckTimer.cancel();
+//                                                isClosing = true;
+//                                                intent = new Intent(Rinnai34Lighting.this, Rinnai22IgnitionSequence.class);
+//                                                startActivity(intent);
+//
+//                                                finish();
+//                                                Log.d("myApp_WiFiTCP", "Rinnai34Lighting_clientCallBackTCP: startActivity(Rinnai22IgnitionSequence).");
                                             }
 
                                             //Burning state = Thermostat:[0x02]

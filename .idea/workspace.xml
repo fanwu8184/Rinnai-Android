@@ -13,8 +13,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8964e60f-6d87-41a2-a4ee-3675787c2afc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11cRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11cRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai11c_registration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai11c_registration.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai34Lighting.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai34Lighting.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,21 +42,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_rinnai11c_registration.xml">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="471" column="52" selection-start-line="471" selection-start-column="52" selection-end-line="471" selection-end-column="52" />
+            <state relative-caret-position="287">
+              <caret line="2202" column="30" selection-start-line="2202" selection-start-column="30" selection-end-line="2203" selection-end-column="92" />
+              <folding>
+                <element signature="e#103734#110811#0" expanded="true" />
+                <element signature="e#108565#110504#0" expanded="true" />
+                <element signature="e#109331#109795#0" expanded="true" />
+                <element signature="e#109794#109795#0" expanded="true" />
+                <element signature="e#109913#110376#0" expanded="true" />
+                <element signature="e#110375#110376#0" expanded="true" />
+                <element signature="e#110503#110504#0" expanded="true" />
+                <element signature="e#110810#110811#0" expanded="true" />
+              </folding>
             </state>
           </provider>
-          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11cRegistration.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/devicenameedit_multiunit_rinnai21_home_screen.xml">
+          <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="622" column="37" selection-start-line="622" selection-start-column="28" selection-end-line="622" selection-end-column="37" />
+            <state relative-caret-position="294">
+              <caret line="247" column="65" selection-start-line="247" selection-start-column="57" selection-end-line="247" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -71,36 +82,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ip</find>
-      <find>Tx_RN171DeviceGetVersion();</find>
-      <find>tcp</find>
-      <find>callback</find>
-      <find>callbacktcp</find>
-      <find>version</find>
-      <find>pText</find>
-      <find>onclic</find>
-      <find>show</find>
-      <find>startupCheckTimer</find>
-      <find>cancel()</find>
-      <find>222</find>
-      <find>Tx_RN171DeviceOTAStart</find>
-      <find>startTxRN171DeviceOTAProcess</find>
-      <find>clientCallBackTCP</find>
-      <find>startupCheckTimerCount</find>
-      <find>ota_filetransfer_row</find>
-      <find>progressBar4</find>
-      <find>please set</find>
-      <find>gotoOTA</find>
-      <find>9a</find>
-      <find>an up</find>
-      <find>RinnaiWiFiMK2_V09</find>
-      <find>showUpdateVersionPopup</find>
       <find>Tx_RN171DeviceSetTime</find>
-      <find>onclick</find>
       <find>RINNAI_12</find>
-      <find>ttt</find>
-      <find>ViewId_edittext6</find>
       <find>editText6</find>
+      <find>setInputType</find>
+      <find>ViewId_edittext6</find>
+      <find>button_navview4</find>
+      <find>starting</find>
+      <find>ignition</find>
+      <find>Rinnai22IgnitionSequence</find>
+      <find>button_navview7</find>
+      <find>ok got this</find>
+      <find>textView14</find>
+      <find>ViewId_textview14</find>
+      <find>button5</find>
+      <find>ok got</find>
+      <find>1111</find>
+      <find>button6</find>
+      <find>11111</find>
+      <find>1111111</find>
+      <find>ttt</find>
+      <find>please enter</find>
+      <find>button16</find>
+      <find>onclick</find>
+      <find>startupCheckTimer</find>
+      <find>gettingVersionTimer</find>
+      <find>version</find>
+      <find>Tx_RN171DeviceGetVersion</find>
+      <find>textview75</find>
+      <find>Tx_RN171DeviceSetDeviceName</find>
+      <find>ViewId_textview75</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -117,7 +128,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/multiunit_rinnai21_home_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/button_multiunit_rinnai21_home_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/button_multiunit_rinnai21_home_screen_standby.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai11h_registration.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/nav_header_rinnai21_home_screen.xml" />
         <option value="$PROJECT_DIR$/build.gradle" />
@@ -131,9 +141,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/TCPClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai12_ota.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11cRegistration.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai11c_registration.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai34Lighting.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" />
       </list>
     </option>
   </component>
@@ -150,8 +162,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -189,7 +200,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -362,57 +374,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai11g_registration.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="46" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="46" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai11i_registration.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai11h_registration.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="69" column="41" selection-start-line="69" selection-start-column="41" selection-end-line="69" selection-end-column="41" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_rinnai21_home_screen.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="4" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_rinnai21_home_screen.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scrollview_row_rinnai33_service_fault_codes.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scrollview_row_rinnai33a_timers.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_rinnai33a_timers.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/proguard-rules.pro">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -437,44 +398,44 @@
       <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai00b_initialsetup_power.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai00c_initialsetup_connect.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai00a_initialsetup_thanks.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_reset_password_complete.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai00d_initialsetup_complete.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai00e_initialsetup_almost.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai00f_initialsetup_network.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai11b_registration.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scrollview_row_rinnai11c_registration.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
           <caret line="27" column="45" lean-forward="true" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="45" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/RemoteSetting.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -508,8 +469,8 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai11a_registration.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai33aTimers.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -536,24 +497,24 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai21_home_screen.xml">
-      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai17_login.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="365">
           <caret line="56" column="58" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="58" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/multiunit_lockout_rinnai21_home_screen.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="34" column="46" lean-forward="true" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/RinnaiFireplaceWiFiModule.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -562,20 +523,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="3919" column="38" selection-start-line="3919" selection-start-column="30" selection-end-line="3919" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scrollview_row_multiunit_rinnai21_home_screen.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
           <caret line="52" column="45" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="45" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/TCPClient.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -592,12 +546,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai12_ota.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
           <caret line="172" column="48" selection-start-line="172" selection-start-column="48" selection-end-line="172" selection-end-column="48" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11bRegistration.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -609,44 +563,130 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/RinnaiWiFiMK2_V10.hex">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="441" column="42" selection-start-line="441" selection-start-column="42" selection-end-line="441" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-299">
-          <caret line="1123" selection-start-line="1123" selection-end-line="1123" />
-          <folding>
-            <element signature="e#13232#14471#0" expanded="true" />
-            <element signature="e#14470#14471#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai11c_registration.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="386">
           <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_rinnai11c_registration.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="471" column="52" selection-start-line="471" selection-start-column="52" selection-end-line="471" selection-end-column="52" />
+        <state relative-caret-position="301">
+          <caret line="606" column="52" selection-start-line="606" selection-start-column="52" selection-end-line="606" selection-end-column="52" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai11cRegistration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="622" column="37" selection-start-line="622" selection-start-column="28" selection-end-line="622" selection-end-column="37" />
+        <state relative-caret-position="397">
+          <caret line="1289" column="10" selection-start-line="1289" selection-start-column="10" selection-end-line="1289" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_rinnai21_home_screen.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai26_power_off.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_rinnai22_ignition_sequence.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="60" column="26" selection-start-line="60" selection-start-column="26" selection-end-line="60" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai34Lighting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="475" column="44" selection-start-line="475" selection-start-column="44" selection-end-line="475" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_rinnai21_home_screen.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="192" column="48" selection-start-line="192" selection-start-column="33" selection-end-line="192" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/showhints_settemp_rinnai21_home_screen.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="164" column="58" selection-start-line="164" selection-start-column="58" selection-end-line="164" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/showhints_flame_rinnai21_home_screen.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="136" column="60" selection-start-line="136" selection-start-column="53" selection-end-line="136" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/devicenameedit_multiunit_rinnai21_home_screen.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="247" column="65" selection-start-line="247" selection-start-column="57" selection-end-line="247" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="65" column="30" selection-start-line="65" selection-start-column="30" selection-end-line="65" selection-end-column="30" />
+          <folding>
+            <element signature="e#13320#14802#0" expanded="true" />
+            <element signature="e#14438#14617#0" expanded="true" />
+            <element signature="e#14616#14617#0" expanded="true" />
+            <element signature="e#14801#14802#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="537" column="9" lean-forward="true" selection-start-line="537" selection-start-column="9" selection-end-line="537" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_verification_code.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="120" column="41" selection-start-line="120" selection-start-column="41" selection-end-line="120" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="2202" column="30" selection-start-line="2202" selection-start-column="30" selection-end-line="2203" selection-end-column="92" />
+          <folding>
+            <element signature="e#103734#110811#0" expanded="true" />
+            <element signature="e#108565#110504#0" expanded="true" />
+            <element signature="e#109331#109795#0" expanded="true" />
+            <element signature="e#109794#109795#0" expanded="true" />
+            <element signature="e#109913#110376#0" expanded="true" />
+            <element signature="e#110375#110376#0" expanded="true" />
+            <element signature="e#110503#110504#0" expanded="true" />
+            <element signature="e#110810#110811#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

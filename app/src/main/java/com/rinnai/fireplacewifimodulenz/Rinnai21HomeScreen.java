@@ -1570,6 +1570,13 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                     case MotionEvent.ACTION_UP:
                         // RELEASED
 
+                        AppGlobals.ViewId_imageview_navview7_actionup = true;
+                        PersistentStorage.StoreValueBoolean(Rinnai21HomeScreen.this,
+                                PersistentStorageDefines.SHARED_PREF_KEY,
+                                PersistentStorageDefines.SHARED_PREF_ID_SHOW_HINT,
+                                AppGlobals.ViewId_imageview_navview7_actionup
+                        );
+
                         ViewId_textview15.setTextColor(Color.parseColor("#FF007FFF"));
 
                         ViewId_imageview_navview7.setImageResource(R.drawable.checkbox2);
@@ -1610,6 +1617,13 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_UP:
                         // RELEASED
+
+                        AppGlobals.ViewId_imageview_navview7_actionup = true;
+                        PersistentStorage.StoreValueBoolean(Rinnai21HomeScreen.this,
+                                PersistentStorageDefines.SHARED_PREF_KEY,
+                                PersistentStorageDefines.SHARED_PREF_ID_SHOW_HINT,
+                                AppGlobals.ViewId_imageview_navview7_actionup
+                        );
 
                         ViewId_textview14.setTextColor(Color.parseColor("#FF007FFF"));
 
@@ -2185,7 +2199,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
                             enableguardtimeRinnai21HomeScreen();
 
-                            ViewId_textview75.setTextColor(Color.parseColor("#FFFFFFFF"));
+//                            ViewId_textview75 = (TextView) findViewById(R.id.textView75);
+//                            ViewId_textview75.setTextColor(Color.parseColor("#FFFFFFFF"));
 
                             //***** Alpha - Multi-unit (button/text) *****//
                             ViewId_include_button_multiunit.setAlpha(1.0f);
