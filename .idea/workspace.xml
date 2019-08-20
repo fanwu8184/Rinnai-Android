@@ -11,12 +11,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8964e60f-6d87-41a2-a4ee-3675787c2afc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai34Lighting.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai34Lighting.java" afterDir="false" />
-    </list>
+    <list default="true" id="8964e60f-6d87-41a2-a4ee-3675787c2afc" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="2202" column="30" selection-start-line="2202" selection-start-column="30" selection-end-line="2203" selection-end-column="92" />
+            <state relative-caret-position="232">
+              <caret line="2174" column="44" lean-forward="true" selection-start-line="2174" selection-start-column="44" selection-end-line="2174" selection-end-column="44" />
               <folding>
                 <element signature="e#103734#110811#0" expanded="true" />
                 <element signature="e#108565#110504#0" expanded="true" />
@@ -103,7 +98,6 @@
       <find>1111111</find>
       <find>ttt</find>
       <find>please enter</find>
-      <find>button16</find>
       <find>onclick</find>
       <find>startupCheckTimer</find>
       <find>gettingVersionTimer</find>
@@ -112,6 +106,7 @@
       <find>textview75</find>
       <find>Tx_RN171DeviceSetDeviceName</find>
       <find>ViewId_textview75</find>
+      <find>button16</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -303,8 +298,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="726" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1280" height="726" extended-state="1" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.26898223" />
@@ -316,7 +310,7 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" />
-      <window_info anchor="bottom" x="-263" y="-751" width="1354" height="658" id="Logcat" order="1" type="WINDOWED" visible="true" weight="0.3643533" />
+      <window_info active="true" anchor="bottom" x="-263" y="-751" width="1354" height="658" id="Logcat" order="1" type="WINDOWED" visible="true" weight="0.3643533" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.3280757" />
@@ -675,8 +669,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="2202" column="30" selection-start-line="2202" selection-start-column="30" selection-end-line="2203" selection-end-column="92" />
+        <state relative-caret-position="232">
+          <caret line="2174" column="44" lean-forward="true" selection-start-line="2174" selection-start-column="44" selection-end-line="2174" selection-end-column="44" />
           <folding>
             <element signature="e#103734#110811#0" expanded="true" />
             <element signature="e#108565#110504#0" expanded="true" />
