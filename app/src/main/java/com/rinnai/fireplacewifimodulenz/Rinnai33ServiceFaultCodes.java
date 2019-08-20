@@ -124,7 +124,9 @@ public class Rinnai33ServiceFaultCodes extends MillecActivityBase
         super.onStop();
         Log.d("myApp_ActivityLifecycle", "Rinnai33ServiceFaultCodes_onStop.");
 
-        startupCheckTimer.cancel();
+        if (startupCheckTimer != null) {
+            startupCheckTimer.cancel();
+        }
         isClosing = true;
     }
 
@@ -547,11 +549,13 @@ public class Rinnai33ServiceFaultCodes extends MillecActivityBase
 
     //Fault
     public void goToActivity_Rinnai26_Fault(View view) {
-        startupCheckTimer.cancel();
+        Log.d("ttt", "111111111");
+        if (startupCheckTimer != null) {
+            startupCheckTimer.cancel();
+        }
         isClosing = true;
-        Intent intent = new Intent(this, Rinnai26Fault.class);
+        Intent intent = new Intent(Rinnai33ServiceFaultCodes.this, Rinnai26Fault.class);
         startActivity(intent);
-
         finish();
         Log.d("myApp", "Rinnai33ServiceFaultCodes_onClick: startActivity(Rinnai26Fault).");
     }
