@@ -215,6 +215,10 @@ public class Rinnai17Login extends MillecActivityBase
 
         }
 
+        if (gettingVersionTimer != null) {
+            gettingVersionTimer.cancel();
+        }
+
     }
 
     @Override
@@ -853,8 +857,8 @@ public class Rinnai17Login extends MillecActivityBase
         final String pType = commandID;
         final String pText = text;
 
-        Log.d("ttt", "type: " + pType);
-        Log.d("ttt", "text: " + pText);
+//        Log.d("ttt", "type: " + pType);
+//        Log.d("ttt", "text: " + pText);
 
         if (isClosing == true) {
             return;
@@ -867,6 +871,9 @@ public class Rinnai17Login extends MillecActivityBase
                 public void run() {
 
                     if (pText.contains("RINNAI_10") && pText.contains("OTA")) {
+                        if (gettingVersionTimer != null) {
+                            gettingVersionTimer.cancel();
+                        }
                         goToOTAPage();
                     }
 

@@ -93,6 +93,8 @@ public class TCPClient extends Thread {
                     while (mRun == true) {
                         this.serverResponse = inStream.readLine();
 
+                        //Log.d("ttt", "this.serverResponse: " + this.serverResponse);
+
                         if (this.serverResponse != null) {
 
                             Log.d("myApp_WiFiTCP", "TCPClient_run - RX(test):" + this.serverResponse);
@@ -156,6 +158,6 @@ public class TCPClient extends Thread {
             Log.d("myApp_WiFiTCP", "TCPClient_run outer -Exception:" + e.getMessage());
 
         }
-        this.currentActicity.clientCallBackTCP("0", "Client Closed");
+        //this.currentActicity.clientCallBackTCP("0", "Client Closed");
     }
 }
