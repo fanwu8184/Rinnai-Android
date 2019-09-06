@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+
 public class Rinnai12OTA extends MillecActivityBase
         implements ActivityClientInterfaceTCP {
 
@@ -46,19 +48,26 @@ public class Rinnai12OTA extends MillecActivityBase
     String[] fileData;
     int fileIndex = 0;
 
+    Timer tcpTimer;
+
+    TCPClient2 tcpClient2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai12_ota);
         Log.d("myApp_ActivityLifecycle", "Rinnai12OTA_onCreate.");
 
-//        String[] hexData = convertHexFileToHexData(readHexFile());
-//        calculateCrc(hexData);
-
         //OTAprocess();
 
         fileData = readHexFile();
-        Tx_RN171DeviceOTAStart();
+        tcpTimer = new Timer();
+        tcpTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Tx_RN171DeviceOTAStart();
+            }
+        }, 0, 1000);
     }
 
     @Override
@@ -94,6 +103,12 @@ public class Rinnai12OTA extends MillecActivityBase
 
         startupCheckTimer.cancel();
         isClosing = true;
+
+        if (tcpTimer != null) {
+            tcpTimer.cancel();
+        }
+
+        tcpClient2.close();
     }
 
     @Override
@@ -320,6 +335,10 @@ public class Rinnai12OTA extends MillecActivityBase
                         }
                         if (pType.contains("9B")) {
 
+                            if (tcpTimer != null) {
+                                tcpTimer.cancel();
+                            }
+
                             if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otastartResult.equals("OK")) {
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: START OK!!!");
 
@@ -346,6 +365,13 @@ public class Rinnai12OTA extends MillecActivityBase
                                 fileIndex += 4;
                                 sendUpdateData(fileIndex);
 
+//                                new Timer().schedule(new TimerTask() {
+//                                    @Override
+//                                    public void run() {
+//                                        sendUpdateData(fileIndex);
+//                                    }
+//                                }, 10);
+
                             } else {
                                 sendUpdateData(fileIndex);
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: FILE TRANSFER FAIL!!!");
@@ -355,10 +381,16 @@ public class Rinnai12OTA extends MillecActivityBase
                             String crcFromDevice = pText.split(",")[1];
                             long crcLongValueFromDevice = Long.parseLong(crcFromDevice, 16);
                             String[] hexData = convertHexFileToHexData(fileData);
+
+                            Log.d("ttt", "crcLongValueFromDevice is: " + crcLongValueFromDevice);
+                            Log.d("ttt", "calculateCrc(hexData) is: " + calculateCrc(hexData));
+
                             if (crcLongValueFromDevice == calculateCrc(hexData)) {
-                                Tx_RN171DeviceOTAEnd();
+                                tcpClient2.close();
+                                showErrorPopup(crcLongValueFromDevice, calculateCrc(hexData));
+                                //Tx_RN171DeviceOTAEnd();
                             } else {
-                                showErrorPopup();
+                                showErrorPopup(crcLongValueFromDevice, calculateCrc(hexData));
                             }
                         }
 
@@ -520,12 +552,12 @@ public class Rinnai12OTA extends MillecActivityBase
 
     private void TCPSendUpdate(String data) {
         try {
-            TCPClient tcpClient = new TCPClient(
+            tcpClient2 = new TCPClient2(
                     3000,
                     AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress,
                     this,
                     "RINNAI_99," + data + "," + "E\n", true);
-            tcpClient.start();
+            tcpClient2.start();
         } catch (Exception e) {
             Log.d("myApp_WiFiTCP", "Rinnai33aTimers: Tx_RN171DeviceDeleteTimers(Exception - " + e + ")");
         }
@@ -536,6 +568,8 @@ public class Rinnai12OTA extends MillecActivityBase
         if (startupCheckTimer != null) {
             startupCheckTimer.cancel();
         }
+
+        final int ind = index;
 
         if(index < fileData.length) {
             final String lines = generateLinesFromHexFile(fileData, index);
@@ -548,6 +582,7 @@ public class Rinnai12OTA extends MillecActivityBase
             this.startupCheckTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    Log.d("ttt", "11111111 index is: " + ind + " and lines is: " + lines);
                     TCPSendUpdate(lines);
                 }
             }, 5000, 5000);
@@ -556,7 +591,7 @@ public class Rinnai12OTA extends MillecActivityBase
         }
     }
 
-    private void showErrorPopup(){
+    private void showErrorPopup(long receivedCrc, long fileCrc){
         fileIndex = 0;
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -565,8 +600,12 @@ public class Rinnai12OTA extends MillecActivityBase
             builder = new AlertDialog.Builder(this);
         }
 
+        //"An error has occured while updating the WiFi module."
+        String message = "receivedCRC is: " + receivedCrc + " fileCRC is: " + fileCrc;
+        //String message = "An error has occured while updating the WiFi module.";
+
         builder.setTitle("Error!")
-                .setMessage("An error has occured while updating the WiFi module.")
+                .setMessage(message)
                 .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Tx_RN171DeviceOTAStart();

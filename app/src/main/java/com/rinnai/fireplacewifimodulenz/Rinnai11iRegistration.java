@@ -116,7 +116,7 @@ public class Rinnai11iRegistration extends MillecActivityBase {
                         intent = new Intent(Rinnai11iRegistration.this, Rinnai11cRegistration.class);
                         startActivity(intent);
 
-                        finish();
+                        //finish();
                         Log.d("myApp", "Rinnai11iRegistration: startActivity(Rinnai11hRegistration).");
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_CANCEL:

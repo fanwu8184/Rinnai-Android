@@ -45,10 +45,24 @@ public class Rinnai26PowerOff extends MillecActivityBase
 
     LinearLayout ViewId_linearlayout_multiunit_row;
 
+    TextView fireplaceNameAtNoPower;
+    ImageView remoteIconAtNoPower;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai26_power_off);
+
+        String ip = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress;
+        String name = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName;
+        fireplaceNameAtNoPower = (TextView) findViewById(R.id.fireplaceNameAtNoPower);
+        fireplaceNameAtNoPower.setText(name);
+        remoteIconAtNoPower = (ImageView) findViewById(R.id.remoteIconAtNoPower);
+        if (ip != null) {
+            remoteIconAtNoPower.setVisibility(View.INVISIBLE);
+        } else {
+            remoteIconAtNoPower.setVisibility(View.VISIBLE);
+        }
 
         Log.d("myApp_ActivityLifecycle", "Rinnai26PowerOff_onCreate.");
 

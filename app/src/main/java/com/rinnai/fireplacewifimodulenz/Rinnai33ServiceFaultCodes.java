@@ -549,7 +549,6 @@ public class Rinnai33ServiceFaultCodes extends MillecActivityBase
 
     //Fault
     public void goToActivity_Rinnai26_Fault(View view) {
-        Log.d("ttt", "111111111");
         if (startupCheckTimer != null) {
             startupCheckTimer.cancel();
         }

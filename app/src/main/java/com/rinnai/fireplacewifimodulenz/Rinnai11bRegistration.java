@@ -274,7 +274,7 @@ public class Rinnai11bRegistration extends MillecActivityBase {
                             intent = new Intent(Rinnai11bRegistration.this, Rinnai11cRegistration.class);
                             startActivity(intent);
 
-                            finish();
+                            //finish();
                             Log.d("myApp", "Rinnai11bRegistration: startActivity(Rinnai11cRegistration).");
                             return true; // if you want to handle the touch event
 

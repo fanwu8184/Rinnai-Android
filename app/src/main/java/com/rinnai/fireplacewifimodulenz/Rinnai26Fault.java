@@ -45,12 +45,26 @@ public class Rinnai26Fault extends MillecActivityBase
     RemoteSetting remoteSetting;
     Timer remoteTimer;
 
+    TextView fireplaceNameAtFault;
+    ImageView remoteIconAtFault;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai26_fault);
 
         Log.d("myApp_ActivityLifecycle", "Rinnai26Fault_onCreate.");
+
+        String ip = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress;
+        String name = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceName;
+        fireplaceNameAtFault = (TextView) findViewById(R.id.fireplaceNameAtFault);
+        fireplaceNameAtFault.setText(name);
+        remoteIconAtFault = (ImageView) findViewById(R.id.remoteIconAtFault);
+        if (ip != null) {
+            remoteIconAtFault.setVisibility(View.INVISIBLE);
+        } else {
+            remoteIconAtFault.setVisibility(View.VISIBLE);
+        }
 
         TextView tvPressServiceInfo = (TextView) findViewById(R.id.textView44);
         tvPressServiceInfo.setOnClickListener(new View.OnClickListener() {

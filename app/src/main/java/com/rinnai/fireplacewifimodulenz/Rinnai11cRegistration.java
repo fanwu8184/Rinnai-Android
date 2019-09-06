@@ -121,8 +121,8 @@ public class Rinnai11cRegistration extends MillecActivityBase
                         ViewId_imagebutton11c.setImageResource(R.drawable.registration_button_cross);
 
                         isClosing = true;
-                        intent = new Intent(Rinnai11cRegistration.this, Rinnai11bRegistration.class);
-                        startActivity(intent);
+//                        intent = new Intent(Rinnai11cRegistration.this, Rinnai11bRegistration.class);
+//                        startActivity(intent);
 
                         finish();
                         Log.d("myApp", "Rinnai11fRegistration: startActivity(Rinnai11bRegistration).");

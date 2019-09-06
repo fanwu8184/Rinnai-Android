@@ -92,6 +92,89 @@ public class Rinnai17Login extends MillecActivityBase
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rinnai17_login);
 
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//
+//
+//            // Permission is not granted
+//
+//            // Permission is not granted
+//            // Should we show an explanation?
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+//                // Show an explanation to the user *asynchronously* -- don't block
+//                // this thread waiting for the user's response! After the user
+//                // sees the explanation, try again to request the permission.
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                        0);
+//            } else {
+//                // No explanation needed; request the permission
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                        0);
+//
+//                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//                // app-defined int constant. The callback method gets the
+//                // result of the request.
+//            }
+//
+//
+//
+//        }else {
+//            isTimer = true;
+//            Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onCreate.");
+//
+//            Runtime rt = Runtime.getRuntime();
+//            long maxMemory = rt.maxMemory();
+//            Log.d("myApp_Memory", "maxMemory:" + Long.toString(maxMemory));
+//
+//            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//            int memoryClass = am.getMemoryClass();
+//            Log.d("myApp_Memory", "memoryClass:" + Integer.toString(memoryClass));
+//
+//            //startFireAnimation();
+//            progressBarOnStart = (ProgressBar) findViewById(R.id.progressBarOnStart);
+//
+//            this.startCommunicationErrorFault();
+//
+//            this.appStart();
+//
+//        }
+
+
+//        try {
+//            tcpClient = new TCPClient2(
+//                    3000,
+//                    "10.0.0.96",
+//                    this,
+//                    "3333333", true);
+//
+//        } catch (Exception e) {
+//            Log.d("myApp_WiFiTCP", "Rinnai33aTimers: Tx_RN171DeviceDeleteTimers(Exception - " + e + ")");
+//        }
+//
+//        new Timer().schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Log.d("ttt", "pppppppppp");
+//                tcpClient.start();
+//            }
+//        }, 5000);
+//
+//        new Timer().schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Log.d("ttt", "pppppppppp");
+//                tcpClient.close();
+//            }
+//        }, 10000);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onStart.");
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
@@ -135,19 +218,13 @@ public class Rinnai17Login extends MillecActivityBase
 
             //startFireAnimation();
             progressBarOnStart = (ProgressBar) findViewById(R.id.progressBarOnStart);
+            progressBarOnStart.setVisibility(View.VISIBLE);
 
             this.startCommunicationErrorFault();
 
             this.appStart();
 
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onStart.");
-
     }
 
     @Override
@@ -413,6 +490,7 @@ public class Rinnai17Login extends MillecActivityBase
             ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
             ViewId_include_multiunit.setVisibility(View.INVISIBLE);
 
+            progressBarOnStart.setVisibility(View.VISIBLE);
             if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
                 goToHomePage();
             } else {
@@ -828,6 +906,15 @@ public class Rinnai17Login extends MillecActivityBase
                         }
                     } else {
                         //show box
+                        AppGlobals.UDPSrv.stopServer();
+                        startupCheckTimer.cancel();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBarOnStart.setVisibility(View.INVISIBLE);
+                                showPopup2();
+                            }
+                        });
                     }
                 }
 
@@ -837,6 +924,40 @@ public class Rinnai17Login extends MillecActivityBase
 
         }, 0, 1000);
 
+    }
+
+    private void showPopup2(){
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+
+        builder.setTitle("Rinnai WiFi not found!")
+                .setMessage("Did not find Rinnai WiFi Fireplace on the home network. \n\nAre you setting up a new Fireplace?")
+                .setPositiveButton("New Setup", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        intent = new Intent(Rinnai17Login.this, Rinnai00aInitialSetupThanks.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("Rescan", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        startTxRN171DeviceGetStatus();
+                        dialog.dismiss();
+                        progressBarOnStart.setVisibility(View.VISIBLE);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog al = builder.create();
+        al.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        al.show();
     }
 
     //************************//
@@ -1262,7 +1383,9 @@ public class Rinnai17Login extends MillecActivityBase
         } else if (!isShowList) {
             if(AppGlobals.rfwmEmail != null){
                 if(!AppGlobals.rfwmEmail.equals("NA")) {
-                    showWifiList();
+                    if(AppGlobals.fireplaceWifi.size() != 0) {
+                        showWifiList();
+                    }
                 } else {
                     goToLoginPage();
                 }
