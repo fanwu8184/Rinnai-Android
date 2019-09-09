@@ -378,6 +378,8 @@ public class Rinnai17Login extends MillecActivityBase
 
     private void showWifiList(){
 
+        isShowList = true;
+
         addRemoteDevices();
 
         ImageButton closeBtn = (ImageButton) findViewById(R.id.imBtn_close);
@@ -387,10 +389,16 @@ public class Rinnai17Login extends MillecActivityBase
         if(AppGlobals.fireplaceWifi.size() == 1){
             AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
 //          auto select only one fireplace and proceed to home screen
-            goToHomePage();
+            //goToHomePage();
+            AppGlobals.UDPSrv.stopServer();
+            gettingVersionTimer = new Timer();
+            gettingVersionTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Tx_RN171DeviceGetVersion();
+                }
+            }, 0, 2000);
         }else{
-
-            isShowList = true;
 
             AppGlobals.UDPSrv.stopServer();
             progressBarOnStart.setVisibility(View.INVISIBLE);
@@ -1013,7 +1021,22 @@ public class Rinnai17Login extends MillecActivityBase
 
                                     showUpdateVersionPopup();
                                 } else {
+                                    Tx_RN171DeviceSetTime();
+
                                     isDeviceGetVersion = true;
+
+                                    startupCheckTimer.cancel();
+                                    //fireanimationCheckTimer.cancel();
+
+                                    if(AppGlobals.rfwmEmail != null){
+                                        if(!AppGlobals.rfwmEmail.equals("NA")) {
+                                            goToHomePage();
+                                        } else {
+                                            goToLoginPage();
+                                        }
+                                    } else {
+                                        goToLoginPage();
+                                    }
                                 }
                             }
 
@@ -1383,7 +1406,7 @@ public class Rinnai17Login extends MillecActivityBase
         } else if (!isShowList) {
             if(AppGlobals.rfwmEmail != null){
                 if(!AppGlobals.rfwmEmail.equals("NA")) {
-                    if(AppGlobals.fireplaceWifi.size() != 0) {
+                    if(AppGlobals.fireplaceWifi.size() > 0) {
                         showWifiList();
                     }
                 } else {
