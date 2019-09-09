@@ -7,8 +7,8 @@ android {
         applicationId "com.rinnai.fireplacewifimodulenz"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 13
-        versionName "2.2"
+        versionCode 15
+        versionName "2.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

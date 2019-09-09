@@ -387,10 +387,9 @@ public class Rinnai12OTA extends MillecActivityBase
 
                             if (crcLongValueFromDevice == calculateCrc(hexData)) {
                                 tcpClient2.close();
-                                showErrorPopup(crcLongValueFromDevice, calculateCrc(hexData));
-                                //Tx_RN171DeviceOTAEnd();
+                                Tx_RN171DeviceOTAEnd();
                             } else {
-                                showErrorPopup(crcLongValueFromDevice, calculateCrc(hexData));
+                                showErrorPopup();
                             }
                         }
 
@@ -582,7 +581,7 @@ public class Rinnai12OTA extends MillecActivityBase
             this.startupCheckTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Log.d("ttt", "11111111 index is: " + ind + " and lines is: " + lines);
+                    //Log.d("ttt", "11111111 index is: " + ind + " and lines is: " + lines);
                     TCPSendUpdate(lines);
                 }
             }, 5000, 5000);
@@ -591,7 +590,7 @@ public class Rinnai12OTA extends MillecActivityBase
         }
     }
 
-    private void showErrorPopup(long receivedCrc, long fileCrc){
+    private void showErrorPopup(){
         fileIndex = 0;
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -601,8 +600,8 @@ public class Rinnai12OTA extends MillecActivityBase
         }
 
         //"An error has occured while updating the WiFi module."
-        String message = "receivedCRC is: " + receivedCrc + " fileCRC is: " + fileCrc;
-        //String message = "An error has occured while updating the WiFi module.";
+        //String message = "receivedCRC is: " + receivedCrc + " fileCRC is: " + fileCrc;
+        String message = "An error has occured while updating the WiFi module.";
 
         builder.setTitle("Error!")
                 .setMessage(message)
