@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -86,6 +88,8 @@ public class Rinnai17Login extends MillecActivityBase
     ProgressBar progressBarOnStart;
 
     ArrayList<Appliance> appliances = new ArrayList<Appliance>();
+
+    boolean isInWifiNetwork = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -851,10 +855,33 @@ public class Rinnai17Login extends MillecActivityBase
                     }
                 });
 
+                if (startupCheckTimerCount == 2) {
+                    WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(getApplicationContext().WIFI_SERVICE);
+                    WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                    String ssid = wifiInfo.getSSID();
+                    if (ssid.contains("unknown ssid")) {
+                        isInWifiNetwork = false;
+                        addRemoteDevices();
+                        AppGlobals.UDPSrv.stopServer();
+                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                        if (AppGlobals.fireplaceWifi.size() == 0) {
+                            startupCheckTimer.cancel();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showPopup2();
+                                }
+                            });
+                        }
+                    }
+                }
+
                 if (startupCheckTimerCount == 9) {
-                    addRemoteDevices();
-                    AppGlobals.UDPSrv.stopServer();
-                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                    if (isInWifiNetwork) {
+                        addRemoteDevices();
+                        AppGlobals.UDPSrv.stopServer();
+                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 if (startupCheckTimerCount >= 10) {
