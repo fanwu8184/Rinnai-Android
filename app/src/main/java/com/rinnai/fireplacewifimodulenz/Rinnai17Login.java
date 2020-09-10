@@ -157,7 +157,6 @@ public class Rinnai17Login extends MillecActivityBase
 //        new Timer().schedule(new TimerTask() {
 //            @Override
 //            public void run() {
-//                Log.d("ttt", "pppppppppp");
 //                tcpClient.start();
 //            }
 //        }, 5000);
@@ -165,7 +164,6 @@ public class Rinnai17Login extends MillecActivityBase
 //        new Timer().schedule(new TimerTask() {
 //            @Override
 //            public void run() {
-//                Log.d("ttt", "pppppppppp");
 //                tcpClient.close();
 //            }
 //        }, 10000);
@@ -174,7 +172,6 @@ public class Rinnai17Login extends MillecActivityBase
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onStart.");
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
@@ -230,7 +227,6 @@ public class Rinnai17Login extends MillecActivityBase
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onRestart.");
 
         isClosing = false;
         isDeviceGetVersion = false;
@@ -239,7 +235,10 @@ public class Rinnai17Login extends MillecActivityBase
         try {
             AppGlobals.UDPSrv.stopServer();
             AppGlobals.UDPSrv.setCurrentActivity(this);
-            AppGlobals.UDPSrv.start();
+            if (AppGlobals.UDPSrv.getState() == Thread.State.NEW) {
+                AppGlobals.UDPSrv.start();
+            }
+            AppGlobals.UDPSrv.starServer();
         } catch (Exception e) {
             Log.d("myApp_WiFiUDP", "Rinnai17Login: onRestart(Exception - " + e + ")");
         }
@@ -377,31 +376,35 @@ public class Rinnai17Login extends MillecActivityBase
     }
 
     private void showWifiList(){
-
+        Log.d("myApp", "Rinnai17Login_showWifiList.");
         isShowList = true;
 
-        addRemoteDevices();
+        //addRemoteDevices();
 
         ImageButton closeBtn = (ImageButton) findViewById(R.id.imBtn_close);
         closeBtn.setVisibility(View.INVISIBLE);
 
         //      check fireplace wifi if only one
-        if(AppGlobals.fireplaceWifi.size() == 1){
-            AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
-//          auto select only one fireplace and proceed to home screen
-            //goToHomePage();
-            AppGlobals.UDPSrv.stopServer();
-            gettingVersionTimer = new Timer();
-            gettingVersionTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Tx_RN171DeviceGetVersion();
-                }
-            }, 0, 2000);
-        }else{
+//        if(AppGlobals.fireplaceWifi.size() == 1){
+//            if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
+//                goToHomePage();
+//            } else {
+//                AppGlobals.selected_fireplaceWifi = scrollviewrowmultiunitrinnai21homescreen_id;
+////          auto select only one fireplace and proceed to home screen
+//                //goToHomePage();
+//                AppGlobals.UDPSrv.stopServer();
+//                gettingVersionTimer = new Timer();
+//                gettingVersionTimer.schedule(new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        Tx_RN171DeviceGetVersion();
+//                    }
+//                }, 0, 2000);
+//            }
+//        } else {}
 
-            AppGlobals.UDPSrv.stopServer();
-            progressBarOnStart.setVisibility(View.INVISIBLE);
+            //AppGlobals.UDPSrv.stopServer();
+            //progressBarOnStart.setVisibility(View.INVISIBLE);
 
             ViewGroup ViewId_include_multiunit = (ViewGroup) findViewById(R.id.include_multiunit);
 
@@ -419,8 +422,7 @@ public class Rinnai17Login extends MillecActivityBase
 
             int id = 0;
 
-            for (int i = 0; i <= AppGlobals.fireplaceWifi.size() - 1; i++) {
-
+            for (int i = 0; i < AppGlobals.fireplaceWifi.size(); i++) {
 
                 View ViewId_scrollview_row_multiunit_rinnai21_home_screen = getLayoutInflater().inflate(R.layout.scrollview_row_multiunit_rinnai21_home_screen, null, false);
 
@@ -440,7 +442,11 @@ public class Rinnai17Login extends MillecActivityBase
                 //Next
                 id++;
             }
-        }
+
+
+
+
+
 
 //        Button ViewId_button14 = (Button) findViewById(R.id.button14);
 //        ViewId_button14.setOnClickListener(new View.OnClickListener() {
@@ -552,7 +558,13 @@ public class Rinnai17Login extends MillecActivityBase
                 try {
                     AppGlobals.UDPSrv.stopServer();
                     AppGlobals.UDPSrv.setCurrentActivity(this);
-                    AppGlobals.UDPSrv.start();
+                    if (AppGlobals.UDPSrv.getState() == Thread.State.NEW) {
+                        AppGlobals.UDPSrv.start();
+                    } else if (AppGlobals.UDPSrv.getState() == Thread.State.TERMINATED) {
+                        AppGlobals.UDPSrv = new UDPServer(3500);
+                        AppGlobals.UDPSrv.start();
+                    }
+                    AppGlobals.UDPSrv.starServer();
                 } catch (Exception e) {
                     Log.d("myApp_WiFiUDP", "Rinnai17Login: appStart(Exception - " + e + ")");
                 }
@@ -832,6 +844,18 @@ public class Rinnai17Login extends MillecActivityBase
             public void run() {
 
                 Log.d("myApp", "Rinnai17Login: Tick.. " + startupCheckTimerCount);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showWifiList();
+                    }
+                });
+
+                if (startupCheckTimerCount == 9) {
+                    addRemoteDevices();
+                    AppGlobals.UDPSrv.stopServer();
+                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                }
 
                 if (startupCheckTimerCount >= 10) {
 
@@ -857,6 +881,7 @@ public class Rinnai17Login extends MillecActivityBase
                                         }
                                     });
 
+                                    //AppGlobals.UDPSrv.stopServer();
                                     isClosing = true;
                                     isAccessPoint = false;
                                     intent = new Intent(Rinnai17Login.this, Rinnai00fInitialSetupNetwork.class);
@@ -986,9 +1011,6 @@ public class Rinnai17Login extends MillecActivityBase
         final String pType = commandID;
         final String pText = text;
 
-//        Log.d("ttt", "type: " + pType);
-//        Log.d("ttt", "text: " + pText);
-
         if (isClosing == true) {
             return;
         }
@@ -1015,7 +1037,7 @@ public class Rinnai17Login extends MillecActivityBase
                                     gettingVersionTimer.cancel();
                                 }
 
-                                if ((2.11f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                                if ((2.12f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                         (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                         (2.02f != AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion)) {
 
@@ -1292,7 +1314,7 @@ public class Rinnai17Login extends MillecActivityBase
                                 gettingVersionTimer.cancel();
                             }
 
-                            if ((2.11f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                            if ((2.12f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                     (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                     (2.02f != AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion)) {
 
@@ -1390,7 +1412,7 @@ public class Rinnai17Login extends MillecActivityBase
 
     @Override
     public void timereventCallBackTimer(int timerID) {
-
+        Log.d("myApp", "Rinnai17Login_timereventCallBackTimer");
         if(isAccessPoint){
             startupCheckTimer.cancel();
             //fireanimationCheckTimer.cancel();

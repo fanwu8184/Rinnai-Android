@@ -41,21 +41,28 @@ public class UDPServer extends Thread {
 
     }
 
+    public void starServer() {
+
+        this.isRunning = true;
+    }
+
     public void stopServer() {
 
-        try {
+        this.isRunning = false;
 
-            if (this.isRunning) {
-                socket.close();
-
-                this.stop();
-            }
-
-            this.isRunning = false;
-
-        } catch (Exception e) {
-            Log.d("myApp_WiFiUDP", "UDPServer: stopServer(Exception - " + e + ")");
-        }
+//        try {
+//
+//            if (this.isRunning) {
+//                socket.close();
+//
+//                this.stop();
+//            }
+//
+//            this.isRunning = false;
+//
+//        } catch (Exception e) {
+//            Log.d("myApp_WiFiUDP", "UDPServer: stopServer(Exception - " + e + ")");
+//        }
     }
 
     public void serverCallBackUDP_Safe(String mesg){
@@ -144,7 +151,6 @@ public class UDPServer extends Thread {
 
                 } catch (Exception e){
                     Log.d("myApp_WiFiUDP", "UDPServer_run: (Exception - " + e + ")");
-
                     this.isRunning = false;
                 }
             }

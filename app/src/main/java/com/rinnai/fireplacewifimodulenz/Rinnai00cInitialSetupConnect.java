@@ -91,11 +91,11 @@ public class Rinnai00cInitialSetupConnect extends MillecActivityBase {
 
             //startupCheckTimer.cancel();
             isClosing = true;
-            intent = new Intent(Rinnai00cInitialSetupConnect.this, Rinnai00fInitialSetupNetwork.class);
+            intent = new Intent(Rinnai00cInitialSetupConnect.this, Rinnai17Login.class);
             startActivity(intent);
 
             finish();
-            Log.d("myApp", "Rinnai00cInitialSetupConnect_onClick: startActivity(Rinnai00fInitialSetupNetwork).");
+            Log.d("myApp", "Rinnai00cInitialSetupConnect_onClick: startActivity(Rinnai17Login).");
 
         }
     }

@@ -668,6 +668,7 @@ public class Rinnai00fInitialSetupNetwork extends MillecActivityBase
         final String pType = commandID;
         final String pText = text;
 
+
         if (isClosing == true) {
             return;
         }

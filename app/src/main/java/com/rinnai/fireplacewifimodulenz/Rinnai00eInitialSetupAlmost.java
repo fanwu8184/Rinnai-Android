@@ -199,7 +199,13 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
         try {
             //AppGlobals.UDPSrv.stopServer();
             AppGlobals.UDPSrv.setCurrentActivity(this);
-            AppGlobals.UDPSrv.start();
+            if (AppGlobals.UDPSrv.getState() == Thread.State.NEW) {
+                AppGlobals.UDPSrv.start();
+            } else if (AppGlobals.UDPSrv.getState() == Thread.State.TERMINATED) {
+                AppGlobals.UDPSrv = new UDPServer(3500);
+                AppGlobals.UDPSrv.start();
+            }
+            AppGlobals.UDPSrv.starServer();
         } catch (Exception e) {
             Log.d("myApp_WiFiUDP", "Rinnai17Login: appStart(Exception - " + e + ")");
         }

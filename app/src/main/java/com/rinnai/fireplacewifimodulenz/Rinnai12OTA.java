@@ -382,9 +382,6 @@ public class Rinnai12OTA extends MillecActivityBase
                             long crcLongValueFromDevice = Long.parseLong(crcFromDevice, 16);
                             String[] hexData = convertHexFileToHexData(fileData);
 
-                            Log.d("ttt", "crcLongValueFromDevice is: " + crcLongValueFromDevice);
-                            Log.d("ttt", "calculateCrc(hexData) is: " + calculateCrc(hexData));
-
                             if (crcLongValueFromDevice == calculateCrc(hexData)) {
                                 tcpClient2.close();
                                 Tx_RN171DeviceOTAEnd();
@@ -469,7 +466,7 @@ public class Rinnai12OTA extends MillecActivityBase
         //BufferedReader reader;
         String tContents = "";
         try {
-            InputStream stream = getAssets().open("RinnaiWiFiMK2_V11.hex");
+            InputStream stream = getAssets().open("RinnaiWiFiMK2_V12.hex");
             int size = stream.available();
             byte[] buffer = new byte[size];
             stream.read(buffer);
@@ -581,7 +578,6 @@ public class Rinnai12OTA extends MillecActivityBase
             this.startupCheckTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    //Log.d("ttt", "11111111 index is: " + ind + " and lines is: " + lines);
                     TCPSendUpdate(lines);
                 }
             }, 5000, 5000);

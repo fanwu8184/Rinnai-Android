@@ -93,8 +93,6 @@ public class TCPClient extends Thread {
                     while (mRun == true) {
                         this.serverResponse = inStream.readLine();
 
-                        //Log.d("ttt", "this.serverResponse: " + this.serverResponse);
-
                         if (this.serverResponse != null) {
 
                             Log.d("myApp_WiFiTCP", "TCPClient_run - RX(test):" + this.serverResponse);
