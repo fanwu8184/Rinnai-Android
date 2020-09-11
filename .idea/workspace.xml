@@ -24,14 +24,16 @@
   <component name="ChangeListManager">
     <list default="true" id="8964e60f-6d87-41a2-a4ee-3675787c2afc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai00f_initialsetup_network.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai00f_initialsetup_network.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_28" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="1c8c2894330c7ece" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -80,8 +82,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="0123456789ABCDEF" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-11-19T04:01:11.712Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="1c8c2894330c7ece" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-09-11T04:17:15.413Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="device.picker.selection" value="0123456789ABCDEF" />
@@ -210,18 +212,18 @@
       <screen x="0" y="23" width="1280" height="723" />
     </state>
     <state width="1238" height="137" key="GridCell.Tab.0.right/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599701679771" />
-    <state x="289" y="217" key="com.intellij.ide.util.TipDialog" timestamp="1599700635628">
+    <state x="289" y="217" key="com.intellij.ide.util.TipDialog" timestamp="1599781006680">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state x="289" y="217" key="com.intellij.ide.util.TipDialog/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599700635628" />
-    <state x="293" y="140" width="693" height="488" key="find.popup" timestamp="1599709769859">
+    <state x="289" y="217" key="com.intellij.ide.util.TipDialog/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599781006680" />
+    <state x="293" y="140" width="805" height="488" key="find.popup" timestamp="1599799680674">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state x="293" y="140" width="693" height="488" key="find.popup/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599709769859" />
-    <state width="306" height="79" key="javadoc.popup.new" timestamp="1599715989105">
+    <state x="293" y="140" width="805" height="488" key="find.popup/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599799680674" />
+    <state width="306" height="79" key="javadoc.popup.new" timestamp="1599800686954">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state width="306" height="79" key="javadoc.popup.new/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599715989105" />
+    <state width="306" height="79" key="javadoc.popup.new/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599800686954" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -851,11 +851,13 @@ public class Rinnai17Login extends MillecActivityBase
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        showWifiList();
+                        if (isAccessPoint == false) {
+                            showWifiList();
+                        }
                     }
                 });
 
-                if (startupCheckTimerCount == 2) {
+                if (startupCheckTimerCount == 2 && isAccessPoint == false) {
                     WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(getApplicationContext().WIFI_SERVICE);
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                     String ssid = wifiInfo.getSSID();
@@ -877,7 +879,7 @@ public class Rinnai17Login extends MillecActivityBase
                 }
 
                 if (startupCheckTimerCount == 9) {
-                    if (isInWifiNetwork) {
+                    if (isInWifiNetwork && isAccessPoint == false) {
                         addRemoteDevices();
                         AppGlobals.UDPSrv.stopServer();
                         progressBarOnStart.setVisibility(View.INVISIBLE);
@@ -1392,9 +1394,12 @@ public class Rinnai17Login extends MillecActivityBase
     //***** RN171_DEVICE_SET_TIME *****//
     public void Tx_RN171DeviceSetTime() {
 
-        int offSetHourFromUTC = getOffSetHourFromUTC();
-        String twoDigitHex = String.format("%02X", offSetHourFromUTC);
-        String message =  twoDigitHex + "000000";
+        double offSetTimeFromUTC = getOffSetHourFromUTC();
+        int hour = (int) offSetTimeFromUTC;
+        int minute = (int) (offSetTimeFromUTC % 1 * 60);
+        String twoDigitHourHex = String.format("%02X", hour);
+        String twoDigitMinuteHex = String.format("%02X", minute);
+        String message =  twoDigitHourHex + twoDigitMinuteHex + "0000";
 
         try {
             TCPClient tcpClient = new TCPClient(
@@ -1736,11 +1741,11 @@ public class Rinnai17Login extends MillecActivityBase
         al.show();
     }
 
-    private int getOffSetHourFromUTC()
+    private double getOffSetHourFromUTC()
     {
         TimeZone tz = TimeZone.getDefault();
         Date now = new Date();
-        int offsetFromUtc = tz.getOffset(now.getTime()) / 3600000;
+        double offsetFromUtc = Double.valueOf(tz.getOffset(now.getTime())) / Double.valueOf(3600000);
         return offsetFromUtc;
     }
 }
