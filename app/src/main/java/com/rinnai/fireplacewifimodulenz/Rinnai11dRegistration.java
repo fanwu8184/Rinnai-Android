@@ -371,7 +371,7 @@ public class Rinnai11dRegistration extends MillecActivityBase {
                     Log.d("myApp", "Rinnai11dRegistration_onFocusChange editText20: Got the focus.");
 
                     ViewId_edittext20 = (EditText) view.findViewById(R.id.editText20);
-                    ViewId_edittext20.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    //ViewId_edittext20.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                     showSoftKeyboard_registrationd(ViewId_edittext20);
 
@@ -391,7 +391,7 @@ public class Rinnai11dRegistration extends MillecActivityBase {
                     Log.d("myApp", "Rinnai11dRegistration_onFocusChange editText21: Got the focus.");
 
                     ViewId_edittext21 = (EditText) view.findViewById(R.id.editText21);
-                    ViewId_edittext21.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    //ViewId_edittext21.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                     showSoftKeyboard_registrationd(ViewId_edittext21);
 
@@ -747,17 +747,17 @@ public class Rinnai11dRegistration extends MillecActivityBase {
 
         //***** Registration Street Address - ViewId_edittext16 *****//
         ViewId_edittext16 = (EditText) findViewById(R.id.editText16);
-        ViewId_edittext16.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext16.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext16.setText("");
 
         //***** Registration Suburb - ViewId_edittext17 *****//
         ViewId_edittext17 = (EditText) findViewById(R.id.editText17);
-        ViewId_edittext17.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext17.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext17.setText("");
 
         //***** Registration City / Region - ViewId_edittext18 *****//
         ViewId_edittext18 = (EditText) findViewById(R.id.editText18);
-        ViewId_edittext18.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext18.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext18.setText("");
 
         //***** Registration Postcode - ViewId_edittext19 *****//
@@ -767,12 +767,12 @@ public class Rinnai11dRegistration extends MillecActivityBase {
 
         //***** Registration Password - ViewId_edittext20 *****//
         ViewId_edittext20 = (EditText) findViewById(R.id.editText20);
-        ViewId_edittext20.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        //ViewId_edittext20.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         ViewId_edittext20.setText("");
 
         //***** Registration Confirm Password - ViewId_edittext21 *****//
         ViewId_edittext21 = (EditText) findViewById(R.id.editText21);
-        ViewId_edittext21.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        //ViewId_edittext21.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         ViewId_edittext21.setText("");
 
         //***** Registration Email - ViewId_edittext31 *****//
@@ -782,12 +782,12 @@ public class Rinnai11dRegistration extends MillecActivityBase {
 
         //***** Registration First Name - ViewId_edittext32 *****//
         ViewId_edittext32 = (EditText) findViewById(R.id.editText32);
-        ViewId_edittext32.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext32.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext32.setText("");
 
         //***** Registration Last Name - ViewId_edittext33 *****//
         ViewId_edittext33 = (EditText) findViewById(R.id.editText33);
-        ViewId_edittext33.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext33.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         ViewId_edittext33.setText("");
 
     }
@@ -839,15 +839,15 @@ public class Rinnai11dRegistration extends MillecActivityBase {
 
         //***** Registration Street Address - ViewId_edittext16 *****//
         ViewId_edittext16 = (EditText) findViewById(R.id.editText16);
-        ViewId_edittext16.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext16.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Suburb - ViewId_edittext17 *****//
         ViewId_edittext17 = (EditText) findViewById(R.id.editText17);
-        ViewId_edittext17.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext17.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration City / Region - ViewId_edittext18 *****//
         ViewId_edittext18 = (EditText) findViewById(R.id.editText18);
-        ViewId_edittext18.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext18.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Postcode - ViewId_edittext19 *****//
         ViewId_edittext19 = (EditText) findViewById(R.id.editText19);
@@ -855,11 +855,11 @@ public class Rinnai11dRegistration extends MillecActivityBase {
 
         //***** Registration Password - ViewId_edittext20 *****//
         ViewId_edittext20 = (EditText) findViewById(R.id.editText20);
-        ViewId_edittext20.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        //ViewId_edittext20.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         //***** Registration Confirm Password - ViewId_edittext21 *****//
         ViewId_edittext21 = (EditText) findViewById(R.id.editText21);
-        ViewId_edittext21.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        //ViewId_edittext21.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         //***** Registration Email - ViewId_edittext31 *****//
         ViewId_edittext31 = (EditText) findViewById(R.id.editText31);
@@ -867,11 +867,11 @@ public class Rinnai11dRegistration extends MillecActivityBase {
 
         //***** Registration First Name - ViewId_edittext32 *****//
         ViewId_edittext32 = (EditText) findViewById(R.id.editText32);
-        ViewId_edittext32.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext32.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         //***** Registration Last Name - ViewId_edittext33 *****//
         ViewId_edittext33 = (EditText) findViewById(R.id.editText33);
-        ViewId_edittext33.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        //ViewId_edittext33.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
     }
 

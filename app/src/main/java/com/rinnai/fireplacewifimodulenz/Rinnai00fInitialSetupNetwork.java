@@ -189,7 +189,7 @@ public class Rinnai00fInitialSetupNetwork extends MillecActivityBase
                     Log.d("myApp", "Rinnai00fInitialSetupNetwork_onFocusChange editText30: Got the focus.");
 
                     ViewId_edittext30 = (EditText) view.findViewById(R.id.editText30);
-                    ViewId_edittext30.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    //ViewId_edittext30.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                     showSoftKeyboard_initialsetupf(ViewId_edittext30);
 
@@ -281,7 +281,7 @@ public class Rinnai00fInitialSetupNetwork extends MillecActivityBase
 
             //***** Network password - ViewId_edittext30 *****//
             ViewId_edittext30 = (EditText) findViewById(R.id.editText30);
-            ViewId_edittext30.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            //ViewId_edittext30.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             ViewId_edittext30.setText("");
 
             //***** include - ViewId_include_scanning_initialsetupnetwork *****//
@@ -418,7 +418,7 @@ public class Rinnai00fInitialSetupNetwork extends MillecActivityBase
 
             //***** Network Password - ViewId_edittext30 *****//
             ViewId_edittext30 = (EditText) findViewById(R.id.editText30);
-            ViewId_edittext30.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            //ViewId_edittext30.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
             //***** include - ViewId_include_scanning_initialsetupnetwork *****//
             ViewId_include_scanning_initialsetupnetwork = (ViewGroup) findViewById(R.id.include_scanning_initialsetupnetwork);

@@ -399,7 +399,7 @@ public class Rinnai11bRegistration extends MillecActivityBase {
                     Log.d("myApp", "Rinnai11bRegistration_onFocusChange editText4: Got the focus.");
 
                     ViewId_edittext4 = (EditText) view.findViewById(R.id.editText4);
-                    ViewId_edittext4.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    //ViewId_edittext4.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                     showSoftKeyboard_registrationb(ViewId_edittext4);
 
@@ -536,7 +536,7 @@ public class Rinnai11bRegistration extends MillecActivityBase {
 
         //***** Registration Password - ViewId_edittext4 *****//
         ViewId_edittext4 = (EditText) findViewById(R.id.editText4);
-        ViewId_edittext4.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        //ViewId_edittext4.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         ViewId_edittext4.setText("");
 
     }
@@ -591,7 +591,7 @@ public class Rinnai11bRegistration extends MillecActivityBase {
 
         //***** Registration Password - ViewId_edittext4 *****//
         ViewId_edittext4 = (EditText) findViewById(R.id.editText4);
-        ViewId_edittext4.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        //ViewId_edittext4.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
     }
 

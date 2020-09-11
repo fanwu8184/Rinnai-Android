@@ -158,7 +158,7 @@ public class Rinnai37Network extends MillecActivityBase
                 Log.d("myApp", "Rinnai37Network_onClick: EditText.");
 
                 ViewId_edittext = (EditText) v.findViewById(R.id.editText);
-                ViewId_edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                //ViewId_edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                 if (selected_edittextfirsttime == false) {
                     ViewId_edittext.setText("");
