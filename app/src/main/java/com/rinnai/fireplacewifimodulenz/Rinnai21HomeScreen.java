@@ -3700,6 +3700,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     }
 
     private void getRemoteStat() {
+        Log.d("myApp", "getRemoteStat");
         final String uuid = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).UUID;
         AWSconnection.remoteControlSelectURL(uuid,
 
@@ -3710,7 +3711,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                     public void getResult(String result) {
 
                         //Log outputs
-                        Log.d("RC Values::", result);
+                        Log.d("myApp", "RC Values:: " + result);
                         try {
                             JSONObject jObject = new JSONObject(result);
                             JSONArray jArray = jObject.getJSONArray("Items");
@@ -3719,7 +3720,8 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                             int mode = jArray.getJSONObject(0).getInt("mode");
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
-                            remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode);
+                            int timestampSec = jArray.getJSONObject(0).getInt("timestamp") / 1000;
+                            remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode, timestampSec);
 
                             runOnUiThread(new Runnable() {
                                 @Override

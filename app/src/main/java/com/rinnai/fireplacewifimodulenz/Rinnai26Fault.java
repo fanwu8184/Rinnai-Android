@@ -714,7 +714,8 @@ public class Rinnai26Fault extends MillecActivityBase
                             int mode = jArray.getJSONObject(0).getInt("mode");
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
-                            remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode);
+                            int timestampSec = jArray.getJSONObject(0).getInt("timestamp") / 1000;
+                            remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode, timestampSec);
 
                             runOnUiThread(new Runnable() {
                                 @Override
