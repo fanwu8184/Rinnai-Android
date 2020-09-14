@@ -8,9 +8,9 @@ public class RemoteSetting {
     public int setFlame = 0;
     public int currentTemp = 0;
     public int mode = 0;
-    public int timestamp = 0;
+    public long timestamp = 0;
 
-    public RemoteSetting(String uuid, String faultCode, int setTemp, int setFlame, int currentTemp, int mode, int timestamp){
+    public RemoteSetting(String uuid, String faultCode, int setTemp, int setFlame, int currentTemp, int mode, long timestamp){
         this.uuid = uuid;
         this.faultCode = faultCode;
         this.setTemp = setTemp;

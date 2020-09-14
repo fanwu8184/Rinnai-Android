@@ -334,7 +334,6 @@ public class Rinnai12OTA extends MillecActivityBase
                             }
                         }
                         if (pType.contains("9B")) {
-
                             if (tcpTimer != null) {
                                 tcpTimer.cancel();
                             }
@@ -373,8 +372,11 @@ public class Rinnai12OTA extends MillecActivityBase
 //                                }, 10);
 
                             } else {
-                                sendUpdateData(fileIndex);
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: FILE TRANSFER FAIL!!!");
+                                if (tcpTimer != null) {
+                                    tcpTimer.cancel();
+                                }
+                                showErrorPopup();
                             }
                         }
                         if (pType.contains("9C")) {
@@ -403,7 +405,6 @@ public class Rinnai12OTA extends MillecActivityBase
 
     //***** RN171_DEVICE_OTA_START *****//
     public void Tx_RN171DeviceOTAStart() {
-
         try {
             TCPClient tcpClient = new TCPClient(
                     3000,
@@ -466,7 +467,7 @@ public class Rinnai12OTA extends MillecActivityBase
         //BufferedReader reader;
         String tContents = "";
         try {
-            InputStream stream = getAssets().open("RinnaiWiFiMK2_V12.hex");
+            InputStream stream = getAssets().open("RinnaiWiFiMK2_V13.hex");
             int size = stream.available();
             byte[] buffer = new byte[size];
             stream.read(buffer);
@@ -603,6 +604,7 @@ public class Rinnai12OTA extends MillecActivityBase
                 .setMessage(message)
                 .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        fileIndex = 0;
                         Tx_RN171DeviceOTAStart();
                     }
                 })

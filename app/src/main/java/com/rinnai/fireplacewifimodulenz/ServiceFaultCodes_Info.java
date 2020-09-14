@@ -135,6 +135,12 @@ public class ServiceFaultCodes_Info {
                 info.faultAction          = "Please check that your Smart Device and Rinnai WiFi module are within range. Check network settings.";
                 break;
 
+            case 92:
+                info.faultCause           = "Cloud Function.";
+                info.faultDescription     = "Could function currently not available.";
+                info.faultAction          = "This is due to another device having control on the Home network or the WiFi module has gone offline.";
+                break;
+
             default:
                 info.faultCause           = "Unknown Fault.";
                 info.faultDescription     = "An unknown Fault has occured.";

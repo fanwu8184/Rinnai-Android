@@ -692,7 +692,7 @@ public class Rinnai26PowerOff extends MillecActivityBase
                             int mode = jArray.getJSONObject(0).getInt("mode");
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
-                            int timestampSec = jArray.getJSONObject(0).getInt("timestamp") / 1000;
+                            long timestampSec = jArray.getJSONObject(0).getLong("timestamp") / 1000;
                             remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode, timestampSec);
 
                             runOnUiThread(new Runnable() {

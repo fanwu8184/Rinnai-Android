@@ -75,7 +75,13 @@ public class Rinnai26Fault extends MillecActivityBase
                 isClosing = true;
                 Intent intent = new Intent(Rinnai26Fault.this, Rinnai33ServiceFaultCodes.class);
                 if (remoteSetting != null) {
-                    intent.putExtra("FAULTCODE", remoteSetting.faultCode);
+                    long currentTimeStamp = System.currentTimeMillis() / 1000;
+                    long difTime = currentTimeStamp - remoteSetting.timestamp;
+                    if (difTime >= 60) {
+                        intent.putExtra("FAULTCODE", "92");
+                    } else {
+                        intent.putExtra("FAULTCODE", remoteSetting.faultCode);
+                    }
                 }
                 startActivity(intent);
                 finish();
@@ -714,7 +720,7 @@ public class Rinnai26Fault extends MillecActivityBase
                             int mode = jArray.getJSONObject(0).getInt("mode");
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
-                            int timestampSec = jArray.getJSONObject(0).getInt("timestamp") / 1000;
+                            long timestampSec = jArray.getJSONObject(0).getLong("timestamp") / 1000;
                             remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode, timestampSec);
 
                             runOnUiThread(new Runnable() {
@@ -734,8 +740,11 @@ public class Rinnai26Fault extends MillecActivityBase
     private void updateUI() {
 
         if (remoteSetting != null) {
+            long currentTimeStamp = System.currentTimeMillis() / 1000;
+            long difTime = currentTimeStamp - remoteSetting.timestamp;
+            //Log.d("ttt", "difTime from falt page: " + difTime);
 
-            if (remoteSetting.mode != 3) {
+            if (remoteSetting.mode != 3 && difTime <= 60) {
                 cancelTimers();
                 isClosing = true;
                 intent = new Intent(Rinnai26Fault.this, Rinnai21HomeScreen.class);

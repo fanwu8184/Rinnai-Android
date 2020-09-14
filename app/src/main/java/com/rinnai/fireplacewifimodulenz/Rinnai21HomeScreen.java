@@ -2563,7 +2563,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                 public void run() {
                     getRemoteStat();
                 }
-            }, 0, 5000);
+            }, 0, 10000);
 
         } else {
             this.startupCheckTimerCount = 0;
@@ -3720,7 +3720,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                             int mode = jArray.getJSONObject(0).getInt("mode");
                             int setTemp = jArray.getJSONObject(0).getInt("set_temp");
                             String faultCode = jArray.getJSONObject(0).getString("fault");
-                            int timestampSec = jArray.getJSONObject(0).getInt("timestamp") / 1000;
+                            long timestampSec = jArray.getJSONObject(0).getLong("timestamp") / 1000;
                             remoteSetting = new RemoteSetting(uuid, faultCode, setTemp, setFlame, currentTemp, mode, timestampSec);
 
                             runOnUiThread(new Runnable() {
@@ -3926,6 +3926,18 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                 cancelTimers();
                 isClosing = true;
                 intent = new Intent(Rinnai21HomeScreen.this, Rinnai26PowerOff.class);
+                startActivity(intent);
+                finish();
+            }
+
+            long currentTimeStamp = System.currentTimeMillis() / 1000;
+            long difTime = currentTimeStamp - remoteSetting.timestamp;
+            //Log.d("ttt", "difTime: " + difTime);
+            if (difTime >= 60 && remoteSetting.timestamp != 0) {
+                resetguardtimeRinnai21HomeScreen();
+                cancelTimers();
+                isClosing = true;
+                intent = new Intent(Rinnai21HomeScreen.this, Rinnai26Fault.class);
                 startActivity(intent);
                 finish();
             }
