@@ -23,23 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8964e60f-6d87-41a2-a4ee-3675787c2afc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/assets/RinnaiWiFiMK2_V13.hex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/assets/RinnaiWiFiMK2_V11.hex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/RemoteSetting.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/RemoteSetting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai12OTA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai26Fault.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai26Fault.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai26PowerOff.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai26PowerOff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/ServiceFaultCodes_Info.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/ServiceFaultCodes_Info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="1c8c2894330c7ece" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_28" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -196,26 +187,26 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1339" height="377" key="GridCell.Tab.0.bottom" timestamp="1599807465656">
+    <state width="1385" height="345" key="GridCell.Tab.0.bottom" timestamp="1600062013573">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state width="1339" height="377" key="GridCell.Tab.0.bottom/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599807465656" />
-    <state width="1339" height="377" key="GridCell.Tab.0.center" timestamp="1599807465655">
+    <state width="1385" height="345" key="GridCell.Tab.0.bottom/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600062013573" />
+    <state width="1385" height="345" key="GridCell.Tab.0.center" timestamp="1600062013572">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state width="1339" height="377" key="GridCell.Tab.0.center/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599807465655" />
-    <state width="1339" height="377" key="GridCell.Tab.0.left" timestamp="1599807465653">
+    <state width="1385" height="345" key="GridCell.Tab.0.center/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600062013572" />
+    <state width="1385" height="345" key="GridCell.Tab.0.left" timestamp="1600062013548">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state width="1339" height="377" key="GridCell.Tab.0.left/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599807465653" />
-    <state width="1339" height="377" key="GridCell.Tab.0.right" timestamp="1599807465655">
+    <state width="1385" height="345" key="GridCell.Tab.0.left/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600062013548" />
+    <state width="1385" height="345" key="GridCell.Tab.0.right" timestamp="1600062013572">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state width="1339" height="377" key="GridCell.Tab.0.right/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1599807465655" />
-    <state x="289" y="217" key="com.intellij.ide.util.TipDialog" timestamp="1600041644948">
+    <state width="1385" height="345" key="GridCell.Tab.0.right/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600062013572" />
+    <state x="289" y="217" key="com.intellij.ide.util.TipDialog" timestamp="1600989495364">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state x="289" y="217" key="com.intellij.ide.util.TipDialog/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600041644948" />
+    <state x="289" y="217" key="com.intellij.ide.util.TipDialog/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600989495364" />
     <state x="293" y="140" width="805" height="488" key="find.popup" timestamp="1600060190844">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
