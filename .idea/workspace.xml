@@ -23,14 +23,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8964e60f-6d87-41a2-a4ee-3675787c2afc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/RinnaiWiFiMK2_V13.hex" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/RinnaiWiFiMK2_V13.hex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_28" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="1c8c2894330c7ece" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -187,6 +191,14 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="472" y="280" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1600994394159">
+      <screen x="0" y="23" width="1280" height="723" />
+    </state>
+    <state x="472" y="280" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600994394159" />
+    <state x="228" y="46" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor" timestamp="1600994377110">
+      <screen x="0" y="23" width="1280" height="723" />
+    </state>
+    <state x="228" y="46" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600994377110" />
     <state width="1385" height="345" key="GridCell.Tab.0.bottom" timestamp="1600062013573">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
@@ -203,18 +215,22 @@
       <screen x="0" y="23" width="1280" height="723" />
     </state>
     <state width="1385" height="345" key="GridCell.Tab.0.right/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600062013572" />
-    <state x="289" y="217" key="com.intellij.ide.util.TipDialog" timestamp="1600991388061">
+    <state x="135" y="23" key="SettingsEditor" timestamp="1600994837232">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state x="289" y="217" key="com.intellij.ide.util.TipDialog/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600991388061" />
-    <state x="293" y="140" width="805" height="488" key="find.popup" timestamp="1600060190844">
+    <state x="135" y="23" key="SettingsEditor/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600994837232" />
+    <state x="289" y="217" key="com.intellij.ide.util.TipDialog" timestamp="1601268749614">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state x="293" y="140" width="805" height="488" key="find.popup/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600060190844" />
-    <state width="306" height="79" key="javadoc.popup.new" timestamp="1600048529327">
+    <state x="289" y="217" key="com.intellij.ide.util.TipDialog/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1601268749614" />
+    <state x="293" y="140" width="805" height="488" key="find.popup" timestamp="1600991589560">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state width="306" height="79" key="javadoc.popup.new/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600048529327" />
+    <state x="293" y="140" width="805" height="488" key="find.popup/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600991589560" />
+    <state width="306" height="79" key="javadoc.popup.new" timestamp="1601953337869">
+      <screen x="0" y="23" width="1280" height="723" />
+    </state>
+    <state width="306" height="79" key="javadoc.popup.new/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1601953337869" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

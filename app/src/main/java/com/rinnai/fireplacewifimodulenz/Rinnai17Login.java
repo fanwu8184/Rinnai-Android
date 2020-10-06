@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -57,8 +58,6 @@ public class Rinnai17Login extends MillecActivityBase
 
     ImageView ViewId_imageview18;
 
-
-
     Timer startupCheckTimer;
     int startupCheckTimerCount;
 
@@ -90,6 +89,7 @@ public class Rinnai17Login extends MillecActivityBase
     ArrayList<Appliance> appliances = new ArrayList<Appliance>();
 
     boolean isInWifiNetwork = true;
+    boolean isAppSuccessfullyStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,8 +178,6 @@ public class Rinnai17Login extends MillecActivityBase
         super.onStart();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
-
             // Permission is not granted
 
             // Permission is not granted
@@ -206,52 +204,76 @@ public class Rinnai17Login extends MillecActivityBase
 
 
         }else {
-            isTimer = true;
-            Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onCreate.");
+            LocationManager lm = (LocationManager) getSystemService(this.LOCATION_SERVICE );
+            if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                progressBarOnStart = (ProgressBar) findViewById(R.id.progressBarOnStart);
+                progressBarOnStart.setVisibility(View.INVISIBLE);
 
-            Runtime rt = Runtime.getRuntime();
-            long maxMemory = rt.maxMemory();
-            Log.d("myApp_Memory", "maxMemory:" + Long.toString(maxMemory));
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Please enable your Location Service.")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                dialog.cancel();
+                            }
+                        });
+                final AlertDialog alert = builder.create();
+                alert.show();
 
-            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-            int memoryClass = am.getMemoryClass();
-            Log.d("myApp_Memory", "memoryClass:" + Integer.toString(memoryClass));
+            } else {
+                isAppSuccessfullyStarted = true;
+                isTimer = true;
+                Log.d("myApp_ActivityLifecycle", "Rinnai17Login_onCreate.");
 
-            //startFireAnimation();
-            progressBarOnStart = (ProgressBar) findViewById(R.id.progressBarOnStart);
-            progressBarOnStart.setVisibility(View.VISIBLE);
+                Runtime rt = Runtime.getRuntime();
+                long maxMemory = rt.maxMemory();
+                Log.d("myApp_Memory", "maxMemory:" + Long.toString(maxMemory));
 
-            this.startCommunicationErrorFault();
+                ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                int memoryClass = am.getMemoryClass();
+                Log.d("myApp_Memory", "memoryClass:" + Integer.toString(memoryClass));
 
-            this.appStart();
+                //startFireAnimation();
+                progressBarOnStart = (ProgressBar) findViewById(R.id.progressBarOnStart);
+                progressBarOnStart.setVisibility(View.VISIBLE);
 
+                this.startCommunicationErrorFault();
+
+                this.appStart();
+            }
         }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        if (isAppSuccessfullyStarted) {
+            isClosing = false;
+            isDeviceGetVersion = false;
+            isDeviceSetTime = false;
 
-        isClosing = false;
-        isDeviceGetVersion = false;
-        isDeviceSetTime = false;
-
-        try {
-            AppGlobals.UDPSrv.stopServer();
-            AppGlobals.UDPSrv.setCurrentActivity(this);
-            if (AppGlobals.UDPSrv.getState() == Thread.State.NEW) {
-                AppGlobals.UDPSrv.start();
+            try {
+                AppGlobals.UDPSrv.stopServer();
+                AppGlobals.UDPSrv.setCurrentActivity(this);
+                if (AppGlobals.UDPSrv.getState() == Thread.State.NEW) {
+                    AppGlobals.UDPSrv.start();
+                }
+                AppGlobals.UDPSrv.starServer();
+            } catch (Exception e) {
+                Log.d("myApp_WiFiUDP", "Rinnai17Login: onRestart(Exception - " + e + ")");
             }
-            AppGlobals.UDPSrv.starServer();
-        } catch (Exception e) {
-            Log.d("myApp_WiFiUDP", "Rinnai17Login: onRestart(Exception - " + e + ")");
+
+            startFireAnimation();
+
+            startCommunicationErrorFault();
+
+            startTxRN171DeviceGetStatus();
         }
-
-        startFireAnimation();
-
-        startCommunicationErrorFault();
-
-        startTxRN171DeviceGetStatus();
 
 //        if(AppGlobals.rfwmEmail != null){
 //            if(!AppGlobals.rfwmEmail.equals("NA")) {
