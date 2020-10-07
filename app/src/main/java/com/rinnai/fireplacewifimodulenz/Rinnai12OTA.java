@@ -384,6 +384,7 @@ public class Rinnai12OTA extends MillecActivityBase
                             long crcLongValueFromDevice = Long.parseLong(crcFromDevice, 16);
                             String[] hexData = convertHexFileToHexData(fileData);
 
+                            Log.d("myApp_WiFiTCP", "Rinnai12OTA crcLongValueFromDevice: " + crcLongValueFromDevice + " calculateCrc: " + calculateCrc(hexData));
                             if (crcLongValueFromDevice == calculateCrc(hexData)) {
                                 tcpClient2.close();
                                 Tx_RN171DeviceOTAEnd();

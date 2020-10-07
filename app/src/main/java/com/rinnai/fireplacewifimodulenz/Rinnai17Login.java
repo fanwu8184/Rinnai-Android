@@ -310,7 +310,9 @@ public class Rinnai17Login extends MillecActivityBase
             AppGlobals.UDPSrv.stopServer();
         }
         if(isTimer){
-            startupCheckTimer.cancel();
+            if (startupCheckTimer != null) {
+                startupCheckTimer.cancel();
+            }
             //fireanimationCheckTimer.cancel();
             progressBarOnStart.setVisibility(View.INVISIBLE);
             isClosing = true;
@@ -612,6 +614,14 @@ public class Rinnai17Login extends MillecActivityBase
 
                     isAccessPoint = true;
 
+                    progressBarOnStart.setVisibility(View.INVISIBLE);
+                    isClosing = true;
+                    isAccessPoint = false;
+                    intent = new Intent(Rinnai17Login.this, Rinnai00fInitialSetupNetwork.class);
+                    startActivity(intent);
+                    finish();
+                    Log.d("myApp_WiFiTCP", "Rinnai17Login_startTxRN171DeviceGetStatus: startActivity(Rinnai00fInitialSetupNetwork).");
+
                 } else {
                     Log.d("myApp_WiFiSystem", "Rinnai17Login_appStart:NOT CONNECTED IN AP.");
 
@@ -622,8 +632,8 @@ public class Rinnai17Login extends MillecActivityBase
                             getAWSCustomerAppliance();
                         }
                     }
+                    startTxRN171DeviceGetStatus();
                 }
-                startTxRN171DeviceGetStatus();
     }
 
     //******************************//
@@ -904,7 +914,12 @@ public class Rinnai17Login extends MillecActivityBase
                     if (isInWifiNetwork && isAccessPoint == false) {
                         addRemoteDevices();
                         AppGlobals.UDPSrv.stopServer();
-                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBarOnStart.setVisibility(View.INVISIBLE);
+                            }
+                        });
                     }
                 }
 
@@ -1088,7 +1103,7 @@ public class Rinnai17Login extends MillecActivityBase
                                     gettingVersionTimer.cancel();
                                 }
 
-                                if ((2.13f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                                if ((2.14f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                         (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                         (2.02f != AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion)) {
 
@@ -1365,7 +1380,7 @@ public class Rinnai17Login extends MillecActivityBase
                                 gettingVersionTimer.cancel();
                             }
 
-                            if ((2.13f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
+                            if ((2.14f > AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                     (1.99f < AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion) &&
                                     (2.02f != AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).DeviceVersion)) {
 
