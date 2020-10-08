@@ -880,6 +880,7 @@ public class Rinnai17Login extends MillecActivityBase
             public void run() {
 
                 Log.d("myApp", "Rinnai17Login: Tick.. " + startupCheckTimerCount);
+                Log.d("myApp", "AppGlobals.fireplaceWifi.size: " + AppGlobals.fireplaceWifi.size());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -894,12 +895,20 @@ public class Rinnai17Login extends MillecActivityBase
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                     String ssid = wifiInfo.getSSID();
                     if (ssid.contains("unknown ssid")) {
+                        Log.d("myApp", "4G mode");
                         isInWifiNetwork = false;
                         addRemoteDevices();
                         AppGlobals.UDPSrv.stopServer();
-                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                showWifiList();
+                                progressBarOnStart.setVisibility(View.INVISIBLE);
+                            }
+                        });
                         if (AppGlobals.fireplaceWifi.size() == 0) {
                             startupCheckTimer.cancel();
+                            AppGlobals.CommErrorFault.stopTimer();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
