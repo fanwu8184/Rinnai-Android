@@ -52,6 +52,8 @@ public class Rinnai12OTA extends MillecActivityBase
 
     TCPClient2 tcpClient2;
 
+    int tcp9BmsgCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,9 @@ public class Rinnai12OTA extends MillecActivityBase
         super.onStop();
         Log.d("myApp_ActivityLifecycle", "Rinnai12OTA_onStop.");
 
-        startupCheckTimer.cancel();
+        if (startupCheckTimer != null) {
+            startupCheckTimer.cancel();
+        }
         isClosing = true;
 
         if (tcpTimer != null) {
@@ -336,19 +340,30 @@ public class Rinnai12OTA extends MillecActivityBase
                         if (pType.contains("9B")) {
                             if (tcpTimer != null) {
                                 tcpTimer.cancel();
+                                tcpTimer = null;
                             }
 
                             if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otastartResult.equals("OK")) {
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: START OK!!!");
-
 //                                isOTAFileTransfer = true;
 //                                startTxRN171DeviceOTAProcess();
-                                new Timer().schedule(new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        sendUpdateData(fileIndex);
-                                    }
-                                }, 1000);
+                                tcp9BmsgCount++;
+                                if (tcp9BmsgCount < 2) {
+                                    tcpTimer = new Timer();
+                                    tcpTimer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            Tx_RN171DeviceOTAStart();
+                                        }
+                                    }, 0, 1000);
+                                } else {
+                                    new Timer().schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            sendUpdateData(fileIndex);
+                                        }
+                                    }, 1000);
+                                }
                             } else {
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: START FAIL!!!");
                             }
@@ -356,7 +371,8 @@ public class Rinnai12OTA extends MillecActivityBase
                         if (pType.contains("99")) {
                             Log.d("myApp_WiFiTCP", "Rinnai12OTA_clientCallBackTCP: OTA File Transfer Result (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otafiletransferResult + ")");
 
-                            if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otafiletransferResult.equals("OK") && isOTAFileTransfer == false) {
+                            //AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otafiletransferResult.equals("OK") &&
+                            if (isOTAFileTransfer == false) {
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: FILE TRANSFER OK!!!");
 
 //                                ota_filetransfer_row = ota_filetransfer_row_sent + 1;
@@ -576,13 +592,13 @@ public class Rinnai12OTA extends MillecActivityBase
             int progress = index * 100 /fileData.length;
             ViewId_progressbar4.setProgress(progress);
 
-            this.startupCheckTimer = new Timer();
-            this.startupCheckTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    TCPSendUpdate(lines);
-                }
-            }, 5000, 5000);
+//            this.startupCheckTimer = new Timer();
+//            this.startupCheckTimer.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    TCPSendUpdate(lines);
+//                }
+//            }, 5000, 5000);
         } else {
             Tx_RN171DeviceOTACRC();
         }
