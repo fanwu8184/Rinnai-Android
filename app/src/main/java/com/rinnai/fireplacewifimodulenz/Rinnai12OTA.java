@@ -112,7 +112,9 @@ public class Rinnai12OTA extends MillecActivityBase
             tcpTimer.cancel();
         }
 
-        tcpClient2.close();
+        if (tcpClient2 != null) {
+            tcpClient2.close();
+        }
     }
 
     @Override
