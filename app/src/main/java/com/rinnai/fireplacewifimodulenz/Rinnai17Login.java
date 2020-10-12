@@ -507,9 +507,10 @@ public class Rinnai17Login extends MillecActivityBase
             View ViewId_scrollview_row_multiunit_rinnai21_home_screen = ViewId_multiunit_tableLayout.getChildAt(a);
 
             //Highlight Selection
-            ViewId_linearlayout_multiunit_row = ((LinearLayout) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.linearlayout_multiunit_row));
-
-            ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#00000000"));
+            if (ViewId_scrollview_row_multiunit_rinnai21_home_screen != null) {
+                ViewId_linearlayout_multiunit_row = ((LinearLayout) ViewId_scrollview_row_multiunit_rinnai21_home_screen.findViewById(R.id.linearlayout_multiunit_row));
+                ViewId_linearlayout_multiunit_row.setBackgroundColor(Color.parseColor("#00000000"));
+            }
         }
     }
 
