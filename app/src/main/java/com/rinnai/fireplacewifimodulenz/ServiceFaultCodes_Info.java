@@ -138,7 +138,7 @@ public class ServiceFaultCodes_Info {
             case 92:
                 info.faultCause           = "Cloud Function.";
                 info.faultDescription     = "Could function currently not available.";
-                info.faultAction          = "This is due to another device having control on the Home network or the WiFi module has gone offline.";
+                info.faultAction          = "This is due to another device having control on the Home network or the WiFi module has gone offline. Please check your home network connection or signal strength.";
                 break;
 
             default:

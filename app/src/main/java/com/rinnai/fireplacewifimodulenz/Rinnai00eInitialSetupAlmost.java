@@ -181,7 +181,7 @@ public class Rinnai00eInitialSetupAlmost extends MillecActivityBase
                 progressBarWaiting.setVisibility(View.INVISIBLE);
                 AlertDialog alertDialog = new AlertDialog.Builder(Rinnai00eInitialSetupAlmost.this).create();
                 alertDialog.setTitle("Setup Failed");
-                alertDialog.setMessage("Please make sure the password you entered for the home network is correct. This App will be off for you to restart the setup again.");
+                alertDialog.setMessage("Please make sure the password you entered for the home network is correct. This app will close now for you to restart the setup process again.");
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
