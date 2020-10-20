@@ -18,26 +18,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -90,6 +80,8 @@ public class Rinnai17Login extends MillecActivityBase
 
     boolean isInWifiNetwork = true;
     boolean isAppSuccessfullyStarted = false;
+
+    boolean isAlreadyPickOne = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -516,6 +508,7 @@ public class Rinnai17Login extends MillecActivityBase
 
     private View.OnClickListener wifiListOnclickListener = new View.OnClickListener() {
         public void onClick(View v) {
+            isAlreadyPickOne = true;
 
             //Get Selected Text (timersdaysofweek)
             TextView ViewId_textview80 = ((TextView) v.findViewById(R.id.textView80));
@@ -537,6 +530,7 @@ public class Rinnai17Login extends MillecActivityBase
             if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).ipAddress == null) {
                 goToHomePage();
             } else {
+                Log.d("ttt", "TCP check device version..... every one second");
                 gettingVersionTimer = new Timer();
                 gettingVersionTimer.schedule(new TimerTask() {
                     @Override
@@ -583,6 +577,8 @@ public class Rinnai17Login extends MillecActivityBase
     }
 
     void appStart() {
+
+        isAlreadyPickOne = false;
 
                 try {
                     AppGlobals.UDPSrv.stopServer();
@@ -885,7 +881,7 @@ public class Rinnai17Login extends MillecActivityBase
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (isAccessPoint == false) {
+                        if (isAccessPoint == false && isAlreadyPickOne == false) {
                             showWifiList();
                         }
                     }
@@ -1096,7 +1092,8 @@ public class Rinnai17Login extends MillecActivityBase
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
+                    Log.d("ttt", "tcp received pType: " + pType);
+                    Log.d("ttt", "tcp received pType: " + pText);
                     if (pText.contains("RINNAI_10") && pText.contains("OTA")) {
                         if (gettingVersionTimer != null) {
                             gettingVersionTimer.cancel();

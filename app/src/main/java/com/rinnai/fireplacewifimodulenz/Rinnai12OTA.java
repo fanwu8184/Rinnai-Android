@@ -373,8 +373,7 @@ public class Rinnai12OTA extends MillecActivityBase
                         if (pType.contains("99")) {
                             Log.d("myApp_WiFiTCP", "Rinnai12OTA_clientCallBackTCP: OTA File Transfer Result (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otafiletransferResult + ")");
 
-                            //AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otafiletransferResult.equals("OK") &&
-                            if (isOTAFileTransfer == false) {
+                            if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).otafiletransferResult.equals("OK") && isOTAFileTransfer == false) {
                                 Log.d("myApp_WiFiTCP", "Rinnai12OTA: FILE TRANSFER OK!!!");
 
 //                                ota_filetransfer_row = ota_filetransfer_row_sent + 1;
@@ -594,14 +593,22 @@ public class Rinnai12OTA extends MillecActivityBase
             int progress = index * 100 /fileData.length;
             ViewId_progressbar4.setProgress(progress);
 
-//            this.startupCheckTimer = new Timer();
-//            this.startupCheckTimer.schedule(new TimerTask() {
-//                @Override
-//                public void run() {
-//                    TCPSendUpdate(lines);
-//                }
-//            }, 5000, 5000);
+            this.startupCheckTimer = new Timer();
+            this.startupCheckTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showErrorPopup();
+                        }
+                    });
+                }
+            }, 10000);
         } else {
+            if (startupCheckTimer != null) {
+                startupCheckTimer.cancel();
+            }
             Tx_RN171DeviceOTACRC();
         }
     }
