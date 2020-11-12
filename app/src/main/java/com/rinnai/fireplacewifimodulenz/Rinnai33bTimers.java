@@ -330,9 +330,12 @@ public class Rinnai33bTimers extends MillecActivityBase
 
 
                             if (ViewId_numberpicker4.getValue() == 1) {
-                                AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue() + 12;
+                                if (ViewId_numberpicker2.getValue() == 12) {
+                                    AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue();
+                                } else {
+                                    AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue() + 12;
+                                }
                             } else {
-
                                 if (ViewId_numberpicker2.getValue() == 12) {
                                     AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOn = ViewId_numberpicker2.getValue() - 12;
                                 } else {
@@ -343,9 +346,12 @@ public class Rinnai33bTimers extends MillecActivityBase
                             AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersMinutesOn = ViewId_numberpicker3.getValue();
 
                             if (ViewId_numberpicker7.getValue() == 1) {
-                                AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue() + 12;
+                                if (ViewId_numberpicker5.getValue() == 12) {
+                                    AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue();
+                                } else {
+                                    AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue() + 12;
+                                }
                             } else {
-
                                 if (ViewId_numberpicker5.getValue() == 12) {
                                     AppGlobals.TimersInfo_List.get(selected_scrollviewrowrinnai33btimersid).timersHoursOff = ViewId_numberpicker5.getValue() - 12;
                                 } else {

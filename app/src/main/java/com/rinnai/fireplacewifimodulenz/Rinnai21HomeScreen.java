@@ -90,6 +90,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     ImageView imageView_remoteIconAtStandby;
 
     TextView ViewId_textview3;
+    TextView ViewId_textviewDegree;
     TextView ViewId_textview4;
     TextView ViewId_textview5;
     TextView ViewId_textview6;
@@ -97,6 +98,7 @@ public class Rinnai21HomeScreen extends MillecActivityBase
     TextView ViewId_textview14;
     TextView ViewId_textview15;
     TextView ViewId_textview58;
+    TextView ViewId_textviewDegree2;
     TextView ViewId_textview71;
     TextView ViewId_textview71Standby;
     TextView ViewId_textview75;
@@ -3086,12 +3088,16 @@ public class Rinnai21HomeScreen extends MillecActivityBase
                                             Log.d("myApp_WiFiTCP", "Rinnai21HomeScreen_clientCallBackTCP: Room Temperature (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmRoomTemperature + ")");
 
                                             ViewId_textview3 = (TextView) findViewById(R.id.textView3);
+                                            ViewId_textviewDegree = (TextView) findViewById(R.id.textViewDegree);
 
-                                            ViewId_textview3.setText(String.valueOf(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmRoomTemperature) + "°");
+                                            ViewId_textview3.setText(String.valueOf(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmRoomTemperature));
+                                            ViewId_textviewDegree.setText("°");
 
                                             ViewId_textview58 = (TextView) findViewById(R.id.textView58);
+                                            ViewId_textviewDegree2 = (TextView) findViewById(R.id.textViewDegree2);
 
-                                            ViewId_textview58.setText(String.valueOf(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmRoomTemperature) + "°");
+                                            ViewId_textview58.setText(String.valueOf(AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmRoomTemperature));
+                                            ViewId_textviewDegree2.setText("°");
 
                                             //***************************//
                                             //***** Set Temperature *****//
@@ -3764,9 +3770,13 @@ public class Rinnai21HomeScreen extends MillecActivityBase
 
         if (remoteSetting != null) {
             ViewId_textview3 = (TextView) findViewById(R.id.textView3);
-            ViewId_textview3.setText(remoteSetting.currentTemp + "°");
+            ViewId_textview3.setText(remoteSetting.currentTemp + "");
+            ViewId_textviewDegree = (TextView) findViewById(R.id.textViewDegree);
+            ViewId_textviewDegree.setText("°");
             ViewId_textview58 = (TextView) findViewById(R.id.textView58);
-            ViewId_textview58.setText(remoteSetting.currentTemp + "°");
+            ViewId_textview58.setText(remoteSetting.currentTemp + "");
+            ViewId_textviewDegree2 = (TextView) findViewById(R.id.textViewDegree2);
+            ViewId_textviewDegree2.setText("°");
             ViewId_myseekbar4 = (VerticalSeekBar) findViewById(R.id.mySeekBar4);
             switch (remoteSetting.currentTemp) {
                 case 16:
