@@ -27,17 +27,15 @@
   <component name="ChangeListManager">
     <list default="true" id="8964e60f-6d87-41a2-a4ee-3675787c2afc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai21HomeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai33bTimers.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai33bTimers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai21_home_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_rinnai21_home_screen.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/standby_rinnai21_home_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/standby_rinnai21_home_screen.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rinnai/fireplacewifimodulenz/Rinnai17Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[0123456789ABCDEF]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -206,22 +204,26 @@
       <screen x="0" y="23" width="1280" height="723" />
     </state>
     <state x="228" y="46" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1600994377110" />
-    <state width="1625" height="716" key="GridCell.Tab.0.bottom" timestamp="1603246791733">
-      <screen x="0" y="23" width="1280" height="723" />
+    <state width="1642" height="591" key="GridCell.Tab.0.bottom" timestamp="1606099813376">
+      <screen x="0" y="25" width="1280" height="715" />
     </state>
     <state width="1625" height="716" key="GridCell.Tab.0.bottom/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1603246791733" />
-    <state width="1625" height="716" key="GridCell.Tab.0.center" timestamp="1603246791730">
-      <screen x="0" y="23" width="1280" height="723" />
+    <state width="1642" height="591" key="GridCell.Tab.0.bottom/0.25.1280.715/-289.-1055.1920.1055@0.25.1280.715" timestamp="1606099813376" />
+    <state width="1642" height="591" key="GridCell.Tab.0.center" timestamp="1606099813374">
+      <screen x="0" y="25" width="1280" height="715" />
     </state>
     <state width="1625" height="716" key="GridCell.Tab.0.center/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1603246791730" />
-    <state width="1625" height="716" key="GridCell.Tab.0.left" timestamp="1603246791724">
-      <screen x="0" y="23" width="1280" height="723" />
+    <state width="1642" height="591" key="GridCell.Tab.0.center/0.25.1280.715/-289.-1055.1920.1055@0.25.1280.715" timestamp="1606099813374" />
+    <state width="1642" height="591" key="GridCell.Tab.0.left" timestamp="1606099813372">
+      <screen x="0" y="25" width="1280" height="715" />
     </state>
     <state width="1625" height="716" key="GridCell.Tab.0.left/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1603246791724" />
-    <state width="1625" height="716" key="GridCell.Tab.0.right" timestamp="1603246791732">
-      <screen x="0" y="23" width="1280" height="723" />
+    <state width="1642" height="591" key="GridCell.Tab.0.left/0.25.1280.715/-289.-1055.1920.1055@0.25.1280.715" timestamp="1606099813372" />
+    <state width="1642" height="591" key="GridCell.Tab.0.right" timestamp="1606099813375">
+      <screen x="0" y="25" width="1280" height="715" />
     </state>
     <state width="1625" height="716" key="GridCell.Tab.0.right/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1603246791732" />
+    <state width="1642" height="591" key="GridCell.Tab.0.right/0.25.1280.715/-289.-1055.1920.1055@0.25.1280.715" timestamp="1606099813375" />
     <state x="135" y="23" key="SettingsEditor" timestamp="1600994837232">
       <screen x="0" y="23" width="1280" height="723" />
     </state>
@@ -230,14 +232,16 @@
       <screen x="0" y="23" width="1280" height="723" />
     </state>
     <state x="289" y="217" key="com.intellij.ide.util.TipDialog/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1602627946222" />
-    <state x="293" y="140" width="805" height="490" key="find.popup" timestamp="1605138268601">
-      <screen x="0" y="23" width="1280" height="723" />
+    <state x="293" y="141" width="805" height="522" key="find.popup" timestamp="1606098554936">
+      <screen x="0" y="25" width="1280" height="715" />
     </state>
     <state x="293" y="140" width="805" height="490" key="find.popup/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1605138268601" />
-    <state width="306" height="79" key="javadoc.popup.new" timestamp="1605137994833">
-      <screen x="0" y="23" width="1280" height="723" />
+    <state x="293" y="141" width="805" height="522" key="find.popup/0.25.1280.715/-289.-1055.1920.1055@0.25.1280.715" timestamp="1606098554936" />
+    <state width="306" height="79" key="javadoc.popup.new" timestamp="1606267011444">
+      <screen x="0" y="25" width="1280" height="715" />
     </state>
     <state width="306" height="79" key="javadoc.popup.new/0.23.1280.723/-289.-1057.1920.1057@0.23.1280.723" timestamp="1605137994833" />
+    <state width="306" height="79" key="javadoc.popup.new/0.25.1280.715/-289.-1055.1920.1055@0.25.1280.715" timestamp="1606267011444" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

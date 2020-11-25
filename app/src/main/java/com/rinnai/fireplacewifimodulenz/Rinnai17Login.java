@@ -82,6 +82,7 @@ public class Rinnai17Login extends MillecActivityBase
     boolean isAppSuccessfullyStarted = false;
 
     boolean isAlreadyPickOne = false;
+    boolean isCheckingSignal = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -563,6 +564,11 @@ public class Rinnai17Login extends MillecActivityBase
         intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
         startActivity(intent);
         finish();
+    }
+
+    void checkWiFiSignal() {
+        isCheckingSignal = true;
+        Tx_RN171DeviceGetStatus();
     }
 
     void goToOTAPage() {
@@ -1151,170 +1157,201 @@ public class Rinnai17Login extends MillecActivityBase
 
                                 Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Main Power Switch (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmMainPowerSwitch + ")");
 
-                                //Main power switch = ON:[0x00]
-                                if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmMainPowerSwitch == 0) {
-
-                                    //***************************//
-                                    //***** Error Code HIGH *****//
-                                    //***************************//
-
-                                    Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Error Code HIGH (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeHI + ")");
-
-                                    //***************************//
-                                    //***** Error Code LOW *****//
-                                    //***************************//
-
-                                    Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Error Code LOW (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeLO + ")");
-
-                                    //Error code HIGH = no error code:[Hx(0x20), Dec(32)]
-                                    //Error code LOW = no error code:[Hx(0x20), Dec(32)]
-                                    if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeHI == 32 && AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeLO == 32) {
+                                if (isCheckingSignal) {
+                                    isCheckingSignal = false;
+                                    int decimalStrenth = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmWifiStrength;
+                                    Log.d("ttt", "signal: " + decimalStrenth);
+                                    if (decimalStrenth >= 185) {
+                                        goToOTAPage();
+                                    } else {
+                                        showWeakWiFiSignalPopup();
+                                    }
+                                } else {
+                                    //Main power switch = ON:[0x00]
+                                    if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmMainPowerSwitch == 0) {
 
                                         //***************************//
-                                        //***** Operation State *****//
+                                        //***** Error Code HIGH *****//
                                         //***************************//
 
-                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Operation State (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState + ")");
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Error Code HIGH (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeHI + ")");
 
-                                        //Operation state = Stop:[0x00]
-                                        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 0) {
-                                            AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = false;
-                                        }
+                                        //***************************//
+                                        //***** Error Code LOW *****//
+                                        //***************************//
 
-                                        //Operation state = Operate:[0x01]
-                                        else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 1) {
-                                            AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = true;
-                                        }
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Error Code LOW (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeLO + ")");
 
-                                        //Operation state = Error stop:[0x02]
-                                        else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 2) {
-                                            AppGlobals.UDPSrv.stopServer();
+                                        //Error code HIGH = no error code:[Hx(0x20), Dec(32)]
+                                        //Error code LOW = no error code:[Hx(0x20), Dec(32)]
+                                        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeHI == 32 && AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmErrorCodeLO == 32) {
 
-                                            startupCheckTimer.cancel();
-                                            //fireanimationCheckTimer.cancel();
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
-                                                }
-                                            });
-                                            isClosing = true;
-                                            intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
-                                            startActivity(intent);
+                                            //***************************//
+                                            //***** Operation State *****//
+                                            //***************************//
 
-                                            finish();
-                                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
-                                        } else {
-                                            AppGlobals.UDPSrv.stopServer();
+                                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Operation State (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState + ")");
 
-                                            startupCheckTimer.cancel();
-                                            //fireanimationCheckTimer.cancel();
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
-                                                }
-                                            });
-                                            isClosing = true;
-                                            intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
-                                            startActivity(intent);
+                                            //Operation state = Stop:[0x00]
+                                            if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 0) {
+                                                AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = false;
+                                            }
 
-                                            finish();
-                                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
-                                        }
+                                            //Operation state = Operate:[0x01]
+                                            else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 1) {
+                                                AppGlobals.ViewId_imagebutton3_imagebutton22_actionup = true;
+                                            }
 
-                                        //*************************//
-                                        //***** Burning State *****//
-                                        //*************************//
+                                            //Operation state = Error stop:[0x02]
+                                            else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmOperationState == 2) {
+                                                AppGlobals.UDPSrv.stopServer();
 
-                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Burning State (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState + ")");
+                                                startupCheckTimer.cancel();
+                                                //fireanimationCheckTimer.cancel();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                    }
+                                                });
+                                                isClosing = true;
+                                                intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+                                                startActivity(intent);
 
-                                        //Burning state = Extinguish:[0x00]
-                                        if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 0) {
-                                            AppGlobals.UDPSrv.stopServer();
+                                                finish();
+                                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
+                                            } else {
+                                                AppGlobals.UDPSrv.stopServer();
 
-                                            startupCheckTimer.cancel();
-                                            //fireanimationCheckTimer.cancel();
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
-                                                }
-                                            });
-                                            isClosing = true;
+                                                startupCheckTimer.cancel();
+                                                //fireanimationCheckTimer.cancel();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                    }
+                                                });
+                                                isClosing = true;
+                                                intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+                                                startActivity(intent);
+
+                                                finish();
+                                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
+                                            }
+
+                                            //*************************//
+                                            //***** Burning State *****//
+                                            //*************************//
+
+                                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: Burning State (" + AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState + ")");
+
+                                            //Burning state = Extinguish:[0x00]
+                                            if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 0) {
+                                                AppGlobals.UDPSrv.stopServer();
+
+                                                startupCheckTimer.cancel();
+                                                //fireanimationCheckTimer.cancel();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                    }
+                                                });
+                                                isClosing = true;
 
 
 
-                                            if(AppGlobals.rfwmEmail != null){
-                                                if(!AppGlobals.rfwmEmail.equals("NA")) {
-                                                    showWifiList();
+                                                if(AppGlobals.rfwmEmail != null){
+                                                    if(!AppGlobals.rfwmEmail.equals("NA")) {
+                                                        showWifiList();
+                                                    } else {
+                                                        goToLoginPage();
+                                                    }
                                                 } else {
                                                     goToLoginPage();
                                                 }
-                                            } else {
-                                                goToLoginPage();
                                             }
-                                        }
 
-                                        //Burning state = Ignite:[0x01]
-                                        else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 1) {
-                                            AppGlobals.UDPSrv.stopServer();
+                                            //Burning state = Ignite:[0x01]
+                                            else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 1) {
+                                                AppGlobals.UDPSrv.stopServer();
 
-                                            startupCheckTimer.cancel();
-                                            //fireanimationCheckTimer.cancel();
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
-                                                }
-                                            });
-                                            isClosing = true;
-                                            intent = new Intent(Rinnai17Login.this, Rinnai22IgnitionSequence.class);
-                                            startActivity(intent);
+                                                startupCheckTimer.cancel();
+                                                //fireanimationCheckTimer.cancel();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                    }
+                                                });
+                                                isClosing = true;
+                                                intent = new Intent(Rinnai17Login.this, Rinnai22IgnitionSequence.class);
+                                                startActivity(intent);
 
-                                            finish();
-                                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai22IgnitionSequence).");
-                                        }
+                                                finish();
+                                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai22IgnitionSequence).");
+                                            }
 
-                                        //Burning state = Thermostat:[0x02]
-                                        else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 2) {
-                                            AppGlobals.UDPSrv.stopServer();
+                                            //Burning state = Thermostat:[0x02]
+                                            else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 2) {
+                                                AppGlobals.UDPSrv.stopServer();
 
-                                            startupCheckTimer.cancel();
-                                            //fireanimationCheckTimer.cancel();
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
-                                                }
-                                            });
-                                            isClosing = true;
-                                            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-                                            startActivity(intent);
+                                                startupCheckTimer.cancel();
+                                                //fireanimationCheckTimer.cancel();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                    }
+                                                });
+                                                isClosing = true;
+                                                intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+                                                startActivity(intent);
 
-                                            finish();
-                                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
-                                        }
+                                                finish();
+                                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
+                                            }
 
-                                        //Burning state = Thermostat OFF:[0x03]
-                                        else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 3) {
-                                            AppGlobals.UDPSrv.stopServer();
+                                            //Burning state = Thermostat OFF:[0x03]
+                                            else if (AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmBurningState == 3) {
+                                                AppGlobals.UDPSrv.stopServer();
 
-                                            startupCheckTimer.cancel();
-                                            //fireanimationCheckTimer.cancel();
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    progressBarOnStart.setVisibility(View.INVISIBLE);
-                                                }
-                                            });
-                                            isClosing = true;
-                                            intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
-                                            startActivity(intent);
+                                                startupCheckTimer.cancel();
+                                                //fireanimationCheckTimer.cancel();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                    }
+                                                });
+                                                isClosing = true;
+                                                intent = new Intent(Rinnai17Login.this, Rinnai21HomeScreen.class);
+                                                startActivity(intent);
 
-                                            finish();
-                                            Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
+                                                finish();
+                                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai21HomeScreen).");
+                                            } else {
+                                                AppGlobals.UDPSrv.stopServer();
+
+                                                startupCheckTimer.cancel();
+                                                //fireanimationCheckTimer.cancel();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        progressBarOnStart.setVisibility(View.INVISIBLE);
+                                                    }
+                                                });
+                                                isClosing = true;
+                                                intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+                                                startActivity(intent);
+
+                                                finish();
+                                                Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
+                                            }
+
                                         } else {
+
+
                                             AppGlobals.UDPSrv.stopServer();
 
                                             startupCheckTimer.cancel();
@@ -1326,16 +1363,17 @@ public class Rinnai17Login extends MillecActivityBase
                                                 }
                                             });
                                             isClosing = true;
-                                            intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
-                                            startActivity(intent);
 
-                                            finish();
+                                            showWifiList();
+//                                        intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
+//                                        startActivity(intent);
+//
+//                                        finish();
                                             Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
                                         }
-
-                                    } else {
-
-
+                                    }
+                                    //Main power switch = OFF:[0x01]
+                                    else {
                                         AppGlobals.UDPSrv.stopServer();
 
                                         startupCheckTimer.cancel();
@@ -1346,34 +1384,13 @@ public class Rinnai17Login extends MillecActivityBase
                                                 progressBarOnStart.setVisibility(View.INVISIBLE);
                                             }
                                         });
-                                        isClosing = true;
 
                                         showWifiList();
-//                                        intent = new Intent(Rinnai17Login.this, Rinnai26Fault.class);
-//                                        startActivity(intent);
-//
-//                                        finish();
-                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26Fault).");
-                                    }
-                                }
-                                //Main power switch = OFF:[0x01]
-                                else {
-                                    AppGlobals.UDPSrv.stopServer();
-
-                                    startupCheckTimer.cancel();
-                                    //fireanimationCheckTimer.cancel();
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            progressBarOnStart.setVisibility(View.INVISIBLE);
-                                        }
-                                    });
-
-                                    showWifiList();
 //                                    intent = new Intent(Rinnai17Login.this, Rinnai26PowerOff.class);
 //                                    startActivity(intent);
 //                                    finish();
-                                    Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26PowerOff).");
+                                        Log.d("myApp_WiFiTCP", "Rinnai17Login_clientCallBackTCP: startActivity(Rinnai26PowerOff).");
+                                    }
                                 }
                             }
                         } catch (Exception e) {
@@ -1409,6 +1426,17 @@ public class Rinnai17Login extends MillecActivityBase
                                 } else {
                                     goToLoginPage();
                                 }
+                            }
+                        }
+
+                        if (pType.contains("22")) {
+                            isCheckingSignal = false;
+                            int decimalStrenth = AppGlobals.fireplaceWifi.get(AppGlobals.selected_fireplaceWifi).rfwmWifiStrength;
+                            Log.d("ttt", "signal: " + decimalStrenth);
+                            if (decimalStrenth >= 185) {
+                                goToOTAPage();
+                            } else {
+                                showWeakWiFiSignalPopup();
                             }
                         }
                     }
@@ -1769,7 +1797,7 @@ public class Rinnai17Login extends MillecActivityBase
                 .setMessage("An Update for the Rinnai WiFi module is available. Press update to continue.")
                 .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        goToOTAPage();
+                        checkWiFiSignal();
                     }
                 })
 //                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -1778,6 +1806,44 @@ public class Rinnai17Login extends MillecActivityBase
 //                        dialog.dismiss();
 //                    }
 //                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog al = builder.create();
+        al.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        al.show();
+    }
+
+    private void showWeakWiFiSignalPopup() {
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+
+        builder.setTitle("WARNING LOW SIGNAL STRENGTH")
+                .setMessage("We have detected low signal strength to the Wi-Fi module in your fire, the firmware update cannot be installed. To ensure the latest functionality with full customer support we recommend improving signal strength with a booster or improving your network router.")
+                .setPositiveButton("Continue Without Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Tx_RN171DeviceSetTime();
+
+                        isDeviceGetVersion = true;
+
+                        startupCheckTimer.cancel();
+                        //fireanimationCheckTimer.cancel();
+
+                        if(AppGlobals.rfwmEmail != null){
+                            if(!AppGlobals.rfwmEmail.equals("NA")) {
+                                goToHomePage();
+                            } else {
+                                goToLoginPage();
+                            }
+                        } else {
+                            goToLoginPage();
+                        }
+                    }
+                })
                 .setIcon(android.R.drawable.ic_dialog_alert);
 
         AlertDialog al = builder.create();
