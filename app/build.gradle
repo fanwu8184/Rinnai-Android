@@ -6,9 +6,9 @@ android {
     defaultConfig {
         applicationId "com.rinnai.fireplacewifimodulenz"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 18
-        versionName "2.7"
+        versionName "2.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
